@@ -3,12 +3,13 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Hexo
-subtitle: ''
-description: ''
-keywords:
+title: "Ⅶ布利亚"
+subtitle: '奇布里亚'
+description: '这里是奇布里亚大草原'
+keywords: en
 author: qibria
-language: cn
+#language: en
+language: zh-CN
 timezone: Asia/Shanghai
 
 # URL
@@ -44,14 +45,14 @@ post_asset_folder: false
 relative_link: false
 future: true
 highlight:
-  enable: true
+  enable: false
   line_number: true
   auto_detect: false
   tab_replace: ''
   wrap: true
   hljs: false
 prismjs:
-  enable: false
+  enable: true
   preprocess: true
   line_number: true
   tab_replace: ''
@@ -61,7 +62,7 @@ prismjs:
 # per_page: Posts displayed per page. (0 = disable pagination)
 # order_by: Posts order. (Order by date descending by default)
 index_generator:
-  path: ''
+  path: '/intro/'
   per_page: 10
   order_by: -date
 
@@ -97,7 +98,9 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: landscape
+#theme: landscape
+theme: next
+
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
@@ -105,3 +108,21 @@ deploy:
   type: git
   repo:
     github: https://github.com/gerry-gqj/blog-notes.git
+  branch: main
+
+# Search
+#search:
+#path: search.xml # 支持json和xml，可自行设定，索引文件的路径，相对于站点根目录
+#field: post # 搜索范围，默认是 post，还可以选择 page、all，设置成 all 表示搜索所有页面
+#format: html
+#limit: 10000 # 限制搜索的条目数
+
+
+# symbols_count_time:
+#   symbols: true
+#   time: true
+#   total_symbols: true
+#   total_time: true
+#   exclude_codeblock: false
+#   wpm: 275
+#   suffix: "mins."
