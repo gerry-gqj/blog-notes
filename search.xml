@@ -19,6 +19,65 @@
 ]]></content>
   </entry>
   <entry>
+    <title>npm镜像源</title>
+    <url>/blog-notes/2022/11/11/npm%E9%95%9C%E5%83%8F%E6%BA%90/</url>
+    <content><![CDATA[<h2 id="查看"><a href="#查看" class="headerlink" title="查看"></a>查看</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> config get registry <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h2 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h2><p>临时更改( –registry 参数)</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> <span class="token function">install</span> any-touch@latest <span class="token parameter variable">--registry</span> <span class="token operator">&lt;</span>源地址<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>持久化更改</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> config <span class="token builtin class-name">set</span> registry <span class="token operator">&lt;</span>源地址<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p>原始源</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> config <span class="token builtin class-name">set</span> registry https://registry.npmjs.org/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>淘宝源</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> config <span class="token builtin class-name">set</span> registry https://registry.npm.taobao.org <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>华为源</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> config <span class="token builtin class-name">set</span> registry https://mirrors.huaweicloud.com/repository/npm/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+]]></content>
+      <categories>
+        <category>web前端</category>
+        <category>包管理</category>
+      </categories>
+      <tags>
+        <tag>npm</tag>
+        <tag>包管理</tag>
+        <tag>镜像源</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>nrm镜像管理工具</title>
+    <url>/blog-notes/2022/11/11/nrm%E9%95%9C%E5%83%8F%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/</url>
+    <content><![CDATA[<p>管理registry地址</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> <span class="token function">install</span> <span class="token parameter variable">-g</span> nrm<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h2 id="查看镜像列表"><a href="#查看镜像列表" class="headerlink" title="查看镜像列表"></a>查看镜像列表</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">nrm <span class="token function">ls</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h2 id="切换"><a href="#切换" class="headerlink" title="切换"></a>切换</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">nrm use taobao/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+]]></content>
+      <categories>
+        <category>web前端</category>
+        <category>镜像管理</category>
+      </categories>
+      <tags>
+        <tag>nrm</tag>
+        <tag>镜像管理</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>npm、yarn、pnpm镜像</title>
     <url>/blog-notes/2022/11/11/npm%E3%80%81yarn%E3%80%81pnpm%E9%95%9C%E5%83%8F/</url>
     <content><![CDATA[<h2 id="npm"><a href="#npm" class="headerlink" title="npm"></a>npm</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 华为镜像</span>
@@ -61,104 +120,10 @@
       </categories>
       <tags>
         <tag>npm</tag>
+        <tag>包管理</tag>
+        <tag>镜像源</tag>
         <tag>yarn</tag>
         <tag>pnpm</tag>
-        <tag>包管理</tag>
-        <tag>镜像源</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>nrm镜像管理工具</title>
-    <url>/blog-notes/2022/11/11/nrm%E9%95%9C%E5%83%8F%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/</url>
-    <content><![CDATA[<p>管理registry地址</p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> <span class="token function">install</span> <span class="token parameter variable">-g</span> nrm<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
-<h2 id="查看镜像列表"><a href="#查看镜像列表" class="headerlink" title="查看镜像列表"></a>查看镜像列表</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">nrm <span class="token function">ls</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
-<h2 id="切换"><a href="#切换" class="headerlink" title="切换"></a>切换</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">nrm use taobao/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-]]></content>
-      <categories>
-        <category>web前端</category>
-        <category>镜像管理</category>
-      </categories>
-      <tags>
-        <tag>nrm</tag>
-        <tag>镜像管理</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>npm镜像源</title>
-    <url>/blog-notes/2022/11/11/npm%E9%95%9C%E5%83%8F%E6%BA%90/</url>
-    <content><![CDATA[<h2 id="查看"><a href="#查看" class="headerlink" title="查看"></a>查看</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> config get registry <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
-<h2 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h2><p>临时更改( –registry 参数)</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> <span class="token function">install</span> any-touch@latest <span class="token parameter variable">--registry</span> <span class="token operator">&lt;</span>源地址<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>持久化更改</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> config <span class="token builtin class-name">set</span> registry <span class="token operator">&lt;</span>源地址<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
-<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p>原始源</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> config <span class="token builtin class-name">set</span> registry https://registry.npmjs.org/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>淘宝源</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> config <span class="token builtin class-name">set</span> registry https://registry.npm.taobao.org <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>华为源</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> config <span class="token builtin class-name">set</span> registry https://mirrors.huaweicloud.com/repository/npm/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-]]></content>
-      <categories>
-        <category>web前端</category>
-        <category>包管理</category>
-      </categories>
-      <tags>
-        <tag>npm</tag>
-        <tag>包管理</tag>
-        <tag>镜像源</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>yarn镜像源</title>
-    <url>/blog-notes/2022/11/11/yarn%E9%95%9C%E5%83%8F%E6%BA%90/</url>
-    <content><![CDATA[<h2 id="查看"><a href="#查看" class="headerlink" title="查看"></a>查看</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">yarn</span> config get registry<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
-<h2 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h2><p>临时更改( –registry 参数)</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">yarn</span> <span class="token function">add</span> any-touch@latest <span class="token parameter variable">--registry</span><span class="token operator">=</span>https://registry.npmjs.org/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>持久化更改</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">yarn</span> config <span class="token builtin class-name">set</span> registry <span class="token operator">&lt;</span>源地址<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
-<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p>原始源</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">yarn</span> config <span class="token builtin class-name">set</span> registry https://registry.yarnpkg.com<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>淘宝源</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">yarn</span> config <span class="token builtin class-name">set</span> registry https://registry.npm.taobao.org/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>华为源</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">yarn</span> config <span class="token builtin class-name">set</span> registry https://mirrors.huaweicloud.com/repository/npm/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-]]></content>
-      <categories>
-        <category>web前端</category>
-        <category>包管理</category>
-      </categories>
-      <tags>
-        <tag>yarn</tag>
-        <tag>包管理</tag>
-        <tag>镜像源</tag>
       </tags>
   </entry>
   <entry>
@@ -191,9 +156,95 @@
         <category>包管理</category>
       </categories>
       <tags>
-        <tag>pnpm</tag>
         <tag>包管理</tag>
         <tag>镜像源</tag>
+        <tag>pnpm</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vscode在win10配置git bash</title>
+    <url>/blog-notes/2022/11/11/vscode%E5%9C%A8win10%E9%85%8D%E7%BD%AEgitbash/</url>
+    <content><![CDATA[<p>打开设置搜索<code>Terminal Integrated window</code></p>
+<p>找到<code>settings.json</code>文件打开</p>
+<p><img src="/blog-notes/../assets/vscode%E5%9C%A8win10%E9%85%8D%E7%BD%AEgitbash/image-20221111143208620.png" alt="image-20221111143208620"></p>
+<p>找到<code>terminal.integrated.profiles.windows</code></p>
+<p><img src="/blog-notes/../assets/vscode%E5%9C%A8win10%E9%85%8D%E7%BD%AEgitbash/image-20221111143549740.png" alt="image-20221111143549740"></p>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token property">"terminal.integrated.profiles.windows"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token property">"PowerShell"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+        <span class="token property">"source"</span><span class="token operator">:</span> <span class="token string">"PowerShell"</span><span class="token punctuation">,</span>
+        <span class="token property">"icon"</span><span class="token operator">:</span> <span class="token string">"terminal-powershell"</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token property">"Command Prompt"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+        <span class="token property">"path"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+            <span class="token string">"$&#123;env:windir&#125;\\Sysnative\\cmd.exe"</span><span class="token punctuation">,</span>
+            <span class="token string">"$&#123;env:windir&#125;\\System32\\cmd.exe"</span>
+        <span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token property">"args"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token property">"icon"</span><span class="token operator">:</span> <span class="token string">"terminal-cmd"</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token property">"GitBash"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">//"source": "Git Bash",</span>
+        <span class="token property">"path"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"D:\\Program Files\\Git\\bin\\bash.exe"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token property">"icon"</span><span class="token operator">:</span> <span class="token string">"terminal-bash"</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+<span class="token property">"terminal.integrated.defaultProfile.windows"</span><span class="token operator">:</span> <span class="token string">"GitBash"</span><span class="token punctuation">,</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>添加Git Bash配置</p>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token property">"GitBash"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+   <span class="token comment">//"source": "Git Bash",</span>
+   <span class="token property">"path"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"D:\\Program Files\\Git\\bin\\bash.exe"</span><span class="token punctuation">]</span><span class="token punctuation">,</span> 
+   <span class="token property">"icon"</span><span class="token operator">:</span> <span class="token string">"terminal-bash"</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><code>path</code> 的参数是git的安装路径下的<code>/bin/bash.exe</code></p>
+<p>注意<code>GitBash</code>可以是<code>Git-Bash</code>但不可以是<code>Git Bash</code> 配置文件中避免出现空格</p>
+<p>这段配置将<code>Git Bash</code>设置为默认终端</p>
+<p><code>&quot;terminal.integrated.defaultProfile.windows&quot;: &quot;GitBash&quot;,</code> </p>
+]]></content>
+      <categories>
+        <category>vscode</category>
+        <category>git</category>
+      </categories>
+      <tags>
+        <tag>vscode</tag>
+        <tag>win10</tag>
+        <tag>git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>yarn镜像源</title>
+    <url>/blog-notes/2022/11/11/yarn%E9%95%9C%E5%83%8F%E6%BA%90/</url>
+    <content><![CDATA[<h2 id="查看"><a href="#查看" class="headerlink" title="查看"></a>查看</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">yarn</span> config get registry<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h2 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h2><p>临时更改( –registry 参数)</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">yarn</span> <span class="token function">add</span> any-touch@latest <span class="token parameter variable">--registry</span><span class="token operator">=</span>https://registry.npmjs.org/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>持久化更改</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">yarn</span> config <span class="token builtin class-name">set</span> registry <span class="token operator">&lt;</span>源地址<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p>原始源</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">yarn</span> config <span class="token builtin class-name">set</span> registry https://registry.yarnpkg.com<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>淘宝源</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">yarn</span> config <span class="token builtin class-name">set</span> registry https://registry.npm.taobao.org/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>华为源</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">yarn</span> config <span class="token builtin class-name">set</span> registry https://mirrors.huaweicloud.com/repository/npm/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+]]></content>
+      <categories>
+        <category>web前端</category>
+        <category>包管理</category>
+      </categories>
+      <tags>
+        <tag>包管理</tag>
+        <tag>镜像源</tag>
+        <tag>yarn</tag>
       </tags>
   </entry>
 </search>
