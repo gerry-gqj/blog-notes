@@ -4,7 +4,7 @@
 
 # Site
 title: "Ⅶ布利亚"
-subtitle: '奇布里亚'
+subtitle: '奇布里亚`blog'
 description: '这里是奇布里亚大草原'
 keywords: en
 author: qibria
@@ -62,7 +62,7 @@ prismjs:
 # per_page: Posts displayed per page. (0 = disable pagination)
 # order_by: Posts order. (Order by date descending by default)
 index_generator:
-  path: '/intro/'
+  path: '/home/'
   per_page: 10
   order_by: -date
 
