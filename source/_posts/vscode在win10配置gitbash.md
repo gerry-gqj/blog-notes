@@ -16,13 +16,13 @@ categories:
 
 找到`settings.json`文件打开
 
-![image-20221111143208620](../assets/vscode在win10配置gitbash/image-20221111143208620.png)
+![image-20221111143208620](assets/vscode在win10配置gitbash/image-20221111143208620.png)
 
 
 
 找到`terminal.integrated.profiles.windows`
 
-![image-20221111143549740](../assets/vscode在win10配置gitbash/image-20221111143549740.png)
+![image-20221111143549740](assets/vscode在win10配置gitbash/image-20221111143549740.png)
 
 ```json
 "terminal.integrated.profiles.windows": {
