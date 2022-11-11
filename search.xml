@@ -19,6 +19,41 @@
 ]]></content>
   </entry>
   <entry>
+    <title>npm镜像源</title>
+    <url>/blog-notes/2022/11/11/npm%E9%95%9C%E5%83%8F%E6%BA%90/</url>
+    <content><![CDATA[<h2 id="查看"><a href="#查看" class="headerlink" title="查看"></a>查看</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> config get registry <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h2 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h2><p>临时更改( –registry 参数)</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> <span class="token function">install</span> any-touch@latest <span class="token parameter variable">--registry</span> <span class="token operator">&lt;</span>源地址<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>持久化更改</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> config <span class="token builtin class-name">set</span> registry <span class="token operator">&lt;</span>源地址<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p>原始源</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> config <span class="token builtin class-name">set</span> registry https://registry.npmjs.org/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>淘宝源</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> config <span class="token builtin class-name">set</span> registry https://registry.npm.taobao.org <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>华为源</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> config <span class="token builtin class-name">set</span> registry https://mirrors.huaweicloud.com/repository/npm/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+]]></content>
+      <categories>
+        <category>web前端</category>
+        <category>包管理</category>
+      </categories>
+      <tags>
+        <tag>npm</tag>
+        <tag>包管理</tag>
+        <tag>镜像源</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>npm、yarn、pnpm镜像</title>
     <url>/blog-notes/2022/11/11/npm%E3%80%81yarn%E3%80%81pnpm%E9%95%9C%E5%83%8F/</url>
     <content><![CDATA[<h2 id="npm"><a href="#npm" class="headerlink" title="npm"></a>npm</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 华为镜像</span>
@@ -61,10 +96,10 @@
       </categories>
       <tags>
         <tag>npm</tag>
-        <tag>yarn</tag>
-        <tag>pnpm</tag>
         <tag>包管理</tag>
         <tag>镜像源</tag>
+        <tag>yarn</tag>
+        <tag>pnpm</tag>
       </tags>
   </entry>
   <entry>
@@ -121,44 +156,9 @@
         <category>包管理</category>
       </categories>
       <tags>
+        <tag>包管理</tag>
+        <tag>镜像源</tag>
         <tag>pnpm</tag>
-        <tag>包管理</tag>
-        <tag>镜像源</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>npm镜像源</title>
-    <url>/blog-notes/2022/11/11/npm%E9%95%9C%E5%83%8F%E6%BA%90/</url>
-    <content><![CDATA[<h2 id="查看"><a href="#查看" class="headerlink" title="查看"></a>查看</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> config get registry <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
-<h2 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h2><p>临时更改( –registry 参数)</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> <span class="token function">install</span> any-touch@latest <span class="token parameter variable">--registry</span> <span class="token operator">&lt;</span>源地址<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>持久化更改</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> config <span class="token builtin class-name">set</span> registry <span class="token operator">&lt;</span>源地址<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
-<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p>原始源</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> config <span class="token builtin class-name">set</span> registry https://registry.npmjs.org/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>淘宝源</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> config <span class="token builtin class-name">set</span> registry https://registry.npm.taobao.org <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>华为源</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> config <span class="token builtin class-name">set</span> registry https://mirrors.huaweicloud.com/repository/npm/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-]]></content>
-      <categories>
-        <category>web前端</category>
-        <category>包管理</category>
-      </categories>
-      <tags>
-        <tag>npm</tag>
-        <tag>包管理</tag>
-        <tag>镜像源</tag>
       </tags>
   </entry>
   <entry>
@@ -242,9 +242,9 @@
         <category>包管理</category>
       </categories>
       <tags>
-        <tag>yarn</tag>
         <tag>包管理</tag>
         <tag>镜像源</tag>
+        <tag>yarn</tag>
       </tags>
   </entry>
 </search>
