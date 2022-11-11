@@ -19,6 +19,55 @@
 ]]></content>
   </entry>
   <entry>
+    <title>npm、yarn、pnpm镜像</title>
+    <url>/blog-notes/2022/11/11/npm%E3%80%81yarn%E3%80%81pnpm%E9%95%9C%E5%83%8F/</url>
+    <content><![CDATA[<h2 id="npm"><a href="#npm" class="headerlink" title="npm"></a>npm</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 华为镜像</span>
+<span class="token function">npm</span> config <span class="token builtin class-name">set</span> registry https://mirrors.huaweicloud.com/repository/npm/
+<span class="token function">npm</span> config <span class="token builtin class-name">set</span> disturl https://mirrors.huaweicloud.com/nodejs/
+<span class="token function">npm</span> config <span class="token builtin class-name">set</span> electron_mirror https://mirrors.huaweicloud.com/electron/
+<span class="token comment"># 淘宝镜像</span>
+<span class="token function">npm</span> config <span class="token builtin class-name">set</span> registry https://registry.npm.taobao.org
+<span class="token function">npm</span> config <span class="token builtin class-name">set</span> disturl https://npm.taobao.org/dist
+<span class="token function">npm</span> config <span class="token builtin class-name">set</span> electron_mirror https://npm.taobao.org/mirrors/electron/<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h2 id="yarn"><a href="#yarn" class="headerlink" title="yarn"></a>yarn</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 华为镜像</span>
+<span class="token function">yarn</span> config <span class="token builtin class-name">set</span> registry https://mirrors.huaweicloud.com/repository/npm/
+<span class="token function">yarn</span> config <span class="token builtin class-name">set</span> disturl https://mirrors.huaweicloud.com/nodejs/
+<span class="token function">yarn</span> config <span class="token builtin class-name">set</span> electron_mirror https://mirrors.huaweicloud.com/electron/
+<span class="token comment"># 淘宝镜像</span>
+<span class="token function">yarn</span> config <span class="token builtin class-name">set</span> registry https://registry.npm.taobao.org
+<span class="token function">yarn</span> config <span class="token builtin class-name">set</span> disturl https://npm.taobao.org/dist
+<span class="token function">yarn</span> config <span class="token builtin class-name">set</span> electron_mirror https://npm.taobao.org/mirrors/electron/<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h2 id="pnpm"><a href="#pnpm" class="headerlink" title="pnpm"></a>pnpm</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 华为镜像</span>
+<span class="token function">pnpm</span> config <span class="token builtin class-name">set</span> registry https://mirrors.huaweicloud.com/repository/npm/
+<span class="token function">pnpm</span> config <span class="token builtin class-name">set</span> disturl https://mirrors.huaweicloud.com/nodejs/
+<span class="token function">pnpm</span> config <span class="token builtin class-name">set</span> electron_mirror https://mirrors.huaweicloud.com/electron/
+<span class="token comment"># 淘宝镜像</span>
+<span class="token function">pnpm</span> config <span class="token builtin class-name">set</span> registry https://registry.npm.taobao.org
+<span class="token function">pnpm</span> config <span class="token builtin class-name">set</span> disturl https://npm.taobao.org/dist
+<span class="token function">pnpm</span> config <span class="token builtin class-name">set</span> electron_mirror https://npm.taobao.org/mirrors/electron/<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+]]></content>
+      <categories>
+        <category>web前端</category>
+        <category>包管理</category>
+      </categories>
+      <tags>
+        <tag>npm</tag>
+        <tag>yarn</tag>
+        <tag>pnpm</tag>
+        <tag>包管理</tag>
+        <tag>镜像源</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>npm镜像源</title>
     <url>/blog-notes/2022/11/11/npm%E9%95%9C%E5%83%8F%E6%BA%90/</url>
     <content><![CDATA[<h2 id="查看"><a href="#查看" class="headerlink" title="查看"></a>查看</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> config get registry <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -78,55 +127,6 @@
       </tags>
   </entry>
   <entry>
-    <title>npm、yarn、pnpm镜像</title>
-    <url>/blog-notes/2022/11/11/npm%E3%80%81yarn%E3%80%81pnpm%E9%95%9C%E5%83%8F/</url>
-    <content><![CDATA[<h2 id="npm"><a href="#npm" class="headerlink" title="npm"></a>npm</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 华为镜像</span>
-<span class="token function">npm</span> config <span class="token builtin class-name">set</span> registry https://mirrors.huaweicloud.com/repository/npm/
-<span class="token function">npm</span> config <span class="token builtin class-name">set</span> disturl https://mirrors.huaweicloud.com/nodejs/
-<span class="token function">npm</span> config <span class="token builtin class-name">set</span> electron_mirror https://mirrors.huaweicloud.com/electron/
-<span class="token comment"># 淘宝镜像</span>
-<span class="token function">npm</span> config <span class="token builtin class-name">set</span> registry https://registry.npm.taobao.org
-<span class="token function">npm</span> config <span class="token builtin class-name">set</span> disturl https://npm.taobao.org/dist
-<span class="token function">npm</span> config <span class="token builtin class-name">set</span> electron_mirror https://npm.taobao.org/mirrors/electron/<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-<h2 id="yarn"><a href="#yarn" class="headerlink" title="yarn"></a>yarn</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 华为镜像</span>
-<span class="token function">yarn</span> config <span class="token builtin class-name">set</span> registry https://mirrors.huaweicloud.com/repository/npm/
-<span class="token function">yarn</span> config <span class="token builtin class-name">set</span> disturl https://mirrors.huaweicloud.com/nodejs/
-<span class="token function">yarn</span> config <span class="token builtin class-name">set</span> electron_mirror https://mirrors.huaweicloud.com/electron/
-<span class="token comment"># 淘宝镜像</span>
-<span class="token function">yarn</span> config <span class="token builtin class-name">set</span> registry https://registry.npm.taobao.org
-<span class="token function">yarn</span> config <span class="token builtin class-name">set</span> disturl https://npm.taobao.org/dist
-<span class="token function">yarn</span> config <span class="token builtin class-name">set</span> electron_mirror https://npm.taobao.org/mirrors/electron/<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-<h2 id="pnpm"><a href="#pnpm" class="headerlink" title="pnpm"></a>pnpm</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 华为镜像</span>
-<span class="token function">pnpm</span> config <span class="token builtin class-name">set</span> registry https://mirrors.huaweicloud.com/repository/npm/
-<span class="token function">pnpm</span> config <span class="token builtin class-name">set</span> disturl https://mirrors.huaweicloud.com/nodejs/
-<span class="token function">pnpm</span> config <span class="token builtin class-name">set</span> electron_mirror https://mirrors.huaweicloud.com/electron/
-<span class="token comment"># 淘宝镜像</span>
-<span class="token function">pnpm</span> config <span class="token builtin class-name">set</span> registry https://registry.npm.taobao.org
-<span class="token function">pnpm</span> config <span class="token builtin class-name">set</span> disturl https://npm.taobao.org/dist
-<span class="token function">pnpm</span> config <span class="token builtin class-name">set</span> electron_mirror https://npm.taobao.org/mirrors/electron/<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-]]></content>
-      <categories>
-        <category>web前端</category>
-        <category>包管理</category>
-      </categories>
-      <tags>
-        <tag>npm</tag>
-        <tag>包管理</tag>
-        <tag>镜像源</tag>
-        <tag>yarn</tag>
-        <tag>pnpm</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>pnpm镜像源</title>
     <url>/blog-notes/2022/11/11/pnpm%E9%95%9C%E5%83%8F%E6%BA%90/</url>
     <content><![CDATA[<h2 id="查看"><a href="#查看" class="headerlink" title="查看"></a>查看</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">pnpm</span> get registry <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -156,9 +156,9 @@
         <category>包管理</category>
       </categories>
       <tags>
+        <tag>pnpm</tag>
         <tag>包管理</tag>
         <tag>镜像源</tag>
-        <tag>pnpm</tag>
       </tags>
   </entry>
   <entry>
@@ -166,9 +166,9 @@
     <url>/blog-notes/2022/11/11/vscode%E5%9C%A8win10%E9%85%8D%E7%BD%AEgitbash/</url>
     <content><![CDATA[<p>打开设置搜索<code>Terminal Integrated window</code></p>
 <p>找到<code>settings.json</code>文件打开</p>
-<p><img src="/blog-notes/../assets/vscode%E5%9C%A8win10%E9%85%8D%E7%BD%AEgitbash/image-20221111143208620.png" alt="image-20221111143208620"></p>
+<p><img src="/blog-notes/assets/vscode%E5%9C%A8win10%E9%85%8D%E7%BD%AEgitbash/image-20221111143208620.png" alt="image-20221111143208620"></p>
 <p>找到<code>terminal.integrated.profiles.windows</code></p>
-<p><img src="/blog-notes/../assets/vscode%E5%9C%A8win10%E9%85%8D%E7%BD%AEgitbash/image-20221111143549740.png" alt="image-20221111143549740"></p>
+<p><img src="/blog-notes/assets/vscode%E5%9C%A8win10%E9%85%8D%E7%BD%AEgitbash/image-20221111143549740.png" alt="image-20221111143549740"></p>
 <pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token property">"terminal.integrated.profiles.windows"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
     <span class="token property">"PowerShell"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
         <span class="token property">"source"</span><span class="token operator">:</span> <span class="token string">"PowerShell"</span><span class="token punctuation">,</span>
@@ -242,9 +242,9 @@
         <category>包管理</category>
       </categories>
       <tags>
+        <tag>yarn</tag>
         <tag>包管理</tag>
         <tag>镜像源</tag>
-        <tag>yarn</tag>
       </tags>
   </entry>
 </search>
