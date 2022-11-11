@@ -1,6 +1,7 @@
 ---
 title: npm、yarn、pnpm镜像
 date: 2022-11-11 00:36:03
+typora-root-url: ../
 tags:
  - npm
  - yarn

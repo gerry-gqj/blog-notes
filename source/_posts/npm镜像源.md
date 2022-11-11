@@ -1,6 +1,7 @@
 ---
 title: npm镜像源
 date: 2022-11-11 00:23:02
+typora-root-url: ../
 tags:
  - npm
  - 包管理

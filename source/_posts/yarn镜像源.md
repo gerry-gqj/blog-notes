@@ -1,6 +1,7 @@
 ---
 title: yarn镜像源
 date: 2022-11-11 00:23:11
+typora-root-url: ../
 tags:
  - yarn
  - 包管理

@@ -1,6 +1,7 @@
 ---
 title: pnpm镜像源
 date: 2022-11-11 00:23:25
+typora-root-url: ../
 tags:
  - pnpm
  - 包管理

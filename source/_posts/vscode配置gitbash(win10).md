@@ -1,6 +1,7 @@
 ---
-title: vscode在win10配置git bash
+title: windows 10 在 vscode 中配置 git bash 终端
 date: 2022-11-11 14:10:42
+typora-root-url: ../
 tags:
  - vscode
  - win10
@@ -16,13 +17,11 @@ categories:
 
 找到`settings.json`文件打开
 
-![image-20221111143208620](assets/vscode在win10配置gitbash/image-20221111143208620.png)
-
-
+![image-20221111143208620](/images/vscode配置gitbash(win10)/image-20221111143208620.png)
 
 找到`terminal.integrated.profiles.windows`
 
-![image-20221111143549740](assets/vscode在win10配置gitbash/image-20221111143549740.png)
+![image-20221111143208620](/images/vscode配置gitbash(win10)/image-20221111143208620.png)
 
 ```json
 "terminal.integrated.profiles.windows": {

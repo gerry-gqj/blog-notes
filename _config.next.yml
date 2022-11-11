@@ -12,7 +12,7 @@
 
 # Allow to cache content generation.
 cache:
-  enable: true
+  enable: false
 
 # Remove unnecessary files after hexo generate.
 minify: false
@@ -142,7 +142,7 @@ sidebar:
 avatar:
   # Replace the default image and set the url here.
   #url: /images/avatar.gif
-  url: /assets/images/avatar.jpg
+  url: /images/avatar.jpg
   # If true, the avatar will be displayed in circle.
   rounded: false
   # If true, the avatar will be rotated with the cursor.

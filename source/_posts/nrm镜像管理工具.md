@@ -1,6 +1,7 @@
 ---
 title: nrm镜像管理工具
 date: 2022-11-11 00:33:31
+typora-root-url: ../
 tags:
  - nrm
  - 镜像管理
