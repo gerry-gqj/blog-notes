@@ -3081,3 +3081,13 @@ mark.search-keyword {
     padding: 10px 12px;
   }
 }
+body {
+  background: url("/blog-notes/images/bg.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: 100% 100%;
+  background-size: cover;
+}
+main {
+  opacity: 0.8;
+}
