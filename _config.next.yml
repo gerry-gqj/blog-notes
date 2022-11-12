@@ -29,7 +29,7 @@ custom_file_path:
   #bodyEnd: source/_data/body-end.njk
   #variable: source/_data/variables.styl
   #mixin: source/_data/mixins.styl
-  #style: source/_data/styles.styl
+  style: source/_data/styles.styl
 
 
 # ---------------------------------------------------------------
@@ -951,6 +951,7 @@ path: search.xml # 支持json和xml，可自行设定，索引文件的路径，
 field: post # 搜索范围，默认是 post，还可以选择 page、all，设置成 all 表示搜索所有页面
 format: html
 limit: 10000 # 限制搜索的条目数
+
 
 # 背景色切换功能
 # Darkmode JS
