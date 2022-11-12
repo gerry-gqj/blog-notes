@@ -3082,7 +3082,7 @@ mark.search-keyword {
   }
 }
 body {
-  background: url("/blog-notes/images/bg.jpg");
+  background: url("../images/bg.jpg");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: 100% 100%;
