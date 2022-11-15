@@ -183,6 +183,100 @@ EXPOSE <span class="token number">6001</span><span aria-hidden="true" class="lin
       </tags>
   </entry>
   <entry>
+    <title>docker-compose常用模板</title>
+    <url>/2022/11/13/docker-compose%E5%B8%B8%E7%94%A8%E6%A8%A1%E6%9D%BF/</url>
+    <content><![CDATA[<h2 id="网络服务"><a href="#网络服务" class="headerlink" title="网络服务"></a>网络服务</h2><pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">version</span><span class="token punctuation">:</span> <span class="token string">'3'</span>
+<span class="token key atrule">services</span><span class="token punctuation">:</span>
+  <span class="token key atrule">hello_web</span><span class="token punctuation">:</span>
+    <span class="token key atrule">image</span><span class="token punctuation">:</span> my<span class="token punctuation">-</span>app<span class="token punctuation">:</span>latest
+    <span class="token key atrule">container_name</span><span class="token punctuation">:</span> my<span class="token punctuation">-</span>app_6001
+    <span class="token key atrule">privileged</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>  <span class="token comment"># 提供权限</span>
+    <span class="token key atrule">network_mode</span><span class="token punctuation">:</span> bridge
+    <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> 6001<span class="token punctuation">:</span><span class="token number">6001</span> <span class="token comment"># 启动时暴露端口 内部端口3306 宿主机端口3300</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h2 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h2><pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">version</span><span class="token punctuation">:</span> <span class="token string">'3'</span>
+<span class="token key atrule">services</span><span class="token punctuation">:</span>
+  <span class="token key atrule">mysql</span><span class="token punctuation">:</span>
+    <span class="token key atrule">image</span><span class="token punctuation">:</span> qibria/mysql<span class="token punctuation">:</span><span class="token number">5.7</span>
+    <span class="token key atrule">container_name</span><span class="token punctuation">:</span> mysql<span class="token punctuation">-</span>5.7<span class="token punctuation">-</span><span class="token number">3300</span>
+    <span class="token key atrule">restart</span><span class="token punctuation">:</span> always <span class="token comment"># 总是开机启动</span>
+    <span class="token key atrule">network_mode</span><span class="token punctuation">:</span> bridge
+      <span class="token comment">#no不自动重启容器. (默认value)</span>
+      <span class="token comment">#on-failure 容器发生error而退出(容器退出状态不为0)重启容器</span>
+      <span class="token comment">#unless-stopped 在容器已经stop掉或Docker stoped/restarted的时候才重启容器</span>
+      <span class="token comment">#always 在容器已经stop掉或Docker stoped/restarted的时候才重启容器</span>
+    <span class="token key atrule">privileged</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>  <span class="token comment"># 提供权限</span>
+    <span class="token key atrule">volumes</span><span class="token punctuation">:</span> <span class="token comment"># 容器数据卷挂载</span>
+      <span class="token punctuation">-</span> v5.7_3300_data<span class="token punctuation">:</span>/var/lib/mysql<span class="token punctuation">:</span>rw <span class="token comment"># 数据文件</span>
+      <span class="token punctuation">-</span> v5.7_3300<span class="token punctuation">-</span>log<span class="token punctuation">:</span>/var/log/mysql<span class="token punctuation">:</span>rw <span class="token comment"># 日志文件</span>
+      <span class="token punctuation">-</span> v5.7_3300_config<span class="token punctuation">:</span>/etc/mysql/conf.d<span class="token punctuation">:</span>rw <span class="token comment"># 配置文件</span>
+    <span class="token key atrule">environment</span><span class="token punctuation">:</span>
+      <span class="token key atrule">MYSQL_ROOT_PASSWORD</span><span class="token punctuation">:</span> root <span class="token comment"># root 用户密码</span>
+      <span class="token key atrule">MYSQL_ALLOW_EMPTY_PASSWORD</span><span class="token punctuation">:</span> no <span class="token comment"># 不允许空密码登录</span>
+      <span class="token comment">#MYSQL_DATABASE: db2021 # 创建容器时创建数据库</span>
+      <span class="token key atrule">MYSQL_USER</span><span class="token punctuation">:</span> mysqldboy <span class="token comment"># 创建用户 具备admin权限 用户名</span>
+      <span class="token key atrule">MYSQL_PASSWORD</span><span class="token punctuation">:</span> mysqldboy <span class="token comment"># 密码</span>
+    <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> 3300<span class="token punctuation">:</span><span class="token number">3306</span> <span class="token comment"># 启动时暴露端口 内部端口3306 宿主机端口3300</span>
+    <span class="token key atrule">mem_limit</span><span class="token punctuation">:</span> 1g <span class="token comment"># 最大内存空间占用 1g</span>
+<span class="token key atrule">volumes</span><span class="token punctuation">:</span> <span class="token comment"># 容器数据卷</span>
+  <span class="token key atrule">v5.7_3300_data</span><span class="token punctuation">:</span>
+  <span class="token key atrule">v5.7_3300-log</span><span class="token punctuation">:</span>
+  v5.7_3300_config<span class="token punctuation">:</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h2 id="nacos"><a href="#nacos" class="headerlink" title="nacos"></a>nacos</h2><pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">version</span><span class="token punctuation">:</span> <span class="token string">'3'</span>
+<span class="token key atrule">services</span><span class="token punctuation">:</span>
+  <span class="token key atrule">nacos</span><span class="token punctuation">:</span>
+    <span class="token key atrule">image</span><span class="token punctuation">:</span> qibria/nacos<span class="token punctuation">-</span>server<span class="token punctuation">:</span>v2.1.0
+    <span class="token key atrule">container_name</span><span class="token punctuation">:</span> nacos<span class="token punctuation">-</span>server<span class="token punctuation">-</span>v2.1.0<span class="token punctuation">-</span><span class="token number">8840</span>
+    <span class="token key atrule">restart</span><span class="token punctuation">:</span> always <span class="token comment"># 总是开机启动</span>
+    <span class="token key atrule">privileged</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>  <span class="token comment"># 提供权限</span>
+    <span class="token key atrule">network_mode</span><span class="token punctuation">:</span> bridge
+    <span class="token key atrule">environment</span><span class="token punctuation">:</span>
+      <span class="token key atrule">PREFER_HOST_MODE</span><span class="token punctuation">:</span> hostname       <span class="token comment"># 是否支持hostname</span>
+      <span class="token key atrule">MODE</span><span class="token punctuation">:</span> standalone                           <span class="token comment"># 单机模式启动</span>
+      <span class="token key atrule">SPRING_DATASOURCE_PLATFORM</span><span class="token punctuation">:</span> mysql
+      <span class="token key atrule">MYSQL_SERVICE_HOST</span><span class="token punctuation">:</span> dboy    <span class="token comment"># 注：这里不能为`127.0.0.1`或`localhost`方式！！！</span>
+      <span class="token key atrule">MYSQL_SERVICE_DB_NAME</span><span class="token punctuation">:</span> nacos_config        <span class="token comment"># 所需sql脚本位于 `nacos-mysql/nacos-mysql.sql`</span>
+      <span class="token key atrule">MYSQL_SERVICE_PORT</span><span class="token punctuation">:</span> <span class="token number">3300</span>
+      <span class="token key atrule">MYSQL_SERVICE_USER</span><span class="token punctuation">:</span> root
+      <span class="token key atrule">MYSQL_SERVICE_PASSWORD</span><span class="token punctuation">:</span> root
+       <span class="token comment"># JVM调优参数</span>
+      <span class="token key atrule">JVM_XMS</span><span class="token punctuation">:</span> 512m   <span class="token comment">#-Xms default :2g</span>
+      <span class="token key atrule">JVM_XMX</span><span class="token punctuation">:</span> 512m   <span class="token comment">#-Xmx default :2g</span>
+      <span class="token key atrule">JVM_XMN</span><span class="token punctuation">:</span> 256m   <span class="token comment">#-Xmn default :1g</span>
+      <span class="token key atrule">JVM_MS</span><span class="token punctuation">:</span> 128m     <span class="token comment">#-XX:MetaspaceSize default :128m</span>
+      <span class="token key atrule">JVM_MMS</span><span class="token punctuation">:</span> 320m    <span class="token comment">#-XX:MaxMetaspaceSize default :320m</span>
+      <span class="token key atrule">NACOS_DEBUG</span><span class="token punctuation">:</span> n <span class="token comment">#是否开启远程debug，y/n，默认n</span>
+      <span class="token key atrule">TOMCAT_ACCESSLOG_ENABLED</span><span class="token punctuation">:</span> <span class="token boolean important">false</span> <span class="token comment">#是否开始tomcat访问日志的记录，默认false</span>
+    <span class="token key atrule">volumes</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> logs<span class="token punctuation">:</span>/home/nacos/logs<span class="token punctuation">:</span>rw
+      <span class="token punctuation">-</span> init.d<span class="token punctuation">:</span>/home/nacos/init.d<span class="token punctuation">:</span>rw
+    <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> 8840<span class="token punctuation">:</span><span class="token number">8848</span> <span class="token comment"># 启动时暴露端口 内部端口3306 宿主机端口3300</span>
+<span class="token key atrule">volumes</span><span class="token punctuation">:</span> <span class="token comment"># 容器数据卷</span>
+  <span class="token key atrule">logs</span><span class="token punctuation">:</span>
+  init.d<span class="token punctuation">:</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>docker</category>
+      </categories>
+      <tags>
+        <tag>docker</tag>
+        <tag>docker compose</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>debian设置静态ip</title>
     <url>/2022/11/15/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/</url>
     <content><![CDATA[<p>在 DHCP 网络上，您的 Linux 系统通常会自动从 DHCP 服务器接收 IP 地址，在大多数情况下，它是路由器。 IP 配置通常包括 IPv4 地址、网络掩码、网关和 DNS 设置。 这对于只需要访问 Internet 或网络资源的桌面或客户端 PC 来说通常很方便。</p>
@@ -329,85 +423,44 @@ iface enp0s3 inet static
       </tags>
   </entry>
   <entry>
-    <title>docker-compose常用模板</title>
-    <url>/2022/11/13/docker-compose%E5%B8%B8%E7%94%A8%E6%A8%A1%E6%9D%BF/</url>
-    <content><![CDATA[<h2 id="网络服务"><a href="#网络服务" class="headerlink" title="网络服务"></a>网络服务</h2><pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">version</span><span class="token punctuation">:</span> <span class="token string">'3'</span>
-<span class="token key atrule">services</span><span class="token punctuation">:</span>
-  <span class="token key atrule">hello_web</span><span class="token punctuation">:</span>
-    <span class="token key atrule">image</span><span class="token punctuation">:</span> my<span class="token punctuation">-</span>app<span class="token punctuation">:</span>latest
-    <span class="token key atrule">container_name</span><span class="token punctuation">:</span> my<span class="token punctuation">-</span>app_6001
-    <span class="token key atrule">privileged</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>  <span class="token comment"># 提供权限</span>
-    <span class="token key atrule">network_mode</span><span class="token punctuation">:</span> bridge
-    <span class="token key atrule">ports</span><span class="token punctuation">:</span>
-      <span class="token punctuation">-</span> 6001<span class="token punctuation">:</span><span class="token number">6001</span> <span class="token comment"># 启动时暴露端口 内部端口3306 宿主机端口3300</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <title>git设置代理</title>
+    <url>/2022/11/15/git%E8%AE%BE%E7%BD%AE%E4%BB%A3%E7%90%86/</url>
+    <content><![CDATA[<h2 id="全局代理"><a href="#全局代理" class="headerlink" title="全局代理"></a>全局代理</h2><p><code>http</code> 代理</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> config <span class="token parameter variable">--global</span> http.proxy http://127.0.0.1:1080<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 
 
-<h2 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h2><pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">version</span><span class="token punctuation">:</span> <span class="token string">'3'</span>
-<span class="token key atrule">services</span><span class="token punctuation">:</span>
-  <span class="token key atrule">mysql</span><span class="token punctuation">:</span>
-    <span class="token key atrule">image</span><span class="token punctuation">:</span> qibria/mysql<span class="token punctuation">:</span><span class="token number">5.7</span>
-    <span class="token key atrule">container_name</span><span class="token punctuation">:</span> mysql<span class="token punctuation">-</span>5.7<span class="token punctuation">-</span><span class="token number">3300</span>
-    <span class="token key atrule">restart</span><span class="token punctuation">:</span> always <span class="token comment"># 总是开机启动</span>
-    <span class="token key atrule">network_mode</span><span class="token punctuation">:</span> bridge
-      <span class="token comment">#no不自动重启容器. (默认value)</span>
-      <span class="token comment">#on-failure 容器发生error而退出(容器退出状态不为0)重启容器</span>
-      <span class="token comment">#unless-stopped 在容器已经stop掉或Docker stoped/restarted的时候才重启容器</span>
-      <span class="token comment">#always 在容器已经stop掉或Docker stoped/restarted的时候才重启容器</span>
-    <span class="token key atrule">privileged</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>  <span class="token comment"># 提供权限</span>
-    <span class="token key atrule">volumes</span><span class="token punctuation">:</span> <span class="token comment"># 容器数据卷挂载</span>
-      <span class="token punctuation">-</span> v5.7_3300_data<span class="token punctuation">:</span>/var/lib/mysql<span class="token punctuation">:</span>rw <span class="token comment"># 数据文件</span>
-      <span class="token punctuation">-</span> v5.7_3300<span class="token punctuation">-</span>log<span class="token punctuation">:</span>/var/log/mysql<span class="token punctuation">:</span>rw <span class="token comment"># 日志文件</span>
-      <span class="token punctuation">-</span> v5.7_3300_config<span class="token punctuation">:</span>/etc/mysql/conf.d<span class="token punctuation">:</span>rw <span class="token comment"># 配置文件</span>
-    <span class="token key atrule">environment</span><span class="token punctuation">:</span>
-      <span class="token key atrule">MYSQL_ROOT_PASSWORD</span><span class="token punctuation">:</span> root <span class="token comment"># root 用户密码</span>
-      <span class="token key atrule">MYSQL_ALLOW_EMPTY_PASSWORD</span><span class="token punctuation">:</span> no <span class="token comment"># 不允许空密码登录</span>
-      <span class="token comment">#MYSQL_DATABASE: db2021 # 创建容器时创建数据库</span>
-      <span class="token key atrule">MYSQL_USER</span><span class="token punctuation">:</span> mysqldboy <span class="token comment"># 创建用户 具备admin权限 用户名</span>
-      <span class="token key atrule">MYSQL_PASSWORD</span><span class="token punctuation">:</span> mysqldboy <span class="token comment"># 密码</span>
-    <span class="token key atrule">ports</span><span class="token punctuation">:</span>
-      <span class="token punctuation">-</span> 3300<span class="token punctuation">:</span><span class="token number">3306</span> <span class="token comment"># 启动时暴露端口 内部端口3306 宿主机端口3300</span>
-    <span class="token key atrule">mem_limit</span><span class="token punctuation">:</span> 1g <span class="token comment"># 最大内存空间占用 1g</span>
-<span class="token key atrule">volumes</span><span class="token punctuation">:</span> <span class="token comment"># 容器数据卷</span>
-  <span class="token key atrule">v5.7_3300_data</span><span class="token punctuation">:</span>
-  <span class="token key atrule">v5.7_3300-log</span><span class="token punctuation">:</span>
-  v5.7_3300_config<span class="token punctuation">:</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><code>https</code>代理</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> config <span class="token parameter variable">--global</span> https.proxy http://127.0.0.1:1080<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 
 
-<h2 id="nacos"><a href="#nacos" class="headerlink" title="nacos"></a>nacos</h2><pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">version</span><span class="token punctuation">:</span> <span class="token string">'3'</span>
-<span class="token key atrule">services</span><span class="token punctuation">:</span>
-  <span class="token key atrule">nacos</span><span class="token punctuation">:</span>
-    <span class="token key atrule">image</span><span class="token punctuation">:</span> qibria/nacos<span class="token punctuation">-</span>server<span class="token punctuation">:</span>v2.1.0
-    <span class="token key atrule">container_name</span><span class="token punctuation">:</span> nacos<span class="token punctuation">-</span>server<span class="token punctuation">-</span>v2.1.0<span class="token punctuation">-</span><span class="token number">8840</span>
-    <span class="token key atrule">restart</span><span class="token punctuation">:</span> always <span class="token comment"># 总是开机启动</span>
-    <span class="token key atrule">privileged</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>  <span class="token comment"># 提供权限</span>
-    <span class="token key atrule">network_mode</span><span class="token punctuation">:</span> bridge
-    <span class="token key atrule">environment</span><span class="token punctuation">:</span>
-      <span class="token key atrule">PREFER_HOST_MODE</span><span class="token punctuation">:</span> hostname       <span class="token comment"># 是否支持hostname</span>
-      <span class="token key atrule">MODE</span><span class="token punctuation">:</span> standalone                           <span class="token comment"># 单机模式启动</span>
-      <span class="token key atrule">SPRING_DATASOURCE_PLATFORM</span><span class="token punctuation">:</span> mysql
-      <span class="token key atrule">MYSQL_SERVICE_HOST</span><span class="token punctuation">:</span> dboy    <span class="token comment"># 注：这里不能为`127.0.0.1`或`localhost`方式！！！</span>
-      <span class="token key atrule">MYSQL_SERVICE_DB_NAME</span><span class="token punctuation">:</span> nacos_config        <span class="token comment"># 所需sql脚本位于 `nacos-mysql/nacos-mysql.sql`</span>
-      <span class="token key atrule">MYSQL_SERVICE_PORT</span><span class="token punctuation">:</span> <span class="token number">3300</span>
-      <span class="token key atrule">MYSQL_SERVICE_USER</span><span class="token punctuation">:</span> root
-      <span class="token key atrule">MYSQL_SERVICE_PASSWORD</span><span class="token punctuation">:</span> root
-       <span class="token comment"># JVM调优参数</span>
-      <span class="token key atrule">JVM_XMS</span><span class="token punctuation">:</span> 512m   <span class="token comment">#-Xms default :2g</span>
-      <span class="token key atrule">JVM_XMX</span><span class="token punctuation">:</span> 512m   <span class="token comment">#-Xmx default :2g</span>
-      <span class="token key atrule">JVM_XMN</span><span class="token punctuation">:</span> 256m   <span class="token comment">#-Xmn default :1g</span>
-      <span class="token key atrule">JVM_MS</span><span class="token punctuation">:</span> 128m     <span class="token comment">#-XX:MetaspaceSize default :128m</span>
-      <span class="token key atrule">JVM_MMS</span><span class="token punctuation">:</span> 320m    <span class="token comment">#-XX:MaxMetaspaceSize default :320m</span>
-      <span class="token key atrule">NACOS_DEBUG</span><span class="token punctuation">:</span> n <span class="token comment">#是否开启远程debug，y/n，默认n</span>
-      <span class="token key atrule">TOMCAT_ACCESSLOG_ENABLED</span><span class="token punctuation">:</span> <span class="token boolean important">false</span> <span class="token comment">#是否开始tomcat访问日志的记录，默认false</span>
-    <span class="token key atrule">volumes</span><span class="token punctuation">:</span>
-      <span class="token punctuation">-</span> logs<span class="token punctuation">:</span>/home/nacos/logs<span class="token punctuation">:</span>rw
-      <span class="token punctuation">-</span> init.d<span class="token punctuation">:</span>/home/nacos/init.d<span class="token punctuation">:</span>rw
-    <span class="token key atrule">ports</span><span class="token punctuation">:</span>
-      <span class="token punctuation">-</span> 8840<span class="token punctuation">:</span><span class="token number">8848</span> <span class="token comment"># 启动时暴露端口 内部端口3306 宿主机端口3300</span>
-<span class="token key atrule">volumes</span><span class="token punctuation">:</span> <span class="token comment"># 容器数据卷</span>
-  <span class="token key atrule">logs</span><span class="token punctuation">:</span>
-  init.d<span class="token punctuation">:</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><code>socket</code>方式</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> config <span class="token parameter variable">--global</span> http.proxy socks5://127.0.0.1:7890<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> config <span class="token parameter variable">--global</span> https.proxy socks5://127.0.0.1:7890<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+
+
+<h2 id="针对github代理"><a href="#针对github代理" class="headerlink" title="针对github代理"></a>针对<code>github</code>代理</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> config <span class="token parameter variable">--global</span> http.https://github.com.proxy socks5://127.0.0.1:7890<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+
+
+<h2 id="取消代理"><a href="#取消代理" class="headerlink" title="取消代理"></a>取消代理</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> config <span class="token parameter variable">--global</span> <span class="token parameter variable">--unset</span> http.proxy<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> config <span class="token parameter variable">--global</span> <span class="token parameter variable">--unset</span> https.proxy<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+
+
+
+
+
 
 
 
@@ -415,11 +468,10 @@ iface enp0s3 inet static
 
 ]]></content>
       <categories>
-        <category>docker</category>
+        <category>git</category>
       </categories>
       <tags>
-        <tag>docker</tag>
-        <tag>docker compose</tag>
+        <tag>git</tag>
       </tags>
   </entry>
   <entry>
@@ -698,58 +750,6 @@ iface enp0s3 inet static
       </tags>
   </entry>
   <entry>
-    <title>git设置代理</title>
-    <url>/2022/11/15/git%E8%AE%BE%E7%BD%AE%E4%BB%A3%E7%90%86/</url>
-    <content><![CDATA[<h2 id="全局代理"><a href="#全局代理" class="headerlink" title="全局代理"></a>全局代理</h2><p><code>http</code> 代理</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> config <span class="token parameter variable">--global</span> http.proxy http://127.0.0.1:1080<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
-<p><code>https</code>代理</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> config <span class="token parameter variable">--global</span> https.proxy http://127.0.0.1:1080<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
-<p><code>socket</code>方式</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> config <span class="token parameter variable">--global</span> http.proxy socks5://127.0.0.1:7890<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> config <span class="token parameter variable">--global</span> https.proxy socks5://127.0.0.1:7890<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
-
-
-<h2 id="针对github代理"><a href="#针对github代理" class="headerlink" title="针对github代理"></a>针对<code>github</code>代理</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> config <span class="token parameter variable">--global</span> http.https://github.com.proxy socks5://127.0.0.1:7890<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
-
-
-<h2 id="取消代理"><a href="#取消代理" class="headerlink" title="取消代理"></a>取消代理</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> config <span class="token parameter variable">--global</span> <span class="token parameter variable">--unset</span> http.proxy<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> config <span class="token parameter variable">--global</span> <span class="token parameter variable">--unset</span> https.proxy<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
-
-
-
-
-
-
-
-
-
-
-]]></content>
-      <categories>
-        <category>git</category>
-      </categories>
-      <tags>
-        <tag>git</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Hello World</title>
     <url>/2022/11/10/hello-world/</url>
     <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
@@ -766,50 +766,6 @@ iface enp0s3 inet static
 
 <p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 ]]></content>
-  </entry>
-  <entry>
-    <title>mysql5.7配置文件</title>
-    <url>/2022/11/13/mysql5-7%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/</url>
-    <content><![CDATA[<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p><code>debian bullseye (GNU/Linux)</code></p>
-<p><code>mysql5.7</code></p>
-<p><code>mysql</code>配置文件路径 <code>/etc/mysql/conf.d</code></p>
-<h3 id="新建配置文件-my-cnf"><a href="#新建配置文件-my-cnf" class="headerlink" title="新建配置文件 my.cnf"></a>新建配置文件 <code>my.cnf</code></h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">touch</span> /etc/mysql/conf.d/my.cnf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
-<h2 id="添加内容"><a href="#添加内容" class="headerlink" title="添加内容"></a>添加内容</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">nano</span> /etc/mysql/conf.d/my.cnf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>内容如下:</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>client<span class="token punctuation">]</span>
-<span class="token assign-left variable">default_character_set</span><span class="token operator">=</span>utf8mb4
-
-<span class="token punctuation">[</span>mysql<span class="token punctuation">]</span>
-default-character-set<span class="token operator">=</span>utf8mb4
-
-<span class="token punctuation">[</span>mysqld<span class="token punctuation">]</span>
-<span class="token assign-left variable">collation_server</span><span class="token operator">=</span>utf8mb4_unicode_ci
-<span class="token assign-left variable">character_set_server</span><span class="token operator">=</span>utf8mb4 
-character-set-client-handshake <span class="token operator">=</span> <span class="token boolean">false</span> <span class="token comment">#设置为 False, 在客户端字符集和服务端字符集不同的时候将拒绝连接到服务端执行任何操作</span>
-init_connect <span class="token operator">=</span> <span class="token string">'SET NAMES utf8mb4'</span>
-bind-address<span class="token operator">=</span><span class="token number">0.0</span>.0.0
-default-time_zone<span class="token operator">=</span><span class="token string">'+8:00'</span> <span class="token comment">#设置时区</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-
-
-
-
-
-
-]]></content>
-      <categories>
-        <category>mysql</category>
-      </categories>
-      <tags>
-        <tag>mysql</tag>
-        <tag>mysql5.7</tag>
-      </tags>
   </entry>
   <entry>
     <title>npm、yarn、pnpm镜像</title>
@@ -858,6 +814,50 @@ default-time_zone<span class="token operator">=</span><span class="token string"
         <tag>pnpm</tag>
         <tag>包管理</tag>
         <tag>镜像源</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>mysql5.7配置文件</title>
+    <url>/2022/11/13/mysql5-7%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/</url>
+    <content><![CDATA[<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p><code>debian bullseye (GNU/Linux)</code></p>
+<p><code>mysql5.7</code></p>
+<p><code>mysql</code>配置文件路径 <code>/etc/mysql/conf.d</code></p>
+<h3 id="新建配置文件-my-cnf"><a href="#新建配置文件-my-cnf" class="headerlink" title="新建配置文件 my.cnf"></a>新建配置文件 <code>my.cnf</code></h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">touch</span> /etc/mysql/conf.d/my.cnf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h2 id="添加内容"><a href="#添加内容" class="headerlink" title="添加内容"></a>添加内容</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">nano</span> /etc/mysql/conf.d/my.cnf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>内容如下:</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>client<span class="token punctuation">]</span>
+<span class="token assign-left variable">default_character_set</span><span class="token operator">=</span>utf8mb4
+
+<span class="token punctuation">[</span>mysql<span class="token punctuation">]</span>
+default-character-set<span class="token operator">=</span>utf8mb4
+
+<span class="token punctuation">[</span>mysqld<span class="token punctuation">]</span>
+<span class="token assign-left variable">collation_server</span><span class="token operator">=</span>utf8mb4_unicode_ci
+<span class="token assign-left variable">character_set_server</span><span class="token operator">=</span>utf8mb4 
+character-set-client-handshake <span class="token operator">=</span> <span class="token boolean">false</span> <span class="token comment">#设置为 False, 在客户端字符集和服务端字符集不同的时候将拒绝连接到服务端执行任何操作</span>
+init_connect <span class="token operator">=</span> <span class="token string">'SET NAMES utf8mb4'</span>
+bind-address<span class="token operator">=</span><span class="token number">0.0</span>.0.0
+default-time_zone<span class="token operator">=</span><span class="token string">'+8:00'</span> <span class="token comment">#设置时区</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>mysql</category>
+      </categories>
+      <tags>
+        <tag>mysql</tag>
+        <tag>mysql5.7</tag>
       </tags>
   </entry>
   <entry>
@@ -955,6 +955,340 @@ default-time_zone<span class="token operator">=</span><span class="token string"
       </tags>
   </entry>
   <entry>
+    <title>yarn镜像源</title>
+    <url>/2022/11/11/yarn%E9%95%9C%E5%83%8F%E6%BA%90/</url>
+    <content><![CDATA[<h2 id="查看"><a href="#查看" class="headerlink" title="查看"></a>查看</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">yarn</span> config get registry<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h2 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h2><p>临时更改( –registry 参数)</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">yarn</span> <span class="token function">add</span> any-touch@latest <span class="token parameter variable">--registry</span><span class="token operator">=</span>https://registry.npmjs.org/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>持久化更改</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">yarn</span> config <span class="token builtin class-name">set</span> registry <span class="token operator">&lt;</span>源地址<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p>原始源</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">yarn</span> config <span class="token builtin class-name">set</span> registry https://registry.yarnpkg.com<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>淘宝源</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">yarn</span> config <span class="token builtin class-name">set</span> registry https://registry.npm.taobao.org/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>华为源</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">yarn</span> config <span class="token builtin class-name">set</span> registry https://mirrors.huaweicloud.com/repository/npm/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+]]></content>
+      <categories>
+        <category>web前端</category>
+        <category>包管理</category>
+      </categories>
+      <tags>
+        <tag>yarn</tag>
+        <tag>包管理</tag>
+        <tag>镜像源</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>sentinel持久化改造记录</title>
+    <url>/2022/11/15/sentinel%E6%8C%81%E4%B9%85%E5%8C%96%E6%94%B9%E9%80%A0%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<h2 id=""><a href="#" class="headerlink" title=""></a></h2><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Sentinel Dashboard管理界面配置的规则默认存储在内存，Sentinel Dashboard一旦重启，配置规则就会消失，不适用于生成环境。</p>
+<p>以下对<code>Sentinel Dashboard</code>的源码进行进行修改，实现规则持久化至<code>nacos</code>中，基于<code>sentinel 1.8</code>版本的master分支修改</p>
+<p>github仓库地址:<code>https://github.com/alibaba/Sentinel.git</code></p>
+<h2 id="改造Sentinel-Dashboard"><a href="#改造Sentinel-Dashboard" class="headerlink" title="改造Sentinel-Dashboard"></a>改造Sentinel-Dashboard</h2><h3 id="修改依赖"><a href="#修改依赖" class="headerlink" title="修改依赖"></a>修改依赖</h3><p>修改sentinel-dashboard模块的pom.xml，将依赖<code>sentinel-datasource-nacos</code>的test注释掉</p>
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token comment">&lt;!-- for Nacos rule publisher sample --></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>com.alibaba.csp<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>sentinel-datasource-nacos<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+    <span class="token comment">&lt;!--&lt;scope>test&lt;/scope>--></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="修改nacos相关java代码"><a href="#修改nacos相关java代码" class="headerlink" title="修改nacos相关java代码"></a>修改nacos相关java代码</h3><p>找到如下目录</p>
+<pre class="line-numbers language-apl" data-language="apl"><code class="language-apl">sentinel<span class="token function">-</span>dashboard<span class="token monadic-operator operator">/</span>src<span class="token monadic-operator operator">/</span>test<span class="token monadic-operator operator">/</span>java<span class="token monadic-operator operator">/</span>com<span class="token monadic-operator operator">/</span>alibaba<span class="token monadic-operator operator">/</span>csp<span class="token monadic-operator operator">/</span>sentinel<span class="token monadic-operator operator">/</span>dashboard<span class="token monadic-operator operator">/</span>rule<span class="token monadic-operator operator">/</span>nacos<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>将整个目录拷贝到</p>
+<pre class="line-numbers language-apl" data-language="apl"><code class="language-apl">sentinel<span class="token function">-</span>dashboard<span class="token monadic-operator operator">/</span>src<span class="token monadic-operator operator">/</span>main<span class="token monadic-operator operator">/</span>java<span class="token monadic-operator operator">/</span>com<span class="token monadic-operator operator">/</span>alibaba<span class="token monadic-operator operator">/</span>csp<span class="token monadic-operator operator">/</span>sentinel<span class="token monadic-operator operator">/</span>dashboard<span class="token monadic-operator operator">/</span>rule<span class="token monadic-operator operator">/</span>nacos<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<p>改造NacosConfig类</p>
+<ol>
+<li>添加各规则转换器</li>
+<li>ConfigService bean修改添加nacos相关连接配置,以便启动时可以通过JVM参数指定对应的配置项</li>
+</ol>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Configuration</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">NacosConfig</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// 指定bean name</span>
+    <span class="token annotation punctuation">@Bean</span><span class="token punctuation">(</span><span class="token string">"flowRuleEntityEncoder"</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> <span class="token class-name">Converter</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">List</span><span class="token punctuation">&lt;</span><span class="token class-name">FlowRuleEntity</span><span class="token punctuation">></span><span class="token punctuation">,</span> <span class="token class-name">String</span><span class="token punctuation">></span></span> <span class="token function">flowRuleEntityEncoder</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> <span class="token constant">JSON</span><span class="token operator">::</span><span class="token function">toJSONString</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token comment">// 指定bean name</span>
+    <span class="token annotation punctuation">@Bean</span><span class="token punctuation">(</span><span class="token string">"flowRuleEntityDecoder"</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> <span class="token class-name">Converter</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">List</span><span class="token punctuation">&lt;</span><span class="token class-name">FlowRuleEntity</span><span class="token punctuation">></span><span class="token punctuation">></span></span> <span class="token function">flowRuleEntityDecoder</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> s <span class="token operator">-></span> <span class="token constant">JSON</span><span class="token punctuation">.</span><span class="token function">parseArray</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> <span class="token class-name">FlowRuleEntity</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token comment">// </span>
+    <span class="token comment">// 其它的EntityEncoder，EntityDecoder....省略</span>
+    <span class="token comment">// 如：degrade,param-flow,system,authority,gw-flow,gw-api-group</span>
+    <span class="token comment">// </span>
+
+    <span class="token comment">// 添加nacos连接配置</span>
+    <span class="token annotation punctuation">@Bean</span>
+    <span class="token annotation punctuation">@ConfigurationProperties</span><span class="token punctuation">(</span><span class="token string">"spring.cloud.nacos.config"</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> <span class="token class-name">NacosConfigProperties</span> <span class="token function">nacosConfigProperties</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">NacosConfigProperties</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token annotation punctuation">@Bean</span>
+    <span class="token keyword">public</span> <span class="token class-name">ConfigService</span> <span class="token function">nacosConfigService</span><span class="token punctuation">(</span><span class="token class-name">NacosConfigProperties</span> configProperties<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Exception</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">Properties</span> properties <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Properties</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        properties<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token class-name">PropertyKeyConst</span><span class="token punctuation">.</span><span class="token constant">SERVER_ADDR</span><span class="token punctuation">,</span> configProperties<span class="token punctuation">.</span><span class="token function">getServerAddr</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        properties<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token class-name">PropertyKeyConst</span><span class="token punctuation">.</span><span class="token constant">NAMESPACE</span><span class="token punctuation">,</span> configProperties<span class="token punctuation">.</span><span class="token function">getNamespace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token class-name">ConfigFactory</span><span class="token punctuation">.</span><span class="token function">createConfigService</span><span class="token punctuation">(</span>properties<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">NacosConfigProperties</span><span class="token punctuation">&#123;</span>
+        <span class="token keyword">private</span> <span class="token class-name">String</span> serverAddr<span class="token punctuation">;</span>
+        <span class="token keyword">private</span> <span class="token class-name">String</span> namespace<span class="token punctuation">;</span>
+
+        <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">getServerAddr</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">return</span> serverAddr<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+
+        <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setServerAddr</span><span class="token punctuation">(</span><span class="token class-name">String</span> serverAddr<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">this</span><span class="token punctuation">.</span>serverAddr <span class="token operator">=</span> serverAddr<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+
+        <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">getNamespace</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">return</span> namespace<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+
+        <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setNamespace</span><span class="token punctuation">(</span><span class="token class-name">String</span> namespace<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">this</span><span class="token punctuation">.</span>namespace <span class="token operator">=</span> namespace<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<p>改造<code>NacosConfigUtil</code>,添加各种规则在Nacos存储的Data Id后缀</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"> <span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">class</span> <span class="token class-name">NacosConfigUtil</span> <span class="token punctuation">&#123;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> <span class="token constant">GROUP_ID</span> <span class="token operator">=</span> <span class="token string">"SENTINEL_GROUP"</span><span class="token punctuation">;</span>
+    
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> <span class="token constant">AUTHORITY_DATA_ID_POSTFIX</span> <span class="token operator">=</span> <span class="token string">"-authority-rules"</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> <span class="token constant">DEGRADE_DATA_ID_POSTFIX</span> <span class="token operator">=</span> <span class="token string">"-degrade-rules"</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> <span class="token constant">FLOW_DATA_ID_POSTFIX</span> <span class="token operator">=</span> <span class="token string">"-flow-rules"</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> <span class="token constant">GW_API_DATA_ID_POSTFIX</span> <span class="token operator">=</span> <span class="token string">"-gw-api-rules"</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> <span class="token constant">GW_FLOW_DATA_ID_POSTFIX</span> <span class="token operator">=</span> <span class="token string">"-gw-flow-rules"</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> <span class="token constant">PARAM_FLOW_DATA_ID_POSTFIX</span> <span class="token operator">=</span> <span class="token string">"-param-flow-rules"</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> <span class="token constant">SYSTEM_DATA_ID_POSTFIX</span> <span class="token operator">=</span> <span class="token string">"-system-rules"</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="增加NacosProvider和NacosPublisher"><a href="#增加NacosProvider和NacosPublisher" class="headerlink" title="增加NacosProvider和NacosPublisher"></a>增加NacosProvider和NacosPublisher</h3><p>参考从test目录拷贝过来<code>FlowRuleNacosProvider</code>添加其它类型的<code>NacosProvider</code>,如下的<code>DegradeRuleNacosProvider</code>，其它<code>param-flow</code>,<code>system</code>,<code>authority</code>,<code>gw-flow</code>,<code>gw-api-group</code>此处省略</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Component</span><span class="token punctuation">(</span><span class="token string">"degradeRuleNacosProvider"</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DegradeRuleNacosProvider</span> <span class="token keyword">implements</span> <span class="token class-name">DynamicRuleProvider</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">List</span><span class="token punctuation">&lt;</span><span class="token class-name">DegradeRuleEntity</span><span class="token punctuation">></span><span class="token punctuation">></span></span> <span class="token punctuation">&#123;</span>
+
+    <span class="token annotation punctuation">@Autowired</span>
+    <span class="token keyword">private</span> <span class="token class-name">ConfigService</span> configService<span class="token punctuation">;</span>
+    <span class="token annotation punctuation">@Autowired</span>
+    <span class="token keyword">private</span> <span class="token class-name">Converter</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">List</span><span class="token punctuation">&lt;</span><span class="token class-name">DegradeRuleEntity</span><span class="token punctuation">></span><span class="token punctuation">></span></span> converter<span class="token punctuation">;</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">DegradeRuleEntity</span><span class="token punctuation">></span></span> <span class="token function">getRules</span><span class="token punctuation">(</span><span class="token class-name">String</span> appName<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Exception</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">String</span> rules <span class="token operator">=</span> configService<span class="token punctuation">.</span><span class="token function">getConfig</span><span class="token punctuation">(</span>appName <span class="token operator">+</span> <span class="token class-name">NacosConfigUtil</span><span class="token punctuation">.</span><span class="token constant">DEGRADE_DATA_ID_POSTFIX</span><span class="token punctuation">,</span> <span class="token class-name">NacosConfigUtil</span><span class="token punctuation">.</span><span class="token constant">GROUP_ID</span><span class="token punctuation">,</span> <span class="token number">3000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token class-name">StringUtil</span><span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span>rules<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">return</span> converter<span class="token punctuation">.</span><span class="token function">convert</span><span class="token punctuation">(</span>rules<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>参考从test目录拷贝过来<code>FlowRuleNacosPublisher</code>添加其它类型的<code>NacosPublisher</code>,如下的<code>DegradeRuleNacosPublisher</code>，其它<code>param-flow</code>,<code>system</code>,<code>authority</code>,<code>gw-flow</code>,<code>gw-api-group</code>此处省略</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Component</span><span class="token punctuation">(</span><span class="token string">"degradeRuleNacosPublisher"</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DegradeRuleNacosPublisher</span> <span class="token keyword">implements</span> <span class="token class-name">DynamicRulePublisher</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">List</span><span class="token punctuation">&lt;</span><span class="token class-name">DegradeRuleEntity</span><span class="token punctuation">></span><span class="token punctuation">></span></span> <span class="token punctuation">&#123;</span>
+
+    <span class="token annotation punctuation">@Autowired</span>
+    <span class="token keyword">private</span> <span class="token class-name">ConfigService</span> configService<span class="token punctuation">;</span>
+    <span class="token annotation punctuation">@Autowired</span>
+    <span class="token keyword">private</span> <span class="token class-name">Converter</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">List</span><span class="token punctuation">&lt;</span><span class="token class-name">DegradeRuleEntity</span><span class="token punctuation">></span><span class="token punctuation">,</span> <span class="token class-name">String</span><span class="token punctuation">></span></span> converter<span class="token punctuation">;</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">publish</span><span class="token punctuation">(</span><span class="token class-name">String</span> app<span class="token punctuation">,</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">DegradeRuleEntity</span><span class="token punctuation">></span></span> rules<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Exception</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">AssertUtil</span><span class="token punctuation">.</span><span class="token function">notEmpty</span><span class="token punctuation">(</span>app<span class="token punctuation">,</span> <span class="token string">"app name cannot be empty"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>rules <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        configService<span class="token punctuation">.</span><span class="token function">publishConfig</span><span class="token punctuation">(</span>app <span class="token operator">+</span> <span class="token class-name">NacosConfigUtil</span><span class="token punctuation">.</span><span class="token constant">DEGRADE_DATA_ID_POSTFIX</span><span class="token punctuation">,</span> <span class="token class-name">NacosConfigUtil</span><span class="token punctuation">.</span><span class="token constant">GROUP_ID</span><span class="token punctuation">,</span> converter<span class="token punctuation">.</span><span class="token function">convert</span><span class="token punctuation">(</span>rules<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="改造Controller类"><a href="#改造Controller类" class="headerlink" title="改造Controller类"></a>改造Controller类</h3><p>修改流控规则<code>FlowControllerV1</code>,添加<code>flow</code>的<code>NacosPublisher</code>和<code>NacosProvider</code>，处理增删查改4个接口</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@RestController</span>
+<span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span>value <span class="token operator">=</span> <span class="token string">"/v1/flow"</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">FlowControllerV1</span> <span class="token punctuation">&#123;</span>
+    
+    <span class="token comment">// 这里只给出变动或新增的代码，其它原本的代码省略...</span>
+    
+    <span class="token comment">// 注入FlowRuleNacosProvider</span>
+    <span class="token annotation punctuation">@Autowired</span>
+    <span class="token keyword">private</span> <span class="token class-name">FlowRuleNacosProvider</span> flowRuleNacosProvider<span class="token punctuation">;</span>
+    <span class="token comment">// 注入FlowRuleNacosPublisher</span>
+    <span class="token annotation punctuation">@Autowired</span>
+    <span class="token keyword">private</span> <span class="token class-name">FlowRuleNacosPublisher</span> flowRuleNacosPublisher<span class="token punctuation">;</span>
+
+    <span class="token comment">// 推送规则到nacos</span>
+    <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">publishRules</span><span class="token punctuation">(</span><span class="token class-name">String</span> app<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Exception</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">FlowRuleEntity</span><span class="token punctuation">></span></span> rules <span class="token operator">=</span> repository<span class="token punctuation">.</span><span class="token function">findAllByApp</span><span class="token punctuation">(</span>app<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>flowRuleNacosPublisher<span class="token punctuation">.</span><span class="token function">publish</span><span class="token punctuation">(</span>app<span class="token punctuation">,</span> rules<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    
+    <span class="token annotation punctuation">@GetMapping</span><span class="token punctuation">(</span><span class="token string">"/rules"</span><span class="token punctuation">)</span>
+    <span class="token annotation punctuation">@AuthAction</span><span class="token punctuation">(</span><span class="token class-name">PrivilegeType</span><span class="token punctuation">.</span><span class="token constant">READ_RULE</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> <span class="token class-name">Result</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">List</span><span class="token punctuation">&lt;</span><span class="token class-name">FlowRuleEntity</span><span class="token punctuation">></span><span class="token punctuation">></span></span> <span class="token function">apiQueryMachineRules</span><span class="token punctuation">(</span><span class="token annotation punctuation">@RequestParam</span> <span class="token class-name">String</span> app<span class="token punctuation">,</span>
+                                                             <span class="token annotation punctuation">@RequestParam</span> <span class="token class-name">String</span> ip<span class="token punctuation">,</span>
+                                                             <span class="token annotation punctuation">@RequestParam</span> <span class="token class-name">Integer</span> port<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// 省略....</span>
+        <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
+            <span class="token comment">// 注解掉这行</span>
+            <span class="token comment">//List&lt;FlowRuleEntity> rules = sentinelApiClient.fetchFlowRuleOfMachine(app, ip, port);</span>
+            <span class="token comment">// 通过NacosProvider从nacos获取规则</span>
+            <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">FlowRuleEntity</span><span class="token punctuation">></span></span> rules <span class="token operator">=</span> flowRuleNacosProvider<span class="token punctuation">.</span><span class="token function">getRules</span><span class="token punctuation">(</span>app<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            rules <span class="token operator">=</span> repository<span class="token punctuation">.</span><span class="token function">saveAll</span><span class="token punctuation">(</span>rules<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span> <span class="token class-name">Result</span><span class="token punctuation">.</span><span class="token function">ofSuccess</span><span class="token punctuation">(</span>rules<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Throwable</span> throwable<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token comment">// 省略....</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    
+    <span class="token annotation punctuation">@PostMapping</span><span class="token punctuation">(</span><span class="token string">"/rule"</span><span class="token punctuation">)</span>
+    <span class="token annotation punctuation">@AuthAction</span><span class="token punctuation">(</span><span class="token class-name">PrivilegeType</span><span class="token punctuation">.</span><span class="token constant">WRITE_RULE</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> <span class="token class-name">Result</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">FlowRuleEntity</span><span class="token punctuation">></span></span> <span class="token function">apiAddFlowRule</span><span class="token punctuation">(</span><span class="token annotation punctuation">@RequestBody</span> <span class="token class-name">FlowRuleEntity</span> entity<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// 省略....</span>
+        <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
+            <span class="token comment">// 注解掉这行</span>
+            <span class="token comment">//publishRules(entity.getApp(), entity.getIp(), entity.getPort()).get(5000, TimeUnit.MILLISECONDS);</span>
+            <span class="token comment">// 新增时重新同步至nacos</span>
+            <span class="token function">publishRules</span><span class="token punctuation">(</span>entity<span class="token punctuation">.</span><span class="token function">getApp</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span> <span class="token class-name">Result</span><span class="token punctuation">.</span><span class="token function">ofSuccess</span><span class="token punctuation">(</span>entity<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Throwable</span> t<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token comment">// 省略....</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    
+    <span class="token annotation punctuation">@PutMapping</span><span class="token punctuation">(</span><span class="token string">"/save.json"</span><span class="token punctuation">)</span>
+    <span class="token annotation punctuation">@AuthAction</span><span class="token punctuation">(</span><span class="token class-name">PrivilegeType</span><span class="token punctuation">.</span><span class="token constant">WRITE_RULE</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> <span class="token class-name">Result</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">FlowRuleEntity</span><span class="token punctuation">></span></span> <span class="token function">apiUpdateFlowRule</span><span class="token punctuation">(</span><span class="token class-name">Long</span> id<span class="token punctuation">,</span> <span class="token class-name">String</span> app<span class="token punctuation">,</span>
+                                                  <span class="token class-name">String</span> limitApp<span class="token punctuation">,</span> <span class="token class-name">String</span> resource<span class="token punctuation">,</span> <span class="token class-name">Integer</span> grade<span class="token punctuation">,</span>
+                                                  <span class="token class-name">Double</span> count<span class="token punctuation">,</span> <span class="token class-name">Integer</span> strategy<span class="token punctuation">,</span> <span class="token class-name">String</span> refResource<span class="token punctuation">,</span>
+                                                  <span class="token class-name">Integer</span> controlBehavior<span class="token punctuation">,</span> <span class="token class-name">Integer</span> warmUpPeriodSec<span class="token punctuation">,</span>
+                                                  <span class="token class-name">Integer</span> maxQueueingTimeMs<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// 省略....</span>
+        <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
+            <span class="token comment">// 注解这行</span>
+            <span class="token comment">//publishRules(entity.getApp(), entity.getIp(), entity.getPort()).get(5000, TimeUnit.MILLISECONDS);</span>
+            <span class="token comment">// 更新时重新同步至nacos</span>
+            <span class="token function">publishRules</span><span class="token punctuation">(</span>entity<span class="token punctuation">.</span><span class="token function">getApp</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span> <span class="token class-name">Result</span><span class="token punctuation">.</span><span class="token function">ofSuccess</span><span class="token punctuation">(</span>entity<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Throwable</span> t<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token comment">// 省略....</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    
+    <span class="token annotation punctuation">@DeleteMapping</span><span class="token punctuation">(</span><span class="token string">"/delete.json"</span><span class="token punctuation">)</span>
+    <span class="token annotation punctuation">@AuthAction</span><span class="token punctuation">(</span><span class="token class-name">PrivilegeType</span><span class="token punctuation">.</span><span class="token constant">WRITE_RULE</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> <span class="token class-name">Result</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Long</span><span class="token punctuation">></span></span> <span class="token function">apiDeleteFlowRule</span><span class="token punctuation">(</span><span class="token class-name">Long</span> id<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// 省略....</span>
+        <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
+            <span class="token comment">// 注解这行</span>
+            <span class="token comment">//publishRules(oldEntity.getApp(), oldEntity.getIp(), oldEntity.getPort()).get(5000, TimeUnit.MILLISECONDS);</span>
+            <span class="token comment">// 删除时重新同步至nacos</span>
+            <span class="token function">publishRules</span><span class="token punctuation">(</span>oldEntity<span class="token punctuation">.</span><span class="token function">getApp</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span> <span class="token class-name">Result</span><span class="token punctuation">.</span><span class="token function">ofSuccess</span><span class="token punctuation">(</span>id<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Throwable</span> t<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token comment">// 省略....</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>其它<code>Controller</code>，如：<code>degrade</code>,<code>param-flow</code>,<code>system</code>,<code>authority</code>,<code>gw-flow</code>,<code>gw-api-group</code>也是一样的改造逻辑，此处省略…</p>
+<h2 id="业务微服务项目"><a href="#业务微服务项目" class="headerlink" title="业务微服务项目"></a>业务微服务项目</h2><p>添加POM依赖</p>
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>com.alibaba.csp<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>sentinel-datasource-nacos<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>添加项目配置</p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">spring</span><span class="token punctuation">:</span>
+  <span class="token key atrule">cloud</span><span class="token punctuation">:</span>
+    <span class="token key atrule">sentinel</span><span class="token punctuation">:</span>
+      <span class="token key atrule">transport</span><span class="token punctuation">:</span>
+        <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token string">"20051"</span>
+        <span class="token key atrule">dashboard</span><span class="token punctuation">:</span> 192.168.2.x<span class="token punctuation">:</span><span class="token number">8080</span>   <span class="token comment"># 配置Sentinel dashborad 控制台地址</span>
+      <span class="token key atrule">datasource</span><span class="token punctuation">:</span>                   <span class="token comment">#添加Nacos数据源配置</span>
+        <span class="token key atrule">flow</span><span class="token punctuation">:</span>
+          <span class="token key atrule">nacos</span><span class="token punctuation">:</span>                          <span class="token comment">#数据源为NACOS中</span>
+            <span class="token key atrule">server-addr</span><span class="token punctuation">:</span> $<span class="token punctuation">&#123;</span>spring.cloud.nacos.config.server<span class="token punctuation">-</span>addr<span class="token punctuation">&#125;</span>   <span class="token comment">#NACOS SERVER URL</span>
+            <span class="token key atrule">dataId</span><span class="token punctuation">:</span> $<span class="token punctuation">&#123;</span>spring.application.name<span class="token punctuation">&#125;</span><span class="token punctuation">-</span>flow<span class="token punctuation">-</span>rules           
+            <span class="token key atrule">groupId</span><span class="token punctuation">:</span> SENTINEL_GROUP
+            <span class="token key atrule">namespace</span><span class="token punctuation">:</span> c8247bcf<span class="token punctuation">-</span>16a1<span class="token punctuation">-</span>42da<span class="token punctuation">-</span>bc98<span class="token punctuation">-</span>0f6f4c7b5ecc          
+            <span class="token key atrule">data-type</span><span class="token punctuation">:</span> json
+            <span class="token key atrule">rule-type</span><span class="token punctuation">:</span> flow
+        <span class="token key atrule">authority</span><span class="token punctuation">:</span>
+          <span class="token key atrule">nacos</span><span class="token punctuation">:</span>                          <span class="token comment">#数据源为NACOS中</span>
+            <span class="token key atrule">server-addr</span><span class="token punctuation">:</span> $<span class="token punctuation">&#123;</span>spring.cloud.nacos.config.server<span class="token punctuation">-</span>addr<span class="token punctuation">&#125;</span>   <span class="token comment">#NACOS SERVER URL</span>
+            <span class="token key atrule">dataId</span><span class="token punctuation">:</span> $<span class="token punctuation">&#123;</span>spring.application.name<span class="token punctuation">&#125;</span><span class="token punctuation">-</span>authority<span class="token punctuation">-</span>rules
+            <span class="token key atrule">groupId</span><span class="token punctuation">:</span> DEFAULT_GROUP
+            <span class="token key atrule">namespace</span><span class="token punctuation">:</span> c8247bcf<span class="token punctuation">-</span>16a1<span class="token punctuation">-</span>42da<span class="token punctuation">-</span>bc98<span class="token punctuation">-</span>0f6f4c7b5ecc
+            <span class="token key atrule">data-type</span><span class="token punctuation">:</span> json
+            <span class="token key atrule">rule-type</span><span class="token punctuation">:</span> authority
+        <span class="token key atrule">degrade</span><span class="token punctuation">:</span>
+          <span class="token key atrule">nacos</span><span class="token punctuation">:</span>                          <span class="token comment">#数据源为NACOS中</span>
+            <span class="token key atrule">server-addr</span><span class="token punctuation">:</span> $<span class="token punctuation">&#123;</span>spring.cloud.nacos.config.server<span class="token punctuation">-</span>addr<span class="token punctuation">&#125;</span>   <span class="token comment">#NACOS SERVER URL</span>
+            <span class="token key atrule">dataId</span><span class="token punctuation">:</span> $<span class="token punctuation">&#123;</span>spring.application.name<span class="token punctuation">&#125;</span><span class="token punctuation">-</span>degrade<span class="token punctuation">-</span>rules
+            <span class="token key atrule">groupId</span><span class="token punctuation">:</span> SENTINEL_GROUP
+            <span class="token key atrule">namespace</span><span class="token punctuation">:</span> 83fe3f08<span class="token punctuation">-</span>a12f<span class="token punctuation">-</span>4887<span class="token punctuation">-</span>9cc9<span class="token punctuation">-</span>6ac73320d658
+            <span class="token key atrule">data-type</span><span class="token punctuation">:</span> json
+            <span class="token key atrule">rule-type</span><span class="token punctuation">:</span> degrade
+        <span class="token key atrule">param-flow</span><span class="token punctuation">:</span>
+          <span class="token key atrule">nacos</span><span class="token punctuation">:</span>                          <span class="token comment">#数据源为NACOS中</span>
+            <span class="token key atrule">server-addr</span><span class="token punctuation">:</span> $<span class="token punctuation">&#123;</span>spring.cloud.nacos.config.server<span class="token punctuation">-</span>addr<span class="token punctuation">&#125;</span>   <span class="token comment">#NACOS SERVER URL</span>
+            <span class="token key atrule">dataId</span><span class="token punctuation">:</span> $<span class="token punctuation">&#123;</span>spring.application.name<span class="token punctuation">&#125;</span><span class="token punctuation">-</span>param<span class="token punctuation">-</span>flow<span class="token punctuation">-</span>rules
+            <span class="token key atrule">groupId</span><span class="token punctuation">:</span> SENTINEL_GROUP
+            <span class="token key atrule">namespace</span><span class="token punctuation">:</span> c8247bcf<span class="token punctuation">-</span>16a1<span class="token punctuation">-</span>42da<span class="token punctuation">-</span>bc98<span class="token punctuation">-</span>0f6f4c7b5ecc
+            <span class="token key atrule">data-type</span><span class="token punctuation">:</span> json
+            <span class="token key atrule">rule-type</span><span class="token punctuation">:</span> param<span class="token punctuation">-</span>flow
+        <span class="token key atrule">system</span><span class="token punctuation">:</span>
+          <span class="token key atrule">nacos</span><span class="token punctuation">:</span>                          <span class="token comment">#数据源为NACOS中</span>
+            <span class="token key atrule">server-addr</span><span class="token punctuation">:</span> $<span class="token punctuation">&#123;</span>spring.cloud.nacos.config.server<span class="token punctuation">-</span>addr<span class="token punctuation">&#125;</span>   <span class="token comment">#NACOS SERVER URL</span>
+            <span class="token key atrule">dataId</span><span class="token punctuation">:</span> $<span class="token punctuation">&#123;</span>spring.application.name<span class="token punctuation">&#125;</span><span class="token punctuation">-</span>system<span class="token punctuation">-</span>rules
+            <span class="token key atrule">groupId</span><span class="token punctuation">:</span> SENTINEL_GROUP
+            <span class="token key atrule">namespace</span><span class="token punctuation">:</span> c8247bcf<span class="token punctuation">-</span>16a1<span class="token punctuation">-</span>42da<span class="token punctuation">-</span>bc98<span class="token punctuation">-</span>0f6f4c7b5ecc
+            <span class="token key atrule">data-type</span><span class="token punctuation">:</span> json
+            <span class="token key atrule">rule-type</span><span class="token punctuation">:</span> system<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>sentinel</category>
+      </categories>
+      <tags>
+        <tag>sentinel</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>windows 10 在 vscode 中配置 git bash 终端</title>
     <url>/2022/11/11/vscode%E9%85%8D%E7%BD%AEgitbash(win10)/</url>
     <content><![CDATA[<p>打开设置搜索<code>Terminal Integrated window</code></p>
@@ -1003,41 +1337,6 @@ default-time_zone<span class="token operator">=</span><span class="token string"
         <tag>git</tag>
         <tag>vscode</tag>
         <tag>win10</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>yarn镜像源</title>
-    <url>/2022/11/11/yarn%E9%95%9C%E5%83%8F%E6%BA%90/</url>
-    <content><![CDATA[<h2 id="查看"><a href="#查看" class="headerlink" title="查看"></a>查看</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">yarn</span> config get registry<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
-<h2 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h2><p>临时更改( –registry 参数)</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">yarn</span> <span class="token function">add</span> any-touch@latest <span class="token parameter variable">--registry</span><span class="token operator">=</span>https://registry.npmjs.org/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>持久化更改</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">yarn</span> config <span class="token builtin class-name">set</span> registry <span class="token operator">&lt;</span>源地址<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
-<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p>原始源</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">yarn</span> config <span class="token builtin class-name">set</span> registry https://registry.yarnpkg.com<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>淘宝源</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">yarn</span> config <span class="token builtin class-name">set</span> registry https://registry.npm.taobao.org/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>华为源</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">yarn</span> config <span class="token builtin class-name">set</span> registry https://mirrors.huaweicloud.com/repository/npm/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-]]></content>
-      <categories>
-        <category>web前端</category>
-        <category>包管理</category>
-      </categories>
-      <tags>
-        <tag>yarn</tag>
-        <tag>包管理</tag>
-        <tag>镜像源</tag>
       </tags>
   </entry>
 </search>
