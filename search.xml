@@ -698,6 +698,58 @@ iface enp0s3 inet static
       </tags>
   </entry>
   <entry>
+    <title>git设置代理</title>
+    <url>/2022/11/15/git%E8%AE%BE%E7%BD%AE%E4%BB%A3%E7%90%86/</url>
+    <content><![CDATA[<h2 id="全局代理"><a href="#全局代理" class="headerlink" title="全局代理"></a>全局代理</h2><p><code>http</code> 代理</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> config <span class="token parameter variable">--global</span> http.proxy http://127.0.0.1:1080<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<p><code>https</code>代理</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> config <span class="token parameter variable">--global</span> https.proxy http://127.0.0.1:1080<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<p><code>socket</code>方式</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> config <span class="token parameter variable">--global</span> http.proxy socks5://127.0.0.1:7890<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> config <span class="token parameter variable">--global</span> https.proxy socks5://127.0.0.1:7890<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+
+
+<h2 id="针对github代理"><a href="#针对github代理" class="headerlink" title="针对github代理"></a>针对<code>github</code>代理</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> config <span class="token parameter variable">--global</span> http.https://github.com.proxy socks5://127.0.0.1:7890<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+
+
+<h2 id="取消代理"><a href="#取消代理" class="headerlink" title="取消代理"></a>取消代理</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> config <span class="token parameter variable">--global</span> <span class="token parameter variable">--unset</span> http.proxy<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> config <span class="token parameter variable">--global</span> <span class="token parameter variable">--unset</span> https.proxy<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>git</category>
+      </categories>
+      <tags>
+        <tag>git</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hello World</title>
     <url>/2022/11/10/hello-world/</url>
     <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
@@ -948,9 +1000,9 @@ default-time_zone<span class="token operator">=</span><span class="token string"
         <category>git</category>
       </categories>
       <tags>
+        <tag>git</tag>
         <tag>vscode</tag>
         <tag>win10</tag>
-        <tag>git</tag>
       </tags>
   </entry>
   <entry>
