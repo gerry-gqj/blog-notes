@@ -30,7 +30,7 @@ mkdir my-app
 cd my-app
 ```
 
-
+  
 
 ### 创建`Dockerfile`文件
 
@@ -40,7 +40,8 @@ touch Dockerfile
 
 
 
-### 构建镜像
+
+### 构建镜像     
 
 在`Dokerfile`文件准备好后执行命令构建镜像
 
