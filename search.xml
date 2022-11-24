@@ -183,167 +183,6 @@ EXPOSE <span class="token number">6001</span><span aria-hidden="true" class="lin
       </tags>
   </entry>
   <entry>
-    <title>docker-compose常用模板</title>
-    <url>/2022/11/13/docker-compose%E5%B8%B8%E7%94%A8%E6%A8%A1%E6%9D%BF/</url>
-    <content><![CDATA[<h2 id="网络服务"><a href="#网络服务" class="headerlink" title="网络服务"></a>网络服务</h2><pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">version</span><span class="token punctuation">:</span> <span class="token string">'3'</span>
-<span class="token key atrule">services</span><span class="token punctuation">:</span>
-  <span class="token key atrule">hello_web</span><span class="token punctuation">:</span>
-    <span class="token key atrule">image</span><span class="token punctuation">:</span> my<span class="token punctuation">-</span>app<span class="token punctuation">:</span>latest
-    <span class="token key atrule">container_name</span><span class="token punctuation">:</span> my<span class="token punctuation">-</span>app_6001
-    <span class="token key atrule">privileged</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>  <span class="token comment"># 提供权限</span>
-    <span class="token key atrule">network_mode</span><span class="token punctuation">:</span> bridge
-    <span class="token key atrule">ports</span><span class="token punctuation">:</span>
-      <span class="token punctuation">-</span> 6001<span class="token punctuation">:</span><span class="token number">6001</span> <span class="token comment"># 启动时暴露端口 内部端口3306 宿主机端口3300</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-<h2 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h2><pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">version</span><span class="token punctuation">:</span> <span class="token string">'3'</span>
-<span class="token key atrule">services</span><span class="token punctuation">:</span>
-  <span class="token key atrule">mysql</span><span class="token punctuation">:</span>
-    <span class="token key atrule">image</span><span class="token punctuation">:</span> qibria/mysql<span class="token punctuation">:</span><span class="token number">5.7</span>
-    <span class="token key atrule">container_name</span><span class="token punctuation">:</span> mysql<span class="token punctuation">-</span>5.7<span class="token punctuation">-</span><span class="token number">3300</span>
-    <span class="token key atrule">restart</span><span class="token punctuation">:</span> always <span class="token comment"># 总是开机启动</span>
-    <span class="token key atrule">network_mode</span><span class="token punctuation">:</span> bridge
-      <span class="token comment">#no不自动重启容器. (默认value)</span>
-      <span class="token comment">#on-failure 容器发生error而退出(容器退出状态不为0)重启容器</span>
-      <span class="token comment">#unless-stopped 在容器已经stop掉或Docker stoped/restarted的时候才重启容器</span>
-      <span class="token comment">#always 在容器已经stop掉或Docker stoped/restarted的时候才重启容器</span>
-    <span class="token key atrule">privileged</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>  <span class="token comment"># 提供权限</span>
-    <span class="token key atrule">volumes</span><span class="token punctuation">:</span> <span class="token comment"># 容器数据卷挂载</span>
-      <span class="token punctuation">-</span> v5.7_3300_data<span class="token punctuation">:</span>/var/lib/mysql<span class="token punctuation">:</span>rw <span class="token comment"># 数据文件</span>
-      <span class="token punctuation">-</span> v5.7_3300<span class="token punctuation">-</span>log<span class="token punctuation">:</span>/var/log/mysql<span class="token punctuation">:</span>rw <span class="token comment"># 日志文件</span>
-      <span class="token punctuation">-</span> v5.7_3300_config<span class="token punctuation">:</span>/etc/mysql/conf.d<span class="token punctuation">:</span>rw <span class="token comment"># 配置文件</span>
-    <span class="token key atrule">environment</span><span class="token punctuation">:</span>
-      <span class="token key atrule">MYSQL_ROOT_PASSWORD</span><span class="token punctuation">:</span> root <span class="token comment"># root 用户密码</span>
-      <span class="token key atrule">MYSQL_ALLOW_EMPTY_PASSWORD</span><span class="token punctuation">:</span> no <span class="token comment"># 不允许空密码登录</span>
-      <span class="token comment">#MYSQL_DATABASE: db2021 # 创建容器时创建数据库</span>
-      <span class="token key atrule">MYSQL_USER</span><span class="token punctuation">:</span> mysqldboy <span class="token comment"># 创建用户 具备admin权限 用户名</span>
-      <span class="token key atrule">MYSQL_PASSWORD</span><span class="token punctuation">:</span> mysqldboy <span class="token comment"># 密码</span>
-    <span class="token key atrule">ports</span><span class="token punctuation">:</span>
-      <span class="token punctuation">-</span> 3300<span class="token punctuation">:</span><span class="token number">3306</span> <span class="token comment"># 启动时暴露端口 内部端口3306 宿主机端口3300</span>
-    <span class="token key atrule">mem_limit</span><span class="token punctuation">:</span> 1g <span class="token comment"># 最大内存空间占用 1g</span>
-<span class="token key atrule">volumes</span><span class="token punctuation">:</span> <span class="token comment"># 容器数据卷</span>
-  <span class="token key atrule">v5.7_3300_data</span><span class="token punctuation">:</span>
-  <span class="token key atrule">v5.7_3300-log</span><span class="token punctuation">:</span>
-  v5.7_3300_config<span class="token punctuation">:</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-<h2 id="nacos"><a href="#nacos" class="headerlink" title="nacos"></a>nacos</h2><pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">version</span><span class="token punctuation">:</span> <span class="token string">'3'</span>
-<span class="token key atrule">services</span><span class="token punctuation">:</span>
-  <span class="token key atrule">nacos</span><span class="token punctuation">:</span>
-    <span class="token key atrule">image</span><span class="token punctuation">:</span> qibria/nacos<span class="token punctuation">-</span>server<span class="token punctuation">:</span>v2.1.0
-    <span class="token key atrule">container_name</span><span class="token punctuation">:</span> nacos<span class="token punctuation">-</span>server<span class="token punctuation">-</span>v2.1.0<span class="token punctuation">-</span><span class="token number">8840</span>
-    <span class="token key atrule">restart</span><span class="token punctuation">:</span> always <span class="token comment"># 总是开机启动</span>
-    <span class="token key atrule">privileged</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>  <span class="token comment"># 提供权限</span>
-    <span class="token key atrule">network_mode</span><span class="token punctuation">:</span> bridge
-    <span class="token key atrule">environment</span><span class="token punctuation">:</span>
-      <span class="token key atrule">PREFER_HOST_MODE</span><span class="token punctuation">:</span> hostname       <span class="token comment"># 是否支持hostname</span>
-      <span class="token key atrule">MODE</span><span class="token punctuation">:</span> standalone                           <span class="token comment"># 单机模式启动</span>
-      <span class="token key atrule">SPRING_DATASOURCE_PLATFORM</span><span class="token punctuation">:</span> mysql
-      <span class="token key atrule">MYSQL_SERVICE_HOST</span><span class="token punctuation">:</span> dboy    <span class="token comment"># 注：这里不能为`127.0.0.1`或`localhost`方式！！！</span>
-      <span class="token key atrule">MYSQL_SERVICE_DB_NAME</span><span class="token punctuation">:</span> nacos_config        <span class="token comment"># 所需sql脚本位于 `nacos-mysql/nacos-mysql.sql`</span>
-      <span class="token key atrule">MYSQL_SERVICE_PORT</span><span class="token punctuation">:</span> <span class="token number">3300</span>
-      <span class="token key atrule">MYSQL_SERVICE_USER</span><span class="token punctuation">:</span> root
-      <span class="token key atrule">MYSQL_SERVICE_PASSWORD</span><span class="token punctuation">:</span> root
-       <span class="token comment"># JVM调优参数</span>
-      <span class="token key atrule">JVM_XMS</span><span class="token punctuation">:</span> 512m   <span class="token comment">#-Xms default :2g</span>
-      <span class="token key atrule">JVM_XMX</span><span class="token punctuation">:</span> 512m   <span class="token comment">#-Xmx default :2g</span>
-      <span class="token key atrule">JVM_XMN</span><span class="token punctuation">:</span> 256m   <span class="token comment">#-Xmn default :1g</span>
-      <span class="token key atrule">JVM_MS</span><span class="token punctuation">:</span> 128m     <span class="token comment">#-XX:MetaspaceSize default :128m</span>
-      <span class="token key atrule">JVM_MMS</span><span class="token punctuation">:</span> 320m    <span class="token comment">#-XX:MaxMetaspaceSize default :320m</span>
-      <span class="token key atrule">NACOS_DEBUG</span><span class="token punctuation">:</span> n <span class="token comment">#是否开启远程debug，y/n，默认n</span>
-      <span class="token key atrule">TOMCAT_ACCESSLOG_ENABLED</span><span class="token punctuation">:</span> <span class="token boolean important">false</span> <span class="token comment">#是否开始tomcat访问日志的记录，默认false</span>
-    <span class="token key atrule">volumes</span><span class="token punctuation">:</span>
-      <span class="token punctuation">-</span> logs<span class="token punctuation">:</span>/home/nacos/logs<span class="token punctuation">:</span>rw
-      <span class="token punctuation">-</span> init.d<span class="token punctuation">:</span>/home/nacos/init.d<span class="token punctuation">:</span>rw
-    <span class="token key atrule">ports</span><span class="token punctuation">:</span>
-      <span class="token punctuation">-</span> 8840<span class="token punctuation">:</span><span class="token number">8848</span> <span class="token comment"># 启动时暴露端口 内部端口3306 宿主机端口3300</span>
-<span class="token key atrule">volumes</span><span class="token punctuation">:</span> <span class="token comment"># 容器数据卷</span>
-  <span class="token key atrule">logs</span><span class="token punctuation">:</span>
-  init.d<span class="token punctuation">:</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-
-
-]]></content>
-      <categories>
-        <category>docker</category>
-      </categories>
-      <tags>
-        <tag>docker</tag>
-        <tag>docker compose</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>debian设置静态ip</title>
-    <url>/2022/11/15/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/</url>
-    <content><![CDATA[<p>在 DHCP 网络上，您的 Linux 系统通常会自动从 DHCP 服务器接收 IP 地址，在大多数情况下，它是路由器。 IP 配置通常包括 IPv4 地址、网络掩码、网关和 DNS 设置。 这对于只需要访问 Internet 或网络资源的桌面或客户端 PC 来说通常很方便。</p>
-<p>但是，当您要设置服务器时，情况就不同了。 在这种情况下，您需要配置静态 IP 以使服务器始终通过相同的 IP 地址可用。 使用 DHCP，一旦租用时间结束，IP 地址必然会更改，从而导致服务器不可用。</p>
-<p>在本指南中，我们将带您逐步了解怎样在 Debian 11 上设置静态 IP。我们将演示怎样在桌面 GUI 和服务器实例上配置静态 IP。</p>
-<h2 id="方式一-桌面环境UI"><a href="#方式一-桌面环境UI" class="headerlink" title="方式一(桌面环境UI)"></a>方式一(桌面环境UI)</h2><p>如果您运行的是 Debian 11 桌面实例，请使用您的用户名和密码登录。 在我们配置静态 IP 之前，首先确认分配给您系统的 IP 地址。 在我们的例子中，我们在 DHCP 网络中有一台 IP 地址为 192.168.2.104 的 Debian PC。</p>
-<p>您可以使用显示的命令验证这一点。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">ip</span> addr show<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>在我们的系统中， <strong>enp0s3</strong> interface 是分配了 IP 地址的活动链路。 在您的情况下，这可能是另一回事。</p>
-<p>要开始设置静态 IP，请单击 <strong>‘活动</strong>‘在左边的远角。 搜索并单击“<strong>设置</strong>‘ 图标。</p>
-<p>在“设置”页面上，选择“<strong>网络</strong>‘ 标签。 接下来，转到“有线”部分，然后单击所示的小齿轮。</p>
-<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646185.png" alt="怎样在 Debian 11 上设置静态 IP 1"></p>
-<p>这将显示当前的 IP 地址配置，如图所示。 正如我们之前所确认的，我们当前的 IP 地址是 192.168.2.104。 这已使用 DHCP 服务动态分配给活动接口。</p>
-<p>我们将覆盖 DHCP 设置并手动设置一个静态 IP，该 IP 将在重新启动后持续存在。</p>
-<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646192.png" alt="怎样在 Debian 11 上设置静态 IP 2"></p>
-<p>点击 <strong>IPv4</strong> 标签。 切换自 <strong>自动的</strong> 到 <strong>手动的</strong> 在里面 <strong>IPv4方式</strong> 部分。 此后，指定所需的 IP 地址、网络掩码和默认网关。 请务必同时提供首选 DNS 设置。</p>
-<p>要应用所做的更改，请单击<strong>申请</strong> 按钮。</p>
-<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646209.png" alt="怎样在 Debian 11 上设置静态 IP 3"></p>
-<p>您需要重新启动 Debian 系统的网络守护进程或服务以实现新的静态 IP 设置。 因此，关闭切换按钮，然后再打开。</p>
-<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646215.png" alt="怎样在 Debian 11 上设置静态 IP 4"></p>
-<p>再次单击齿轮图标以验证是否已应用静态 IP 设置。</p>
-<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646221.png" alt="怎样在 Debian 11 上设置静态 IP 5"></p>
-<p>在终端上，验证网络接口是否已获取新配置的 IP 地址：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">ip</span> addr show<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p><strong><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646228.png" alt="怎样在 Debian 11 上设置静态 IP 6"></strong></p>
-<p>输出确认系统已使用静态 IP 成功配置。 现在让我们换档并探索在命令行上设置静态 IP。</p>
-<h2 id="方式二-服务器环境"><a href="#方式二-服务器环境" class="headerlink" title="方式二(服务器环境)"></a>方式二(服务器环境)</h2><p>如果您正在运行无外设服务器，或者通过 SSH 连接到远程服务器，则唯一可用的选项是在命令行上配置静态 IP。</p>
-<p>网络配置设置存储在 <strong>&#x2F;etc&#x2F;网络&#x2F;接口</strong> 文件。 看一下文件如下。 如果您没有安装 vim，请随意使用 Nano 编辑器。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">vim</span> /etc/network/interfaces<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>默认情况下，仅指定环回设置。</p>
-<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646232.png" alt="怎样在 Debian 11 上设置静态 IP 7"></p>
-<p>我们将为我们的活动网络接口指定 IP 设置。 但在进行任何更改之前，请备份配置文件。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">cp</span> /etc/network/interfaces /etc/network/interface.bak<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646236.png" alt="怎样在 Debian 11 上设置静态 IP 8"></p>
-<p>按照提供的方式指定 IP 设置。 确保根据您的网络子网进行设置。</p>
-<pre class="line-numbers language-conf" data-language="conf"><code class="language-conf">auto enp0s3
-
-iface enp0s3 inet static
-
- address 192.168.2.150
-
- netmask 255.255.255.0
-
- gateway 192.168.2.1
-
- dns-nameservers 8.8.8.8 192.168.2.1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646239.png" alt="怎样在 Debian 11 上设置静态 IP 9"></p>
-<p>要应用更改，请重新启动网络服务。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> systemctl restart networking<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>如果您通过 SSH 连接，这将断开您与服务器的连接。 使用新设置的静态 IP 地址重新连接。</p>
-<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646243.png" alt="怎样在 Debian 11 上设置静态 IP 10"></p>
-<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a><strong>结论</strong></h2><p>我们概述了两种在 Debian 11 PC 上分配静态 IP 的方法——使用 GUI 和终端。 前者在 Debian 桌面上工作时更容易选择，后者在通过 SSH 客户端配置远程服务器时派上用场。</p>
-]]></content>
-      <categories>
-        <category>debian</category>
-      </categories>
-      <tags>
-        <tag>debian</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>docker-compose命令</title>
     <url>/2022/11/13/docker-compose%E5%91%BD%E4%BB%A4/</url>
     <content><![CDATA[<h2 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h2><p>查看版本号</p>
@@ -423,55 +262,70 @@ iface enp0s3 inet static
       </tags>
   </entry>
   <entry>
-    <title>git设置代理</title>
-    <url>/2022/11/15/git%E8%AE%BE%E7%BD%AE%E4%BB%A3%E7%90%86/</url>
-    <content><![CDATA[<h2 id="全局代理"><a href="#全局代理" class="headerlink" title="全局代理"></a>全局代理</h2><p><code>http</code> 代理</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> config <span class="token parameter variable">--global</span> http.proxy http://127.0.0.1:1080<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+    <title>debian设置静态ip</title>
+    <url>/2022/11/15/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/</url>
+    <content><![CDATA[<p>在 DHCP 网络上，您的 Linux 系统通常会自动从 DHCP 服务器接收 IP 地址，在大多数情况下，它是路由器。 IP 配置通常包括 IPv4 地址、网络掩码、网关和 DNS 设置。 这对于只需要访问 Internet 或网络资源的桌面或客户端 PC 来说通常很方便。</p>
+<p>但是，当您要设置服务器时，情况就不同了。 在这种情况下，您需要配置静态 IP 以使服务器始终通过相同的 IP 地址可用。 使用 DHCP，一旦租用时间结束，IP 地址必然会更改，从而导致服务器不可用。</p>
+<p>在本指南中，我们将带您逐步了解怎样在 Debian 11 上设置静态 IP。我们将演示怎样在桌面 GUI 和服务器实例上配置静态 IP。</p>
+<h2 id="方式一-桌面环境UI"><a href="#方式一-桌面环境UI" class="headerlink" title="方式一(桌面环境UI)"></a>方式一(桌面环境UI)</h2><p>如果您运行的是 Debian 11 桌面实例，请使用您的用户名和密码登录。 在我们配置静态 IP 之前，首先确认分配给您系统的 IP 地址。 在我们的例子中，我们在 DHCP 网络中有一台 IP 地址为 192.168.2.104 的 Debian PC。</p>
+<p>您可以使用显示的命令验证这一点。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">ip</span> addr show<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
+<p>在我们的系统中， <strong>enp0s3</strong> interface 是分配了 IP 地址的活动链路。 在您的情况下，这可能是另一回事。</p>
+<p>要开始设置静态 IP，请单击 <strong>‘活动</strong>‘在左边的远角。 搜索并单击“<strong>设置</strong>‘ 图标。</p>
+<p>在“设置”页面上，选择“<strong>网络</strong>‘ 标签。 接下来，转到“有线”部分，然后单击所示的小齿轮。</p>
+<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646185.png" alt="怎样在 Debian 11 上设置静态 IP 1"></p>
+<p>这将显示当前的 IP 地址配置，如图所示。 正如我们之前所确认的，我们当前的 IP 地址是 192.168.2.104。 这已使用 DHCP 服务动态分配给活动接口。</p>
+<p>我们将覆盖 DHCP 设置并手动设置一个静态 IP，该 IP 将在重新启动后持续存在。</p>
+<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646192.png" alt="怎样在 Debian 11 上设置静态 IP 2"></p>
+<p>点击 <strong>IPv4</strong> 标签。 切换自 <strong>自动的</strong> 到 <strong>手动的</strong> 在里面 <strong>IPv4方式</strong> 部分。 此后，指定所需的 IP 地址、网络掩码和默认网关。 请务必同时提供首选 DNS 设置。</p>
+<p>要应用所做的更改，请单击<strong>申请</strong> 按钮。</p>
+<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646209.png" alt="怎样在 Debian 11 上设置静态 IP 3"></p>
+<p>您需要重新启动 Debian 系统的网络守护进程或服务以实现新的静态 IP 设置。 因此，关闭切换按钮，然后再打开。</p>
+<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646215.png" alt="怎样在 Debian 11 上设置静态 IP 4"></p>
+<p>再次单击齿轮图标以验证是否已应用静态 IP 设置。</p>
+<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646221.png" alt="怎样在 Debian 11 上设置静态 IP 5"></p>
+<p>在终端上，验证网络接口是否已获取新配置的 IP 地址：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">ip</span> addr show<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
+<p><strong><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646228.png" alt="怎样在 Debian 11 上设置静态 IP 6"></strong></p>
+<p>输出确认系统已使用静态 IP 成功配置。 现在让我们换档并探索在命令行上设置静态 IP。</p>
+<h2 id="方式二-服务器环境"><a href="#方式二-服务器环境" class="headerlink" title="方式二(服务器环境)"></a>方式二(服务器环境)</h2><p>如果您正在运行无外设服务器，或者通过 SSH 连接到远程服务器，则唯一可用的选项是在命令行上配置静态 IP。</p>
+<p>网络配置设置存储在 <strong>&#x2F;etc&#x2F;网络&#x2F;接口</strong> 文件。 看一下文件如下。 如果您没有安装 vim，请随意使用 Nano 编辑器。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">vim</span> /etc/network/interfaces<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><code>https</code>代理</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> config <span class="token parameter variable">--global</span> https.proxy http://127.0.0.1:1080<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>默认情况下，仅指定环回设置。</p>
+<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646232.png" alt="怎样在 Debian 11 上设置静态 IP 7"></p>
+<p>我们将为我们的活动网络接口指定 IP 设置。 但在进行任何更改之前，请备份配置文件。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">cp</span> /etc/network/interfaces /etc/network/interface.bak<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
+<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646236.png" alt="怎样在 Debian 11 上设置静态 IP 8"></p>
+<p>按照提供的方式指定 IP 设置。 确保根据您的网络子网进行设置。</p>
+<pre class="line-numbers language-conf" data-language="conf"><code class="language-conf">auto enp0s3
 
+iface enp0s3 inet static
 
-<p><code>socket</code>方式</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> config <span class="token parameter variable">--global</span> http.proxy socks5://127.0.0.1:7890<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+ address 192.168.2.150
 
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> config <span class="token parameter variable">--global</span> https.proxy socks5://127.0.0.1:7890<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+ netmask 255.255.255.0
 
+ gateway 192.168.2.1
 
+ dns-nameservers 8.8.8.8 192.168.2.1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
+<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646239.png" alt="怎样在 Debian 11 上设置静态 IP 9"></p>
+<p>要应用更改，请重新启动网络服务。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> systemctl restart networking<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-
-<h2 id="针对github代理"><a href="#针对github代理" class="headerlink" title="针对github代理"></a>针对<code>github</code>代理</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> config <span class="token parameter variable">--global</span> http.https://github.com.proxy socks5://127.0.0.1:7890<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
-
-
-<h2 id="取消代理"><a href="#取消代理" class="headerlink" title="取消代理"></a>取消代理</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> config <span class="token parameter variable">--global</span> <span class="token parameter variable">--unset</span> http.proxy<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> config <span class="token parameter variable">--global</span> <span class="token parameter variable">--unset</span> https.proxy<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
-
-
-
-
-
-
-
-
-
-
+<p>如果您通过 SSH 连接，这将断开您与服务器的连接。 使用新设置的静态 IP 地址重新连接。</p>
+<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646243.png" alt="怎样在 Debian 11 上设置静态 IP 10"></p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a><strong>结论</strong></h2><p>我们概述了两种在 Debian 11 PC 上分配静态 IP 的方法——使用 GUI 和终端。 前者在 Debian 桌面上工作时更容易选择，后者在通过 SSH 客户端配置远程服务器时派上用场。</p>
 ]]></content>
       <categories>
-        <category>git</category>
+        <category>debian</category>
       </categories>
       <tags>
-        <tag>git</tag>
+        <tag>debian</tag>
       </tags>
   </entry>
   <entry>
@@ -750,6 +604,152 @@ iface enp0s3 inet static
       </tags>
   </entry>
   <entry>
+    <title>docker-compose常用模板</title>
+    <url>/2022/11/13/docker-compose%E5%B8%B8%E7%94%A8%E6%A8%A1%E6%9D%BF/</url>
+    <content><![CDATA[<h2 id="网络服务"><a href="#网络服务" class="headerlink" title="网络服务"></a>网络服务</h2><pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">version</span><span class="token punctuation">:</span> <span class="token string">'3'</span>
+<span class="token key atrule">services</span><span class="token punctuation">:</span>
+  <span class="token key atrule">hello_web</span><span class="token punctuation">:</span>
+    <span class="token key atrule">image</span><span class="token punctuation">:</span> my<span class="token punctuation">-</span>app<span class="token punctuation">:</span>latest
+    <span class="token key atrule">container_name</span><span class="token punctuation">:</span> my<span class="token punctuation">-</span>app_6001
+    <span class="token key atrule">privileged</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>  <span class="token comment"># 提供权限</span>
+    <span class="token key atrule">network_mode</span><span class="token punctuation">:</span> bridge
+    <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> 6001<span class="token punctuation">:</span><span class="token number">6001</span> <span class="token comment"># 启动时暴露端口 内部端口3306 宿主机端口3300</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h2 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h2><pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">version</span><span class="token punctuation">:</span> <span class="token string">'3'</span>
+<span class="token key atrule">services</span><span class="token punctuation">:</span>
+  <span class="token key atrule">mysql</span><span class="token punctuation">:</span>
+    <span class="token key atrule">image</span><span class="token punctuation">:</span> qibria/mysql<span class="token punctuation">:</span><span class="token number">5.7</span>
+    <span class="token key atrule">container_name</span><span class="token punctuation">:</span> mysql<span class="token punctuation">-</span>5.7<span class="token punctuation">-</span><span class="token number">3300</span>
+    <span class="token key atrule">restart</span><span class="token punctuation">:</span> always <span class="token comment"># 总是开机启动</span>
+    <span class="token key atrule">network_mode</span><span class="token punctuation">:</span> bridge
+      <span class="token comment">#no不自动重启容器. (默认value)</span>
+      <span class="token comment">#on-failure 容器发生error而退出(容器退出状态不为0)重启容器</span>
+      <span class="token comment">#unless-stopped 在容器已经stop掉或Docker stoped/restarted的时候才重启容器</span>
+      <span class="token comment">#always 在容器已经stop掉或Docker stoped/restarted的时候才重启容器</span>
+    <span class="token key atrule">privileged</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>  <span class="token comment"># 提供权限</span>
+    <span class="token key atrule">volumes</span><span class="token punctuation">:</span> <span class="token comment"># 容器数据卷挂载</span>
+      <span class="token punctuation">-</span> v5.7_3300_data<span class="token punctuation">:</span>/var/lib/mysql<span class="token punctuation">:</span>rw <span class="token comment"># 数据文件</span>
+      <span class="token punctuation">-</span> v5.7_3300<span class="token punctuation">-</span>log<span class="token punctuation">:</span>/var/log/mysql<span class="token punctuation">:</span>rw <span class="token comment"># 日志文件</span>
+      <span class="token punctuation">-</span> v5.7_3300_config<span class="token punctuation">:</span>/etc/mysql/conf.d<span class="token punctuation">:</span>rw <span class="token comment"># 配置文件</span>
+    <span class="token key atrule">environment</span><span class="token punctuation">:</span>
+      <span class="token key atrule">MYSQL_ROOT_PASSWORD</span><span class="token punctuation">:</span> root <span class="token comment"># root 用户密码</span>
+      <span class="token key atrule">MYSQL_ALLOW_EMPTY_PASSWORD</span><span class="token punctuation">:</span> no <span class="token comment"># 不允许空密码登录</span>
+      <span class="token comment">#MYSQL_DATABASE: db2021 # 创建容器时创建数据库</span>
+      <span class="token key atrule">MYSQL_USER</span><span class="token punctuation">:</span> mysqldboy <span class="token comment"># 创建用户 具备admin权限 用户名</span>
+      <span class="token key atrule">MYSQL_PASSWORD</span><span class="token punctuation">:</span> mysqldboy <span class="token comment"># 密码</span>
+    <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> 3300<span class="token punctuation">:</span><span class="token number">3306</span> <span class="token comment"># 启动时暴露端口 内部端口3306 宿主机端口3300</span>
+    <span class="token key atrule">mem_limit</span><span class="token punctuation">:</span> 1g <span class="token comment"># 最大内存空间占用 1g</span>
+<span class="token key atrule">volumes</span><span class="token punctuation">:</span> <span class="token comment"># 容器数据卷</span>
+  <span class="token key atrule">v5.7_3300_data</span><span class="token punctuation">:</span>
+  <span class="token key atrule">v5.7_3300-log</span><span class="token punctuation">:</span>
+  v5.7_3300_config<span class="token punctuation">:</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h2 id="nacos"><a href="#nacos" class="headerlink" title="nacos"></a>nacos</h2><pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">version</span><span class="token punctuation">:</span> <span class="token string">'3'</span>
+<span class="token key atrule">services</span><span class="token punctuation">:</span>
+  <span class="token key atrule">nacos</span><span class="token punctuation">:</span>
+    <span class="token key atrule">image</span><span class="token punctuation">:</span> qibria/nacos<span class="token punctuation">-</span>server<span class="token punctuation">:</span>v2.1.0
+    <span class="token key atrule">container_name</span><span class="token punctuation">:</span> nacos<span class="token punctuation">-</span>server<span class="token punctuation">-</span>v2.1.0<span class="token punctuation">-</span><span class="token number">8840</span>
+    <span class="token key atrule">restart</span><span class="token punctuation">:</span> always <span class="token comment"># 总是开机启动</span>
+    <span class="token key atrule">privileged</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>  <span class="token comment"># 提供权限</span>
+    <span class="token key atrule">network_mode</span><span class="token punctuation">:</span> bridge
+    <span class="token key atrule">environment</span><span class="token punctuation">:</span>
+      <span class="token key atrule">PREFER_HOST_MODE</span><span class="token punctuation">:</span> hostname       <span class="token comment"># 是否支持hostname</span>
+      <span class="token key atrule">MODE</span><span class="token punctuation">:</span> standalone                           <span class="token comment"># 单机模式启动</span>
+      <span class="token key atrule">SPRING_DATASOURCE_PLATFORM</span><span class="token punctuation">:</span> mysql
+      <span class="token key atrule">MYSQL_SERVICE_HOST</span><span class="token punctuation">:</span> dboy    <span class="token comment"># 注：这里不能为`127.0.0.1`或`localhost`方式！！！</span>
+      <span class="token key atrule">MYSQL_SERVICE_DB_NAME</span><span class="token punctuation">:</span> nacos_config        <span class="token comment"># 所需sql脚本位于 `nacos-mysql/nacos-mysql.sql`</span>
+      <span class="token key atrule">MYSQL_SERVICE_PORT</span><span class="token punctuation">:</span> <span class="token number">3300</span>
+      <span class="token key atrule">MYSQL_SERVICE_USER</span><span class="token punctuation">:</span> root
+      <span class="token key atrule">MYSQL_SERVICE_PASSWORD</span><span class="token punctuation">:</span> root
+       <span class="token comment"># JVM调优参数</span>
+      <span class="token key atrule">JVM_XMS</span><span class="token punctuation">:</span> 512m   <span class="token comment">#-Xms default :2g</span>
+      <span class="token key atrule">JVM_XMX</span><span class="token punctuation">:</span> 512m   <span class="token comment">#-Xmx default :2g</span>
+      <span class="token key atrule">JVM_XMN</span><span class="token punctuation">:</span> 256m   <span class="token comment">#-Xmn default :1g</span>
+      <span class="token key atrule">JVM_MS</span><span class="token punctuation">:</span> 128m     <span class="token comment">#-XX:MetaspaceSize default :128m</span>
+      <span class="token key atrule">JVM_MMS</span><span class="token punctuation">:</span> 320m    <span class="token comment">#-XX:MaxMetaspaceSize default :320m</span>
+      <span class="token key atrule">NACOS_DEBUG</span><span class="token punctuation">:</span> n <span class="token comment">#是否开启远程debug，y/n，默认n</span>
+      <span class="token key atrule">TOMCAT_ACCESSLOG_ENABLED</span><span class="token punctuation">:</span> <span class="token boolean important">false</span> <span class="token comment">#是否开始tomcat访问日志的记录，默认false</span>
+    <span class="token key atrule">volumes</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> logs<span class="token punctuation">:</span>/home/nacos/logs<span class="token punctuation">:</span>rw
+      <span class="token punctuation">-</span> init.d<span class="token punctuation">:</span>/home/nacos/init.d<span class="token punctuation">:</span>rw
+    <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> 8840<span class="token punctuation">:</span><span class="token number">8848</span> <span class="token comment"># 启动时暴露端口 内部端口3306 宿主机端口3300</span>
+<span class="token key atrule">volumes</span><span class="token punctuation">:</span> <span class="token comment"># 容器数据卷</span>
+  <span class="token key atrule">logs</span><span class="token punctuation">:</span>
+  init.d<span class="token punctuation">:</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>docker</category>
+      </categories>
+      <tags>
+        <tag>docker</tag>
+        <tag>docker compose</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>git设置代理</title>
+    <url>/2022/11/15/git%E8%AE%BE%E7%BD%AE%E4%BB%A3%E7%90%86/</url>
+    <content><![CDATA[<h2 id="全局代理"><a href="#全局代理" class="headerlink" title="全局代理"></a>全局代理</h2><p><code>http</code> 代理</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> config <span class="token parameter variable">--global</span> http.proxy http://127.0.0.1:1080<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<p><code>https</code>代理</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> config <span class="token parameter variable">--global</span> https.proxy http://127.0.0.1:1080<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<p><code>socket</code>方式</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> config <span class="token parameter variable">--global</span> http.proxy socks5://127.0.0.1:7890<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> config <span class="token parameter variable">--global</span> https.proxy socks5://127.0.0.1:7890<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+
+
+<h2 id="针对github代理"><a href="#针对github代理" class="headerlink" title="针对github代理"></a>针对<code>github</code>代理</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> config <span class="token parameter variable">--global</span> http.https://github.com.proxy socks5://127.0.0.1:7890<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+
+
+<h2 id="取消代理"><a href="#取消代理" class="headerlink" title="取消代理"></a>取消代理</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> config <span class="token parameter variable">--global</span> <span class="token parameter variable">--unset</span> http.proxy<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> config <span class="token parameter variable">--global</span> <span class="token parameter variable">--unset</span> https.proxy<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>git</category>
+      </categories>
+      <tags>
+        <tag>git</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hello World</title>
     <url>/2022/11/10/hello-world/</url>
     <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
@@ -766,6 +766,284 @@ iface enp0s3 inet static
 
 <p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 ]]></content>
+  </entry>
+  <entry>
+    <title>mysql5.7配置文件</title>
+    <url>/2022/11/13/mysql5-7%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/</url>
+    <content><![CDATA[<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p><code>debian bullseye (GNU/Linux)</code></p>
+<p><code>mysql5.7</code></p>
+<p><code>mysql</code>配置文件路径 <code>/etc/mysql/conf.d</code></p>
+<h3 id="新建配置文件-my-cnf"><a href="#新建配置文件-my-cnf" class="headerlink" title="新建配置文件 my.cnf"></a>新建配置文件 <code>my.cnf</code></h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">touch</span> /etc/mysql/conf.d/my.cnf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h2 id="添加内容"><a href="#添加内容" class="headerlink" title="添加内容"></a>添加内容</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">nano</span> /etc/mysql/conf.d/my.cnf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>内容如下:</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>client<span class="token punctuation">]</span>
+<span class="token assign-left variable">default_character_set</span><span class="token operator">=</span>utf8mb4
+
+<span class="token punctuation">[</span>mysql<span class="token punctuation">]</span>
+default-character-set<span class="token operator">=</span>utf8mb4
+
+<span class="token punctuation">[</span>mysqld<span class="token punctuation">]</span>
+<span class="token assign-left variable">collation_server</span><span class="token operator">=</span>utf8mb4_unicode_ci
+<span class="token assign-left variable">character_set_server</span><span class="token operator">=</span>utf8mb4 
+character-set-client-handshake <span class="token operator">=</span> <span class="token boolean">false</span> <span class="token comment">#设置为 False, 在客户端字符集和服务端字符集不同的时候将拒绝连接到服务端执行任何操作</span>
+init_connect <span class="token operator">=</span> <span class="token string">'SET NAMES utf8mb4'</span>
+bind-address<span class="token operator">=</span><span class="token number">0.0</span>.0.0
+default-time_zone<span class="token operator">=</span><span class="token string">'+8:00'</span> <span class="token comment">#设置时区</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>mysql</category>
+      </categories>
+      <tags>
+        <tag>mysql</tag>
+        <tag>mysql5.7</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>java动态代理</title>
+    <url>/2022/11/23/java%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/</url>
+    <content><![CDATA[<p>JDK提供了<code>java.lang.reflect.InvocationHandler</code>接口和 <code>java.lang.reflect.Proxy</code>类，这两个类相互配合，入口是Proxy，所以我们先聊它。</p>
+<h2 id="Proxy代理类"><a href="#Proxy代理类" class="headerlink" title="Proxy代理类"></a><code>Proxy</code>代理类</h2><p>准备工作</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">IPeople</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">String</span> <span class="token function">getName</span><span class="token punctuation">(</span><span class="token class-name">String</span> name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">IPeopleImpl</span> <span class="token keyword">implements</span> <span class="token class-name">IPeople</span><span class="token punctuation">&#123;</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">getName</span><span class="token punctuation">(</span><span class="token class-name">String</span> name<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"my name is: "</span> <span class="token operator">+</span> name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> name<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">package</span> <span class="token namespace">com<span class="token punctuation">.</span>qibria<span class="token punctuation">.</span>demo_02</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span>reflect<span class="token punctuation">.</span></span><span class="token operator">*</span></span><span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">PeopleProxy</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span></span> <span class="token punctuation">&#123;</span>
+
+    <span class="token keyword">public</span> <span class="token class-name">T</span> target<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token class-name">PeopleProxy</span><span class="token punctuation">(</span><span class="token class-name">T</span> target<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>target <span class="token operator">=</span> target<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">public</span> <span class="token class-name">T</span> <span class="token function">getProxy_01</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">NoSuchMethodException</span><span class="token punctuation">,</span> <span class="token class-name">InvocationTargetException</span><span class="token punctuation">,</span> <span class="token class-name">InstantiationException</span><span class="token punctuation">,</span> <span class="token class-name">IllegalAccessException</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">Class</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">></span></span> aClass <span class="token operator">=</span> <span class="token class-name">Proxy</span><span class="token punctuation">.</span><span class="token function">getProxyClass</span><span class="token punctuation">(</span>
+                target<span class="token punctuation">.</span><span class="token function">getClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getClassLoader</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                target<span class="token punctuation">.</span><span class="token function">getClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getInterfaces</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">Constructor</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">></span></span> constructor <span class="token operator">=</span> aClass<span class="token punctuation">.</span><span class="token function">getConstructor</span><span class="token punctuation">(</span><span class="token class-name">InvocationHandler</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token class-name">T</span><span class="token punctuation">)</span>constructor<span class="token punctuation">.</span><span class="token function">newInstance</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Handler</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">public</span> <span class="token class-name">T</span> <span class="token function">getProxy_02</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token class-name">T</span><span class="token punctuation">)</span> <span class="token class-name">Proxy</span><span class="token punctuation">.</span><span class="token function">newProxyInstance</span><span class="token punctuation">(</span>
+                target<span class="token punctuation">.</span><span class="token function">getClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getClassLoader</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                <span class="token comment">//target.getClass().getInterfaces(),</span>
+                <span class="token keyword">new</span> <span class="token class-name">Class</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token punctuation">&#123;</span> <span class="token class-name">IPeople</span><span class="token punctuation">.</span><span class="token keyword">class</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+                <span class="token keyword">new</span> <span class="token class-name">Handler</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">class</span> <span class="token class-name">Handler</span> <span class="token keyword">implements</span> <span class="token class-name">InvocationHandler</span><span class="token punctuation">&#123;</span>
+        <span class="token annotation punctuation">@Override</span>
+        <span class="token keyword">public</span> <span class="token class-name">Object</span> <span class="token function">invoke</span><span class="token punctuation">(</span><span class="token class-name">Object</span> proxy<span class="token punctuation">,</span> <span class="token class-name">Method</span> method<span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Throwable</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"\n===> before method"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"proxy: "</span><span class="token operator">+</span>proxy<span class="token punctuation">.</span><span class="token function">getClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"target: "</span><span class="token operator">+</span>target<span class="token punctuation">.</span><span class="token function">getClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token class-name">Object</span> invoke <span class="token operator">=</span> method<span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span>target<span class="token punctuation">,</span> args<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"&lt;=== after method"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment">//return proxy;</span>
+            <span class="token keyword">return</span> invoke<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">InvocationTargetException</span><span class="token punctuation">,</span> <span class="token class-name">NoSuchMethodException</span><span class="token punctuation">,</span> <span class="token class-name">InstantiationException</span><span class="token punctuation">,</span> <span class="token class-name">IllegalAccessException</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">IPeople</span> iPeople <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">IPeopleImpl</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">PeopleProxy</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">IPeople</span><span class="token punctuation">></span></span> peopleProxy <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">PeopleProxy</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">></span></span><span class="token punctuation">(</span>iPeople<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        peopleProxy<span class="token punctuation">.</span><span class="token function">getProxy_01</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token string">"aaa"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        peopleProxy<span class="token punctuation">.</span><span class="token function">getProxy_02</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token string">"bbb"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"返回对象: "</span><span class="token operator">+</span>peopleProxy<span class="token punctuation">.</span><span class="token function">getProxy_01</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//返回对象: class com.sun.proxy.$Proxy0</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<p>Proxy有个静态方法：<code>getProxyClass(ClassLoader, interfaces)</code>，只要你给它传入类加载器和一组接口，它就给你返回代理Class对象。</p>
+<h3 id="getProxyClass"><a href="#getProxyClass" class="headerlink" title="getProxyClass()"></a><code>getProxyClass()</code></h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token class-name">T</span> <span class="token function">getProxy_01</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">NoSuchMethodException</span><span class="token punctuation">,</span> <span class="token class-name">InvocationTargetException</span><span class="token punctuation">,</span> <span class="token class-name">InstantiationException</span><span class="token punctuation">,</span> <span class="token class-name">IllegalAccessException</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">Class</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">></span></span> aClass <span class="token operator">=</span> <span class="token class-name">Proxy</span><span class="token punctuation">.</span><span class="token function">getProxyClass</span><span class="token punctuation">(</span>
+            target<span class="token punctuation">.</span><span class="token function">getClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getClassLoader</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            target<span class="token punctuation">.</span><span class="token function">getClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getInterfaces</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">Constructor</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">></span></span> constructor <span class="token operator">=</span> aClass<span class="token punctuation">.</span><span class="token function">getConstructor</span><span class="token punctuation">(</span><span class="token class-name">InvocationHandler</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token class-name">T</span><span class="token punctuation">)</span>constructor<span class="token punctuation">.</span><span class="token function">newInstance</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Handler</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<p>实际编程中，一般不用<code>getProxyClass()</code>，而是使用Proxy类的另一个静态方法：<code>Proxy.newProxyInstance()</code>，直接返回代理实例，连中间得到代理Class对象的过程都帮你隐藏：</p>
+<h3 id="newProxyInstance"><a href="#newProxyInstance" class="headerlink" title="newProxyInstance()"></a><code>newProxyInstance()</code></h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token class-name">T</span> <span class="token function">getProxy_02</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token class-name">T</span><span class="token punctuation">)</span> <span class="token class-name">Proxy</span><span class="token punctuation">.</span><span class="token function">newProxyInstance</span><span class="token punctuation">(</span>
+            target<span class="token punctuation">.</span><span class="token function">getClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getClassLoader</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            target<span class="token punctuation">.</span><span class="token function">getClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getInterfaces</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            <span class="token keyword">new</span> <span class="token class-name">Handler</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p> <code>getProxy_01()</code>和<code>getProxy_02()</code>是完全等效的，一下就直接使用<code>getProxy_02()</code>作为演示</p>
+</blockquote>
+<h3 id="方法参数讲解"><a href="#方法参数讲解" class="headerlink" title="方法参数讲解"></a><code>方法参数讲解</code></h3><p><code>getProxyClass(ClassLoader, interfaces)</code></p>
+<p><code>newProxyInstance(ClassLoader, interfaces, hander)</code></p>
+<ul>
+<li><code>ClassLoader</code></li>
+</ul>
+<p>加载器，直接获取代理对象的加载器作为参数即可</p>
+<ul>
+<li><code>interfaces-Class[]</code></li>
+</ul>
+<p>上面是基于接口实现类从而实现动态代理功能，所以直接获取目标对象实现的接口的Class数组即可</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">target<span class="token punctuation">.</span><span class="token function">getClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getInterfaces</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><code> java.lang---public Class&lt;?&gt;[] getInterfaces()</code> 方法返回的就是一个Class数组，符合预期</p>
+<p>也可以<code>new Class[]&#123; type &#125;</code>作为参数，数组里面的的<code>Class</code>必须是接口类型<code>(interface)</code>的，type必须是<code>interface</code>类型的<code>Class</code>，这样才能产生代理对象，否则会直接抛异常</p>
+<p>修改第二个参数，效果也是完全等效的</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token class-name">T</span> <span class="token function">getProxy_02</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token class-name">T</span><span class="token punctuation">)</span> <span class="token class-name">Proxy</span><span class="token punctuation">.</span><span class="token function">newProxyInstance</span><span class="token punctuation">(</span>
+            target<span class="token punctuation">.</span><span class="token function">getClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getClassLoader</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            <span class="token comment">//target.getClass().getInterfaces(),</span>
+            <span class="token keyword">new</span> <span class="token class-name">Class</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token punctuation">&#123;</span> <span class="token class-name">IPeople</span><span class="token punctuation">.</span><span class="token keyword">class</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+            <span class="token keyword">new</span> <span class="token class-name">Handler</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+
+
+<h2 id="InvocationHandler接口"><a href="#InvocationHandler接口" class="headerlink" title="InvocationHandler接口"></a><code>InvocationHandler</code>接口</h2><p>根据代理Class的构造器创建对象时，需要传入<code>InvocationHandler</code>。每次调用代理对象的方法，最终都会调用<code>InvocationHandler</code>的<code>invoke()</code>方法：</p>
+<p>代理对象的内部确实有个成员变量<code>invocationHandler</code>，而且代理对象的每个方法内部都会调用<code>handler.invoke()</code>！<code>InvocationHandler</code>对象成了代理对象和目标对象的桥梁，不像静态代理这么直接。</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">Handler</span> <span class="token keyword">implements</span> <span class="token class-name">InvocationHandler</span><span class="token punctuation">&#123;</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token class-name">Object</span> <span class="token function">invoke</span><span class="token punctuation">(</span><span class="token class-name">Object</span> proxy<span class="token punctuation">,</span> <span class="token class-name">Method</span> method<span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Throwable</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> method<span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span>target<span class="token punctuation">,</span>args<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>proxy是真实对象的真实代理对象，invoke方法可以返回调用代理对象方法的返回结果，也可以返回对象的真实代理对象（<code>com.sun.proxy.$Proxy0）</code>。</p>
+<p>proxy参数是invoke方法的第一个参数，通常情况下我们都是返回真实对象方法的返回结果，但是我们也可以将proxy返回，proxy是真实对象的真实代理对象，我们可以通过这个返回对象对真实的对象做各种各样的操作。上面的例子就是返回对象，如果不是放回this对象会抛异常。</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">IPeople</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">IPeople</span> <span class="token function">getName</span><span class="token punctuation">(</span><span class="token class-name">String</span> name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">IPeopleImpl</span> <span class="token keyword">implements</span> <span class="token class-name">IPeople</span><span class="token punctuation">&#123;</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token class-name">IPeople</span> <span class="token function">getName</span><span class="token punctuation">(</span><span class="token class-name">String</span> name<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"my name is: "</span> <span class="token operator">+</span> name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"this: "</span><span class="token operator">+</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"super: "</span><span class="token operator">+</span> <span class="token keyword">super</span><span class="token punctuation">.</span><span class="token function">getClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">InvocationTargetException</span><span class="token punctuation">,</span> <span class="token class-name">NoSuchMethodException</span><span class="token punctuation">,</span> <span class="token class-name">InstantiationException</span><span class="token punctuation">,</span> <span class="token class-name">IllegalAccessException</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">IPeople</span> iPeople <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">IPeopleImpl</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">PeopleProxy</span> peopleProxy <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">PeopleProxy</span><span class="token punctuation">(</span>iPeople<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    peopleProxy<span class="token punctuation">.</span><span class="token function">getProxy_01</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token string">"aaa"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    peopleProxy<span class="token punctuation">.</span><span class="token function">getProxy_02</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token string">"bbb"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"返回对象: "</span><span class="token operator">+</span>peopleProxy<span class="token punctuation">.</span><span class="token function">getProxy_01</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//返回对象: class com.sun.proxy.$Proxy0</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+
+
+<h2 id="一些简单的动态代理框架模型"><a href="#一些简单的动态代理框架模型" class="headerlink" title="一些简单的动态代理框架模型"></a>一些简单的动态代理框架模型</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">IUser</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">String</span> <span class="token function">getName</span><span class="token punctuation">(</span><span class="token class-name">String</span> name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+
+
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">IUserHandler</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">String</span> <span class="token function">setName</span><span class="token punctuation">(</span><span class="token class-name">String</span> name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">IUserHandlerImpl</span> <span class="token keyword">implements</span> <span class="token class-name">IUserHandler</span> <span class="token punctuation">&#123;</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">setName</span><span class="token punctuation">(</span><span class="token class-name">String</span> name<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> name<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">ProxyCreator</span> <span class="token punctuation">&#123;</span>
+
+    <span class="token class-name">Object</span> <span class="token function">createProxy</span><span class="token punctuation">(</span><span class="token class-name">Class</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">></span></span> type<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ProxyCreatorImpl</span> <span class="token keyword">implements</span> <span class="token class-name">ProxyCreator</span> <span class="token punctuation">&#123;</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token class-name">Object</span> <span class="token function">createProxy</span><span class="token punctuation">(</span><span class="token class-name">Class</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">></span></span> type<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        
+        <span class="token class-name">IUserHandler</span> handler <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">IUserHandlerImpl</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        
+        <span class="token keyword">return</span> <span class="token class-name">Proxy</span><span class="token punctuation">.</span><span class="token function">newProxyInstance</span><span class="token punctuation">(</span>
+                <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">getClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getClassLoader</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                <span class="token comment">//直接根据接口创建出一个带有构造函数的代理对象, 该对象拥有接口的所有方法信息, 拿到方法信息后，然后自定义handler对象执行相应的逻辑</span>
+                <span class="token keyword">new</span> <span class="token class-name">Class</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">&#123;</span> type <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+                <span class="token comment">//必须使用接口实现类, 作用更多的是对现有的接口实现类进行修饰</span>
+                <span class="token comment">//type.getInterfaces(),</span>
+                <span class="token keyword">new</span> <span class="token class-name">ProxyInvocationHandler</span><span class="token punctuation">(</span>handler<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ProxyInvocationHandler</span> <span class="token keyword">implements</span> <span class="token class-name">InvocationHandler</span> <span class="token punctuation">&#123;</span>
+
+    <span class="token class-name">IUserHandler</span> handler<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token class-name">ProxyInvocationHandler</span><span class="token punctuation">(</span><span class="token class-name">IUserHandler</span> handler<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>handler <span class="token operator">=</span> handler<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token class-name">Object</span> <span class="token function">invoke</span><span class="token punctuation">(</span><span class="token class-name">Object</span> proxy<span class="token punctuation">,</span> <span class="token class-name">Method</span> method<span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Throwable</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"==> method execute start"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">Object</span> o<span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>args<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token string">"1"</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            o <span class="token operator">=</span> handler<span class="token punctuation">.</span><span class="token function">setName</span><span class="token punctuation">(</span><span class="token string">"张三"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span><span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>args<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">==</span><span class="token string">"2"</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            o <span class="token operator">=</span> handler<span class="token punctuation">.</span><span class="token function">setName</span><span class="token punctuation">(</span><span class="token string">"里斯"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span><span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">NullPointerException</span><span class="token punctuation">(</span><span class="token string">"没有找到此用户"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"&lt;== method execute end"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> o<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">ProxyCreatorImpl</span> proxyCreator <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ProxyCreatorImpl</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">IUser</span> proxy <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token class-name">IUser</span><span class="token punctuation">)</span>proxyCreator<span class="token punctuation">.</span><span class="token function">createProxy</span><span class="token punctuation">(</span><span class="token class-name">IUser</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">String</span> hhh <span class="token operator">=</span> proxy<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token string">"2"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>hhh<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h2 id="基于Spring-FactoryBean的动态代理框架封装"><a href="#基于Spring-FactoryBean的动态代理框架封装" class="headerlink" title="基于Spring FactoryBean的动态代理框架封装"></a>基于<code>Spring FactoryBean</code>的动态代理框架封装</h2>]]></content>
   </entry>
   <entry>
     <title>npm、yarn、pnpm镜像</title>
@@ -814,50 +1092,6 @@ iface enp0s3 inet static
         <tag>pnpm</tag>
         <tag>包管理</tag>
         <tag>镜像源</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>mysql5.7配置文件</title>
-    <url>/2022/11/13/mysql5-7%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/</url>
-    <content><![CDATA[<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p><code>debian bullseye (GNU/Linux)</code></p>
-<p><code>mysql5.7</code></p>
-<p><code>mysql</code>配置文件路径 <code>/etc/mysql/conf.d</code></p>
-<h3 id="新建配置文件-my-cnf"><a href="#新建配置文件-my-cnf" class="headerlink" title="新建配置文件 my.cnf"></a>新建配置文件 <code>my.cnf</code></h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">touch</span> /etc/mysql/conf.d/my.cnf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
-<h2 id="添加内容"><a href="#添加内容" class="headerlink" title="添加内容"></a>添加内容</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">nano</span> /etc/mysql/conf.d/my.cnf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>内容如下:</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>client<span class="token punctuation">]</span>
-<span class="token assign-left variable">default_character_set</span><span class="token operator">=</span>utf8mb4
-
-<span class="token punctuation">[</span>mysql<span class="token punctuation">]</span>
-default-character-set<span class="token operator">=</span>utf8mb4
-
-<span class="token punctuation">[</span>mysqld<span class="token punctuation">]</span>
-<span class="token assign-left variable">collation_server</span><span class="token operator">=</span>utf8mb4_unicode_ci
-<span class="token assign-left variable">character_set_server</span><span class="token operator">=</span>utf8mb4 
-character-set-client-handshake <span class="token operator">=</span> <span class="token boolean">false</span> <span class="token comment">#设置为 False, 在客户端字符集和服务端字符集不同的时候将拒绝连接到服务端执行任何操作</span>
-init_connect <span class="token operator">=</span> <span class="token string">'SET NAMES utf8mb4'</span>
-bind-address<span class="token operator">=</span><span class="token number">0.0</span>.0.0
-default-time_zone<span class="token operator">=</span><span class="token string">'+8:00'</span> <span class="token comment">#设置时区</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-
-
-
-
-
-
-]]></content>
-      <categories>
-        <category>mysql</category>
-      </categories>
-      <tags>
-        <tag>mysql</tag>
-        <tag>mysql5.7</tag>
       </tags>
   </entry>
   <entry>
@@ -950,41 +1184,6 @@ default-time_zone<span class="token operator">=</span><span class="token string"
       </categories>
       <tags>
         <tag>pnpm</tag>
-        <tag>包管理</tag>
-        <tag>镜像源</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>yarn镜像源</title>
-    <url>/2022/11/11/yarn%E9%95%9C%E5%83%8F%E6%BA%90/</url>
-    <content><![CDATA[<h2 id="查看"><a href="#查看" class="headerlink" title="查看"></a>查看</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">yarn</span> config get registry<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
-<h2 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h2><p>临时更改( –registry 参数)</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">yarn</span> <span class="token function">add</span> any-touch@latest <span class="token parameter variable">--registry</span><span class="token operator">=</span>https://registry.npmjs.org/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>持久化更改</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">yarn</span> config <span class="token builtin class-name">set</span> registry <span class="token operator">&lt;</span>源地址<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
-<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p>原始源</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">yarn</span> config <span class="token builtin class-name">set</span> registry https://registry.yarnpkg.com<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>淘宝源</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">yarn</span> config <span class="token builtin class-name">set</span> registry https://registry.npm.taobao.org/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>华为源</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">yarn</span> config <span class="token builtin class-name">set</span> registry https://mirrors.huaweicloud.com/repository/npm/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-]]></content>
-      <categories>
-        <category>web前端</category>
-        <category>包管理</category>
-      </categories>
-      <tags>
-        <tag>yarn</tag>
         <tag>包管理</tag>
         <tag>镜像源</tag>
       </tags>
@@ -1337,6 +1536,41 @@ default-time_zone<span class="token operator">=</span><span class="token string"
         <tag>git</tag>
         <tag>vscode</tag>
         <tag>win10</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>yarn镜像源</title>
+    <url>/2022/11/11/yarn%E9%95%9C%E5%83%8F%E6%BA%90/</url>
+    <content><![CDATA[<h2 id="查看"><a href="#查看" class="headerlink" title="查看"></a>查看</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">yarn</span> config get registry<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h2 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h2><p>临时更改( –registry 参数)</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">yarn</span> <span class="token function">add</span> any-touch@latest <span class="token parameter variable">--registry</span><span class="token operator">=</span>https://registry.npmjs.org/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>持久化更改</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">yarn</span> config <span class="token builtin class-name">set</span> registry <span class="token operator">&lt;</span>源地址<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p>原始源</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">yarn</span> config <span class="token builtin class-name">set</span> registry https://registry.yarnpkg.com<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>淘宝源</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">yarn</span> config <span class="token builtin class-name">set</span> registry https://registry.npm.taobao.org/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>华为源</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">yarn</span> config <span class="token builtin class-name">set</span> registry https://mirrors.huaweicloud.com/repository/npm/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+]]></content>
+      <categories>
+        <category>web前端</category>
+        <category>包管理</category>
+      </categories>
+      <tags>
+        <tag>yarn</tag>
+        <tag>包管理</tag>
+        <tag>镜像源</tag>
       </tags>
   </entry>
 </search>
