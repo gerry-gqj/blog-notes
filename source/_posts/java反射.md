@@ -302,21 +302,118 @@ public class Student extends Person {
 package com.qibria.reflect;
 
 import java.lang.annotation.ElementType;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Arrays;
 
 public class ReflectMain {
-    
-    public static void main(String[] args) throws ClassNotFoundException {
-        
+
+    public static void main(String[] args) throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, NoSuchFieldException {
+        //three_method();
+        //class_type();
+        getRuntimeClassStructure();
     }
-    
-    private static void getRuntimeClassStructure() throws ClassNotFoundException {
-        
+
+    private static void three_method() throws ClassNotFoundException {
+        // 方法一
+        Class<Student> Class_1 = Student.class;
+        System.out.println("方法一-->Class: "+Class_1 +
+                "\thashcode: " + Class_1.hashCode());
+
+        // 方法二
+        Student student = new Student();
+        Class<? extends Person> Class_2 = student.getClass();
+        System.out.println("方法二-->Class: "+Class_2 +
+                "\thashcode: " + Class_2.hashCode());
+
+        // 方法三
+        Class<?> Class_3 = Class.forName("com.qibria.reflect.Student");
+        System.out.println("方法三-->Class: "+Class_3 +
+                "\thashcode: " + Class_3.hashCode());
+    }
+
+    private static void class_type(){
+        Class c1 = Object.class; //类
+        Class c2 = Comparable.class; //接口
+        Class c3 = String[].class; //一维数组
+        Class c4 = int[][].class; //二维数组
+        Class c5 = Override.class; //注解
+        Class c6 = ElementType.class; //枚举
+        Class c7 = Integer.class; //基本数据类型
+        Class c8 = void.class; //void
+        Class c9 = Class.class; //Class
+
+        System.out.println(c1);
+        System.out.println(c2);
+        System.out.println(c3);
+        System.out.println(c4);
+        System.out.println(c5);
+        System.out.println(c6);
+        System.out.println(c7);
+        System.out.println(c8);
+        System.out.println(c9);
+    }
+
+    private static void getRuntimeClassStructure() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchFieldException {
+
+        //#######################操作Class
+        // 1.获取到Class
         Class<?> aClass = Class.forName("com.qibria.reflect.Student");
 
+        //2. 获取Class的构造方法(全参构造方法), 具体使用哪个构造方法只需要传递相应的构造参数类型即可
+        //Constructor<?> constructor = aClass.getConstructor();
+        Constructor<?> constructor = aClass.getConstructor(String.class, Integer.class, String.class);
+
+        // 3.使用构造器创建对象实例
+        Student student = (Student)constructor.newInstance("qibria", 19, "三");
+
+
+        // ####################操作属性
+
+        // 1.获取所有属性, 包括私有属性
+        Field[] declaredFields = aClass.getDeclaredFields();
+        for (Field field : declaredFields) {
+            field.setAccessible(true); // 获取private属性时候要设置权限, 否则会抛非法异常
+            String fName = field.getName();
+            Object fValue = field.get(student);
+            System.out.println(fName + ": "+fValue);
+        }
+
+        // 2.获取所有public属性
+        Field[] fields = aClass.getFields();
+
+        // 3.获取指定属性
+        // 获取对象的属性属性, 因为name这个属性实在父类Person声明的, 因此先获取父类的Class, 再调用方法获取属性, 否则无法获取到
+        Field name = aClass.getSuperclass().getDeclaredField("name");
+
+        Field grade = aClass.getDeclaredField("grade");
+        Field grade1 = aClass.getField("grade");
+        
+
+        // 使用Field 对象的get方法可以获取到对象的属性
+        String string_01 = (String)name.get(student);
+        System.out.println(string_01);
+
+        // 使用Field 对象的set方法可以设置对象的属性
+        name.set(student,"七七七");
+        String string_02 = (String)name.get(student);
+
+        System.out.println(string_02);
+
+
+        // 操作方法
+
+        Method[] declaredMethods = aClass.getDeclaredMethods();
+
+        Method setGrade = aClass.getDeclaredMethod("setGrade", String.class);
+
+        setGrade.invoke(student, "六");
+
+        System.out.println(student.getGrade());
     }
-
 }
-
 ```
 
 
