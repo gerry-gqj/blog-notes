@@ -1,6 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>debian设置静态ip</title>
+    <url>/2022/11/15/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/</url>
+    <content><![CDATA[<p>在 DHCP 网络上，您的 Linux 系统通常会自动从 DHCP 服务器接收 IP 地址，在大多数情况下，它是路由器。 IP 配置通常包括 IPv4 地址、网络掩码、网关和 DNS 设置。 这对于只需要访问 Internet 或网络资源的桌面或客户端 PC 来说通常很方便。</p>
+<p>但是，当您要设置服务器时，情况就不同了。 在这种情况下，您需要配置静态 IP 以使服务器始终通过相同的 IP 地址可用。 使用 DHCP，一旦租用时间结束，IP 地址必然会更改，从而导致服务器不可用。</p>
+<p>在本指南中，我们将带您逐步了解怎样在 Debian 11 上设置静态 IP。我们将演示怎样在桌面 GUI 和服务器实例上配置静态 IP。</p>
+<h2 id="方式一-桌面环境UI"><a href="#方式一-桌面环境UI" class="headerlink" title="方式一(桌面环境UI)"></a>方式一(桌面环境UI)</h2><p>如果您运行的是 Debian 11 桌面实例，请使用您的用户名和密码登录。 在我们配置静态 IP 之前，首先确认分配给您系统的 IP 地址。 在我们的例子中，我们在 DHCP 网络中有一台 IP 地址为 192.168.2.104 的 Debian PC。</p>
+<p>您可以使用显示的命令验证这一点。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">ip</span> addr show<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>在我们的系统中， <strong>enp0s3</strong> interface 是分配了 IP 地址的活动链路。 在您的情况下，这可能是另一回事。</p>
+<p>要开始设置静态 IP，请单击 <strong>‘活动</strong>‘在左边的远角。 搜索并单击“<strong>设置</strong>‘ 图标。</p>
+<p>在“设置”页面上，选择“<strong>网络</strong>‘ 标签。 接下来，转到“有线”部分，然后单击所示的小齿轮。</p>
+<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646185.png" alt="怎样在 Debian 11 上设置静态 IP 1"></p>
+<p>这将显示当前的 IP 地址配置，如图所示。 正如我们之前所确认的，我们当前的 IP 地址是 192.168.2.104。 这已使用 DHCP 服务动态分配给活动接口。</p>
+<p>我们将覆盖 DHCP 设置并手动设置一个静态 IP，该 IP 将在重新启动后持续存在。</p>
+<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646192.png" alt="怎样在 Debian 11 上设置静态 IP 2"></p>
+<p>点击 <strong>IPv4</strong> 标签。 切换自 <strong>自动的</strong> 到 <strong>手动的</strong> 在里面 <strong>IPv4方式</strong> 部分。 此后，指定所需的 IP 地址、网络掩码和默认网关。 请务必同时提供首选 DNS 设置。</p>
+<p>要应用所做的更改，请单击<strong>申请</strong> 按钮。</p>
+<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646209.png" alt="怎样在 Debian 11 上设置静态 IP 3"></p>
+<p>您需要重新启动 Debian 系统的网络守护进程或服务以实现新的静态 IP 设置。 因此，关闭切换按钮，然后再打开。</p>
+<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646215.png" alt="怎样在 Debian 11 上设置静态 IP 4"></p>
+<p>再次单击齿轮图标以验证是否已应用静态 IP 设置。</p>
+<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646221.png" alt="怎样在 Debian 11 上设置静态 IP 5"></p>
+<p>在终端上，验证网络接口是否已获取新配置的 IP 地址：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">ip</span> addr show<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><strong><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646228.png" alt="怎样在 Debian 11 上设置静态 IP 6"></strong></p>
+<p>输出确认系统已使用静态 IP 成功配置。 现在让我们换档并探索在命令行上设置静态 IP。</p>
+<h2 id="方式二-服务器环境"><a href="#方式二-服务器环境" class="headerlink" title="方式二(服务器环境)"></a>方式二(服务器环境)</h2><p>如果您正在运行无外设服务器，或者通过 SSH 连接到远程服务器，则唯一可用的选项是在命令行上配置静态 IP。</p>
+<p>网络配置设置存储在 <strong>&#x2F;etc&#x2F;网络&#x2F;接口</strong> 文件。 看一下文件如下。 如果您没有安装 vim，请随意使用 Nano 编辑器。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">vim</span> /etc/network/interfaces<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>默认情况下，仅指定环回设置。</p>
+<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646232.png" alt="怎样在 Debian 11 上设置静态 IP 7"></p>
+<p>我们将为我们的活动网络接口指定 IP 设置。 但在进行任何更改之前，请备份配置文件。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">cp</span> /etc/network/interfaces /etc/network/interface.bak<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646236.png" alt="怎样在 Debian 11 上设置静态 IP 8"></p>
+<p>按照提供的方式指定 IP 设置。 确保根据您的网络子网进行设置。</p>
+<pre class="line-numbers language-conf" data-language="conf"><code class="language-conf">auto enp0s3
+
+iface enp0s3 inet static
+
+ address 192.168.2.150
+
+ netmask 255.255.255.0
+
+ gateway 192.168.2.1
+
+ dns-nameservers 8.8.8.8 192.168.2.1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646239.png" alt="怎样在 Debian 11 上设置静态 IP 9"></p>
+<p>要应用更改，请重新启动网络服务。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> systemctl restart networking<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>如果您通过 SSH 连接，这将断开您与服务器的连接。 使用新设置的静态 IP 地址重新连接。</p>
+<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646243.png" alt="怎样在 Debian 11 上设置静态 IP 10"></p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a><strong>结论</strong></h2><p>我们概述了两种在 Debian 11 PC 上分配静态 IP 的方法——使用 GUI 和终端。 前者在 Debian 桌面上工作时更容易选择，后者在通过 SSH 客户端配置远程服务器时派上用场。</p>
+]]></content>
+      <categories>
+        <category>debian</category>
+      </categories>
+      <tags>
+        <tag>debian</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Dockerfile指令</title>
     <url>/2022/11/13/Dockerfile%E6%8C%87%E4%BB%A4/</url>
     <content><![CDATA[<h2 id="如何使用Dockerfile构建镜像"><a href="#如何使用Dockerfile构建镜像" class="headerlink" title="如何使用Dockerfile构建镜像"></a>如何使用<code>Dockerfile</code>构建镜像</h2><h3 id="新建一个文件夹my-app"><a href="#新建一个文件夹my-app" class="headerlink" title="新建一个文件夹my-app"></a>新建一个文件夹<code>my-app</code></h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">mkdir</span> my-app<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -262,70 +329,97 @@ EXPOSE <span class="token number">6001</span><span aria-hidden="true" class="lin
       </tags>
   </entry>
   <entry>
-    <title>debian设置静态ip</title>
-    <url>/2022/11/15/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/</url>
-    <content><![CDATA[<p>在 DHCP 网络上，您的 Linux 系统通常会自动从 DHCP 服务器接收 IP 地址，在大多数情况下，它是路由器。 IP 配置通常包括 IPv4 地址、网络掩码、网关和 DNS 设置。 这对于只需要访问 Internet 或网络资源的桌面或客户端 PC 来说通常很方便。</p>
-<p>但是，当您要设置服务器时，情况就不同了。 在这种情况下，您需要配置静态 IP 以使服务器始终通过相同的 IP 地址可用。 使用 DHCP，一旦租用时间结束，IP 地址必然会更改，从而导致服务器不可用。</p>
-<p>在本指南中，我们将带您逐步了解怎样在 Debian 11 上设置静态 IP。我们将演示怎样在桌面 GUI 和服务器实例上配置静态 IP。</p>
-<h2 id="方式一-桌面环境UI"><a href="#方式一-桌面环境UI" class="headerlink" title="方式一(桌面环境UI)"></a>方式一(桌面环境UI)</h2><p>如果您运行的是 Debian 11 桌面实例，请使用您的用户名和密码登录。 在我们配置静态 IP 之前，首先确认分配给您系统的 IP 地址。 在我们的例子中，我们在 DHCP 网络中有一台 IP 地址为 192.168.2.104 的 Debian PC。</p>
-<p>您可以使用显示的命令验证这一点。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">ip</span> addr show<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+    <title>docker-compose常用模板</title>
+    <url>/2022/11/13/docker-compose%E5%B8%B8%E7%94%A8%E6%A8%A1%E6%9D%BF/</url>
+    <content><![CDATA[<h2 id="网络服务"><a href="#网络服务" class="headerlink" title="网络服务"></a>网络服务</h2><pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">version</span><span class="token punctuation">:</span> <span class="token string">'3'</span>
+<span class="token key atrule">services</span><span class="token punctuation">:</span>
+  <span class="token key atrule">hello_web</span><span class="token punctuation">:</span>
+    <span class="token key atrule">image</span><span class="token punctuation">:</span> my<span class="token punctuation">-</span>app<span class="token punctuation">:</span>latest
+    <span class="token key atrule">container_name</span><span class="token punctuation">:</span> my<span class="token punctuation">-</span>app_6001
+    <span class="token key atrule">privileged</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>  <span class="token comment"># 提供权限</span>
+    <span class="token key atrule">network_mode</span><span class="token punctuation">:</span> bridge
+    <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> 6001<span class="token punctuation">:</span><span class="token number">6001</span> <span class="token comment"># 启动时暴露端口 内部端口3306 宿主机端口3300</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>在我们的系统中， <strong>enp0s3</strong> interface 是分配了 IP 地址的活动链路。 在您的情况下，这可能是另一回事。</p>
-<p>要开始设置静态 IP，请单击 <strong>‘活动</strong>‘在左边的远角。 搜索并单击“<strong>设置</strong>‘ 图标。</p>
-<p>在“设置”页面上，选择“<strong>网络</strong>‘ 标签。 接下来，转到“有线”部分，然后单击所示的小齿轮。</p>
-<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646185.png" alt="怎样在 Debian 11 上设置静态 IP 1"></p>
-<p>这将显示当前的 IP 地址配置，如图所示。 正如我们之前所确认的，我们当前的 IP 地址是 192.168.2.104。 这已使用 DHCP 服务动态分配给活动接口。</p>
-<p>我们将覆盖 DHCP 设置并手动设置一个静态 IP，该 IP 将在重新启动后持续存在。</p>
-<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646192.png" alt="怎样在 Debian 11 上设置静态 IP 2"></p>
-<p>点击 <strong>IPv4</strong> 标签。 切换自 <strong>自动的</strong> 到 <strong>手动的</strong> 在里面 <strong>IPv4方式</strong> 部分。 此后，指定所需的 IP 地址、网络掩码和默认网关。 请务必同时提供首选 DNS 设置。</p>
-<p>要应用所做的更改，请单击<strong>申请</strong> 按钮。</p>
-<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646209.png" alt="怎样在 Debian 11 上设置静态 IP 3"></p>
-<p>您需要重新启动 Debian 系统的网络守护进程或服务以实现新的静态 IP 设置。 因此，关闭切换按钮，然后再打开。</p>
-<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646215.png" alt="怎样在 Debian 11 上设置静态 IP 4"></p>
-<p>再次单击齿轮图标以验证是否已应用静态 IP 设置。</p>
-<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646221.png" alt="怎样在 Debian 11 上设置静态 IP 5"></p>
-<p>在终端上，验证网络接口是否已获取新配置的 IP 地址：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">ip</span> addr show<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><strong><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646228.png" alt="怎样在 Debian 11 上设置静态 IP 6"></strong></p>
-<p>输出确认系统已使用静态 IP 成功配置。 现在让我们换档并探索在命令行上设置静态 IP。</p>
-<h2 id="方式二-服务器环境"><a href="#方式二-服务器环境" class="headerlink" title="方式二(服务器环境)"></a>方式二(服务器环境)</h2><p>如果您正在运行无外设服务器，或者通过 SSH 连接到远程服务器，则唯一可用的选项是在命令行上配置静态 IP。</p>
-<p>网络配置设置存储在 <strong>&#x2F;etc&#x2F;网络&#x2F;接口</strong> 文件。 看一下文件如下。 如果您没有安装 vim，请随意使用 Nano 编辑器。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">vim</span> /etc/network/interfaces<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p>默认情况下，仅指定环回设置。</p>
-<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646232.png" alt="怎样在 Debian 11 上设置静态 IP 7"></p>
-<p>我们将为我们的活动网络接口指定 IP 设置。 但在进行任何更改之前，请备份配置文件。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">cp</span> /etc/network/interfaces /etc/network/interface.bak<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h2 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h2><pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">version</span><span class="token punctuation">:</span> <span class="token string">'3'</span>
+<span class="token key atrule">services</span><span class="token punctuation">:</span>
+  <span class="token key atrule">mysql</span><span class="token punctuation">:</span>
+    <span class="token key atrule">image</span><span class="token punctuation">:</span> qibria/mysql<span class="token punctuation">:</span><span class="token number">5.7</span>
+    <span class="token key atrule">container_name</span><span class="token punctuation">:</span> mysql<span class="token punctuation">-</span>5.7<span class="token punctuation">-</span><span class="token number">3300</span>
+    <span class="token key atrule">restart</span><span class="token punctuation">:</span> always <span class="token comment"># 总是开机启动</span>
+    <span class="token key atrule">network_mode</span><span class="token punctuation">:</span> bridge
+      <span class="token comment">#no不自动重启容器. (默认value)</span>
+      <span class="token comment">#on-failure 容器发生error而退出(容器退出状态不为0)重启容器</span>
+      <span class="token comment">#unless-stopped 在容器已经stop掉或Docker stoped/restarted的时候才重启容器</span>
+      <span class="token comment">#always 在容器已经stop掉或Docker stoped/restarted的时候才重启容器</span>
+    <span class="token key atrule">privileged</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>  <span class="token comment"># 提供权限</span>
+    <span class="token key atrule">volumes</span><span class="token punctuation">:</span> <span class="token comment"># 容器数据卷挂载</span>
+      <span class="token punctuation">-</span> v5.7_3300_data<span class="token punctuation">:</span>/var/lib/mysql<span class="token punctuation">:</span>rw <span class="token comment"># 数据文件</span>
+      <span class="token punctuation">-</span> v5.7_3300<span class="token punctuation">-</span>log<span class="token punctuation">:</span>/var/log/mysql<span class="token punctuation">:</span>rw <span class="token comment"># 日志文件</span>
+      <span class="token punctuation">-</span> v5.7_3300_config<span class="token punctuation">:</span>/etc/mysql/conf.d<span class="token punctuation">:</span>rw <span class="token comment"># 配置文件</span>
+    <span class="token key atrule">environment</span><span class="token punctuation">:</span>
+      <span class="token key atrule">MYSQL_ROOT_PASSWORD</span><span class="token punctuation">:</span> root <span class="token comment"># root 用户密码</span>
+      <span class="token key atrule">MYSQL_ALLOW_EMPTY_PASSWORD</span><span class="token punctuation">:</span> no <span class="token comment"># 不允许空密码登录</span>
+      <span class="token comment">#MYSQL_DATABASE: db2021 # 创建容器时创建数据库</span>
+      <span class="token key atrule">MYSQL_USER</span><span class="token punctuation">:</span> mysqldboy <span class="token comment"># 创建用户 具备admin权限 用户名</span>
+      <span class="token key atrule">MYSQL_PASSWORD</span><span class="token punctuation">:</span> mysqldboy <span class="token comment"># 密码</span>
+    <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> 3300<span class="token punctuation">:</span><span class="token number">3306</span> <span class="token comment"># 启动时暴露端口 内部端口3306 宿主机端口3300</span>
+    <span class="token key atrule">mem_limit</span><span class="token punctuation">:</span> 1g <span class="token comment"># 最大内存空间占用 1g</span>
+<span class="token key atrule">volumes</span><span class="token punctuation">:</span> <span class="token comment"># 容器数据卷</span>
+  <span class="token key atrule">v5.7_3300_data</span><span class="token punctuation">:</span>
+  <span class="token key atrule">v5.7_3300-log</span><span class="token punctuation">:</span>
+  v5.7_3300_config<span class="token punctuation">:</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646236.png" alt="怎样在 Debian 11 上设置静态 IP 8"></p>
-<p>按照提供的方式指定 IP 设置。 确保根据您的网络子网进行设置。</p>
-<pre class="line-numbers language-conf" data-language="conf"><code class="language-conf">auto enp0s3
 
-iface enp0s3 inet static
 
- address 192.168.2.150
+<h2 id="nacos"><a href="#nacos" class="headerlink" title="nacos"></a>nacos</h2><pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">version</span><span class="token punctuation">:</span> <span class="token string">'3'</span>
+<span class="token key atrule">services</span><span class="token punctuation">:</span>
+  <span class="token key atrule">nacos</span><span class="token punctuation">:</span>
+    <span class="token key atrule">image</span><span class="token punctuation">:</span> qibria/nacos<span class="token punctuation">-</span>server<span class="token punctuation">:</span>v2.1.0
+    <span class="token key atrule">container_name</span><span class="token punctuation">:</span> nacos<span class="token punctuation">-</span>server<span class="token punctuation">-</span>v2.1.0<span class="token punctuation">-</span><span class="token number">8840</span>
+    <span class="token key atrule">restart</span><span class="token punctuation">:</span> always <span class="token comment"># 总是开机启动</span>
+    <span class="token key atrule">privileged</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>  <span class="token comment"># 提供权限</span>
+    <span class="token key atrule">network_mode</span><span class="token punctuation">:</span> bridge
+    <span class="token key atrule">environment</span><span class="token punctuation">:</span>
+      <span class="token key atrule">PREFER_HOST_MODE</span><span class="token punctuation">:</span> hostname       <span class="token comment"># 是否支持hostname</span>
+      <span class="token key atrule">MODE</span><span class="token punctuation">:</span> standalone                           <span class="token comment"># 单机模式启动</span>
+      <span class="token key atrule">SPRING_DATASOURCE_PLATFORM</span><span class="token punctuation">:</span> mysql
+      <span class="token key atrule">MYSQL_SERVICE_HOST</span><span class="token punctuation">:</span> dboy    <span class="token comment"># 注：这里不能为`127.0.0.1`或`localhost`方式！！！</span>
+      <span class="token key atrule">MYSQL_SERVICE_DB_NAME</span><span class="token punctuation">:</span> nacos_config        <span class="token comment"># 所需sql脚本位于 `nacos-mysql/nacos-mysql.sql`</span>
+      <span class="token key atrule">MYSQL_SERVICE_PORT</span><span class="token punctuation">:</span> <span class="token number">3300</span>
+      <span class="token key atrule">MYSQL_SERVICE_USER</span><span class="token punctuation">:</span> root
+      <span class="token key atrule">MYSQL_SERVICE_PASSWORD</span><span class="token punctuation">:</span> root
+       <span class="token comment"># JVM调优参数</span>
+      <span class="token key atrule">JVM_XMS</span><span class="token punctuation">:</span> 512m   <span class="token comment">#-Xms default :2g</span>
+      <span class="token key atrule">JVM_XMX</span><span class="token punctuation">:</span> 512m   <span class="token comment">#-Xmx default :2g</span>
+      <span class="token key atrule">JVM_XMN</span><span class="token punctuation">:</span> 256m   <span class="token comment">#-Xmn default :1g</span>
+      <span class="token key atrule">JVM_MS</span><span class="token punctuation">:</span> 128m     <span class="token comment">#-XX:MetaspaceSize default :128m</span>
+      <span class="token key atrule">JVM_MMS</span><span class="token punctuation">:</span> 320m    <span class="token comment">#-XX:MaxMetaspaceSize default :320m</span>
+      <span class="token key atrule">NACOS_DEBUG</span><span class="token punctuation">:</span> n <span class="token comment">#是否开启远程debug，y/n，默认n</span>
+      <span class="token key atrule">TOMCAT_ACCESSLOG_ENABLED</span><span class="token punctuation">:</span> <span class="token boolean important">false</span> <span class="token comment">#是否开始tomcat访问日志的记录，默认false</span>
+    <span class="token key atrule">volumes</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> logs<span class="token punctuation">:</span>/home/nacos/logs<span class="token punctuation">:</span>rw
+      <span class="token punctuation">-</span> init.d<span class="token punctuation">:</span>/home/nacos/init.d<span class="token punctuation">:</span>rw
+    <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> 8840<span class="token punctuation">:</span><span class="token number">8848</span> <span class="token comment"># 启动时暴露端口 内部端口3306 宿主机端口3300</span>
+<span class="token key atrule">volumes</span><span class="token punctuation">:</span> <span class="token comment"># 容器数据卷</span>
+  <span class="token key atrule">logs</span><span class="token punctuation">:</span>
+  init.d<span class="token punctuation">:</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
- netmask 255.255.255.0
 
- gateway 192.168.2.1
 
- dns-nameservers 8.8.8.8 192.168.2.1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646239.png" alt="怎样在 Debian 11 上设置静态 IP 9"></p>
-<p>要应用更改，请重新启动网络服务。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> systemctl restart networking<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p>如果您通过 SSH 连接，这将断开您与服务器的连接。 使用新设置的静态 IP 地址重新连接。</p>
-<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646243.png" alt="怎样在 Debian 11 上设置静态 IP 10"></p>
-<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a><strong>结论</strong></h2><p>我们概述了两种在 Debian 11 PC 上分配静态 IP 的方法——使用 GUI 和终端。 前者在 Debian 桌面上工作时更容易选择，后者在通过 SSH 客户端配置远程服务器时派上用场。</p>
 ]]></content>
       <categories>
-        <category>debian</category>
+        <category>docker</category>
       </categories>
       <tags>
-        <tag>debian</tag>
+        <tag>docker</tag>
+        <tag>docker compose</tag>
       </tags>
   </entry>
   <entry>
@@ -604,100 +698,6 @@ iface enp0s3 inet static
       </tags>
   </entry>
   <entry>
-    <title>docker-compose常用模板</title>
-    <url>/2022/11/13/docker-compose%E5%B8%B8%E7%94%A8%E6%A8%A1%E6%9D%BF/</url>
-    <content><![CDATA[<h2 id="网络服务"><a href="#网络服务" class="headerlink" title="网络服务"></a>网络服务</h2><pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">version</span><span class="token punctuation">:</span> <span class="token string">'3'</span>
-<span class="token key atrule">services</span><span class="token punctuation">:</span>
-  <span class="token key atrule">hello_web</span><span class="token punctuation">:</span>
-    <span class="token key atrule">image</span><span class="token punctuation">:</span> my<span class="token punctuation">-</span>app<span class="token punctuation">:</span>latest
-    <span class="token key atrule">container_name</span><span class="token punctuation">:</span> my<span class="token punctuation">-</span>app_6001
-    <span class="token key atrule">privileged</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>  <span class="token comment"># 提供权限</span>
-    <span class="token key atrule">network_mode</span><span class="token punctuation">:</span> bridge
-    <span class="token key atrule">ports</span><span class="token punctuation">:</span>
-      <span class="token punctuation">-</span> 6001<span class="token punctuation">:</span><span class="token number">6001</span> <span class="token comment"># 启动时暴露端口 内部端口3306 宿主机端口3300</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-<h2 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h2><pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">version</span><span class="token punctuation">:</span> <span class="token string">'3'</span>
-<span class="token key atrule">services</span><span class="token punctuation">:</span>
-  <span class="token key atrule">mysql</span><span class="token punctuation">:</span>
-    <span class="token key atrule">image</span><span class="token punctuation">:</span> qibria/mysql<span class="token punctuation">:</span><span class="token number">5.7</span>
-    <span class="token key atrule">container_name</span><span class="token punctuation">:</span> mysql<span class="token punctuation">-</span>5.7<span class="token punctuation">-</span><span class="token number">3300</span>
-    <span class="token key atrule">restart</span><span class="token punctuation">:</span> always <span class="token comment"># 总是开机启动</span>
-    <span class="token key atrule">network_mode</span><span class="token punctuation">:</span> bridge
-      <span class="token comment">#no不自动重启容器. (默认value)</span>
-      <span class="token comment">#on-failure 容器发生error而退出(容器退出状态不为0)重启容器</span>
-      <span class="token comment">#unless-stopped 在容器已经stop掉或Docker stoped/restarted的时候才重启容器</span>
-      <span class="token comment">#always 在容器已经stop掉或Docker stoped/restarted的时候才重启容器</span>
-    <span class="token key atrule">privileged</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>  <span class="token comment"># 提供权限</span>
-    <span class="token key atrule">volumes</span><span class="token punctuation">:</span> <span class="token comment"># 容器数据卷挂载</span>
-      <span class="token punctuation">-</span> v5.7_3300_data<span class="token punctuation">:</span>/var/lib/mysql<span class="token punctuation">:</span>rw <span class="token comment"># 数据文件</span>
-      <span class="token punctuation">-</span> v5.7_3300<span class="token punctuation">-</span>log<span class="token punctuation">:</span>/var/log/mysql<span class="token punctuation">:</span>rw <span class="token comment"># 日志文件</span>
-      <span class="token punctuation">-</span> v5.7_3300_config<span class="token punctuation">:</span>/etc/mysql/conf.d<span class="token punctuation">:</span>rw <span class="token comment"># 配置文件</span>
-    <span class="token key atrule">environment</span><span class="token punctuation">:</span>
-      <span class="token key atrule">MYSQL_ROOT_PASSWORD</span><span class="token punctuation">:</span> root <span class="token comment"># root 用户密码</span>
-      <span class="token key atrule">MYSQL_ALLOW_EMPTY_PASSWORD</span><span class="token punctuation">:</span> no <span class="token comment"># 不允许空密码登录</span>
-      <span class="token comment">#MYSQL_DATABASE: db2021 # 创建容器时创建数据库</span>
-      <span class="token key atrule">MYSQL_USER</span><span class="token punctuation">:</span> mysqldboy <span class="token comment"># 创建用户 具备admin权限 用户名</span>
-      <span class="token key atrule">MYSQL_PASSWORD</span><span class="token punctuation">:</span> mysqldboy <span class="token comment"># 密码</span>
-    <span class="token key atrule">ports</span><span class="token punctuation">:</span>
-      <span class="token punctuation">-</span> 3300<span class="token punctuation">:</span><span class="token number">3306</span> <span class="token comment"># 启动时暴露端口 内部端口3306 宿主机端口3300</span>
-    <span class="token key atrule">mem_limit</span><span class="token punctuation">:</span> 1g <span class="token comment"># 最大内存空间占用 1g</span>
-<span class="token key atrule">volumes</span><span class="token punctuation">:</span> <span class="token comment"># 容器数据卷</span>
-  <span class="token key atrule">v5.7_3300_data</span><span class="token punctuation">:</span>
-  <span class="token key atrule">v5.7_3300-log</span><span class="token punctuation">:</span>
-  v5.7_3300_config<span class="token punctuation">:</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-<h2 id="nacos"><a href="#nacos" class="headerlink" title="nacos"></a>nacos</h2><pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">version</span><span class="token punctuation">:</span> <span class="token string">'3'</span>
-<span class="token key atrule">services</span><span class="token punctuation">:</span>
-  <span class="token key atrule">nacos</span><span class="token punctuation">:</span>
-    <span class="token key atrule">image</span><span class="token punctuation">:</span> qibria/nacos<span class="token punctuation">-</span>server<span class="token punctuation">:</span>v2.1.0
-    <span class="token key atrule">container_name</span><span class="token punctuation">:</span> nacos<span class="token punctuation">-</span>server<span class="token punctuation">-</span>v2.1.0<span class="token punctuation">-</span><span class="token number">8840</span>
-    <span class="token key atrule">restart</span><span class="token punctuation">:</span> always <span class="token comment"># 总是开机启动</span>
-    <span class="token key atrule">privileged</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>  <span class="token comment"># 提供权限</span>
-    <span class="token key atrule">network_mode</span><span class="token punctuation">:</span> bridge
-    <span class="token key atrule">environment</span><span class="token punctuation">:</span>
-      <span class="token key atrule">PREFER_HOST_MODE</span><span class="token punctuation">:</span> hostname       <span class="token comment"># 是否支持hostname</span>
-      <span class="token key atrule">MODE</span><span class="token punctuation">:</span> standalone                           <span class="token comment"># 单机模式启动</span>
-      <span class="token key atrule">SPRING_DATASOURCE_PLATFORM</span><span class="token punctuation">:</span> mysql
-      <span class="token key atrule">MYSQL_SERVICE_HOST</span><span class="token punctuation">:</span> dboy    <span class="token comment"># 注：这里不能为`127.0.0.1`或`localhost`方式！！！</span>
-      <span class="token key atrule">MYSQL_SERVICE_DB_NAME</span><span class="token punctuation">:</span> nacos_config        <span class="token comment"># 所需sql脚本位于 `nacos-mysql/nacos-mysql.sql`</span>
-      <span class="token key atrule">MYSQL_SERVICE_PORT</span><span class="token punctuation">:</span> <span class="token number">3300</span>
-      <span class="token key atrule">MYSQL_SERVICE_USER</span><span class="token punctuation">:</span> root
-      <span class="token key atrule">MYSQL_SERVICE_PASSWORD</span><span class="token punctuation">:</span> root
-       <span class="token comment"># JVM调优参数</span>
-      <span class="token key atrule">JVM_XMS</span><span class="token punctuation">:</span> 512m   <span class="token comment">#-Xms default :2g</span>
-      <span class="token key atrule">JVM_XMX</span><span class="token punctuation">:</span> 512m   <span class="token comment">#-Xmx default :2g</span>
-      <span class="token key atrule">JVM_XMN</span><span class="token punctuation">:</span> 256m   <span class="token comment">#-Xmn default :1g</span>
-      <span class="token key atrule">JVM_MS</span><span class="token punctuation">:</span> 128m     <span class="token comment">#-XX:MetaspaceSize default :128m</span>
-      <span class="token key atrule">JVM_MMS</span><span class="token punctuation">:</span> 320m    <span class="token comment">#-XX:MaxMetaspaceSize default :320m</span>
-      <span class="token key atrule">NACOS_DEBUG</span><span class="token punctuation">:</span> n <span class="token comment">#是否开启远程debug，y/n，默认n</span>
-      <span class="token key atrule">TOMCAT_ACCESSLOG_ENABLED</span><span class="token punctuation">:</span> <span class="token boolean important">false</span> <span class="token comment">#是否开始tomcat访问日志的记录，默认false</span>
-    <span class="token key atrule">volumes</span><span class="token punctuation">:</span>
-      <span class="token punctuation">-</span> logs<span class="token punctuation">:</span>/home/nacos/logs<span class="token punctuation">:</span>rw
-      <span class="token punctuation">-</span> init.d<span class="token punctuation">:</span>/home/nacos/init.d<span class="token punctuation">:</span>rw
-    <span class="token key atrule">ports</span><span class="token punctuation">:</span>
-      <span class="token punctuation">-</span> 8840<span class="token punctuation">:</span><span class="token number">8848</span> <span class="token comment"># 启动时暴露端口 内部端口3306 宿主机端口3300</span>
-<span class="token key atrule">volumes</span><span class="token punctuation">:</span> <span class="token comment"># 容器数据卷</span>
-  <span class="token key atrule">logs</span><span class="token punctuation">:</span>
-  init.d<span class="token punctuation">:</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-
-
-]]></content>
-      <categories>
-        <category>docker</category>
-      </categories>
-      <tags>
-        <tag>docker</tag>
-        <tag>docker compose</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>git设置代理</title>
     <url>/2022/11/15/git%E8%AE%BE%E7%BD%AE%E4%BB%A3%E7%90%86/</url>
     <content><![CDATA[<h2 id="全局代理"><a href="#全局代理" class="headerlink" title="全局代理"></a>全局代理</h2><p><code>http</code> 代理</p>
@@ -768,47 +768,195 @@ iface enp0s3 inet static
 ]]></content>
   </entry>
   <entry>
-    <title>mysql5.7配置文件</title>
-    <url>/2022/11/13/mysql5-7%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/</url>
-    <content><![CDATA[<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p><code>debian bullseye (GNU/Linux)</code></p>
-<p><code>mysql5.7</code></p>
-<p><code>mysql</code>配置文件路径 <code>/etc/mysql/conf.d</code></p>
-<h3 id="新建配置文件-my-cnf"><a href="#新建配置文件-my-cnf" class="headerlink" title="新建配置文件 my.cnf"></a>新建配置文件 <code>my.cnf</code></h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">touch</span> /etc/mysql/conf.d/my.cnf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+    <title>java Lambda表达式</title>
+    <url>/2022/11/24/java-Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>java内部类</title>
+    <url>/2022/11/24/java%E5%86%85%E9%83%A8%E7%B1%BB/</url>
+    <content><![CDATA[<h2 id="成员内部类"><a href="#成员内部类" class="headerlink" title="成员内部类"></a>成员内部类</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Outer</span> <span class="token punctuation">&#123;</span><span class="token comment">//外部类</span>
+    <span class="token keyword">class</span> <span class="token class-name">Inner</span> <span class="token punctuation">&#123;</span><span class="token comment">//内部类</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>成员内部类可以拥有 private 访问权限、protected 访问权限、public 访问权限及包访问权限。</p>
+<p>如果成员内部类 Inner 用 private 修饰，则只能在外部类的内部访问，如果用 public 修饰，则任何地方都能访问；如果用 protected 修饰，则只能在同一个包下或者继承外部类的情况下访问；如果是默认访问权限，则只能在同一个包下访问。这一点和外部类有一点不一样，外部类只能被 public 和包访问两种权限修饰。由于成员内部类看起来像是外部类的一个成员，所以可以像类的成员一样拥有多种权限修饰。</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Outer</span> <span class="token punctuation">&#123;</span>
+
+    <span class="token keyword">private</span> <span class="token class-name">String</span> name<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token class-name">Outer</span><span class="token punctuation">(</span><span class="token class-name">String</span> name<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">out_mem_fuc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"外部类成员方法"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token comment">// 成员内部类 成员</span>
+    <span class="token keyword">class</span> <span class="token class-name">MemberInner</span><span class="token punctuation">&#123;</span>
+        <span class="token keyword">void</span> <span class="token function">mem_fuc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"this: "</span><span class="token operator">+</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">getClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"name:"</span> <span class="token operator">+</span> name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            name <span class="token operator">=</span> <span class="token string">"外部类(修改后)"</span><span class="token punctuation">;</span>
+            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"name:"</span> <span class="token operator">+</span> name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token function">out_mem_fuc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">new</span> <span class="token class-name">Outer</span><span class="token punctuation">(</span><span class="token string">"外部类"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token keyword">new</span> <span class="token class-name">MemberInner</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">mem_fuc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
 
-<h2 id="添加内容"><a href="#添加内容" class="headerlink" title="添加内容"></a>添加内容</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">nano</span> /etc/mysql/conf.d/my.cnf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>内容如下:</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>client<span class="token punctuation">]</span>
-<span class="token assign-left variable">default_character_set</span><span class="token operator">=</span>utf8mb4
-
-<span class="token punctuation">[</span>mysql<span class="token punctuation">]</span>
-default-character-set<span class="token operator">=</span>utf8mb4
-
-<span class="token punctuation">[</span>mysqld<span class="token punctuation">]</span>
-<span class="token assign-left variable">collation_server</span><span class="token operator">=</span>utf8mb4_unicode_ci
-<span class="token assign-left variable">character_set_server</span><span class="token operator">=</span>utf8mb4 
-character-set-client-handshake <span class="token operator">=</span> <span class="token boolean">false</span> <span class="token comment">#设置为 False, 在客户端字符集和服务端字符集不同的时候将拒绝连接到服务端执行任何操作</span>
-init_connect <span class="token operator">=</span> <span class="token string">'SET NAMES utf8mb4'</span>
-bind-address<span class="token operator">=</span><span class="token number">0.0</span>.0.0
-default-time_zone<span class="token operator">=</span><span class="token string">'+8:00'</span> <span class="token comment">#设置时区</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-txt" data-language="txt"><code class="language-txt">this: class com.qibria.inner.Outer$MemberInner
+name:外部类
+name:外部类(修改后)
+外部类成员方法<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
 
 
 
 
+<h2 id="局部内部类"><a href="#局部内部类" class="headerlink" title="局部内部类"></a>局部内部类</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Outer</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">out_local_fuc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token keyword">class</span> <span class="token class-name">LocalInner</span><span class="token punctuation">&#123;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>局部内部类就像是方法里面的一个局部变量一样，是不能有 public、protected、private 以及 static 修饰符的。</p>
+<p>（1）局部内部类可以直接访问外部类的所有成员，包含私有的；</p>
+<p>（2）不能添加修饰符，因为它是一个局部变量，局部变量是不能使用修饰符的，但是可以用final修饰，因为局部变量是可以使用final修饰的。</p>
+<p>（3）作用域仅仅在定义它的方法或者代码块中。</p>
+<p>（4）局部内部类访问外部类的成员属性或者方法时，直接访问；</p>
+<p>（5）外部类访问局部内部类的成员属性或者方法时，通过先创建对象，再访问，且必须要在作用域内。</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Outer</span> <span class="token punctuation">&#123;</span>
+
+    <span class="token keyword">private</span> <span class="token class-name">String</span> name<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token class-name">Outer</span><span class="token punctuation">(</span><span class="token class-name">String</span> name<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">out_mem_fuc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"外部类成员方法"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">out_local_fuc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token keyword">class</span> <span class="token class-name">LocalInner</span><span class="token punctuation">&#123;</span>
+            <span class="token keyword">void</span> <span class="token function">local_fuc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+                <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"this: "</span> <span class="token operator">+</span> <span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"修改前的外部类-->name: "</span><span class="token operator">+</span><span class="token class-name">Outer</span><span class="token punctuation">.</span><span class="token keyword">this</span><span class="token punctuation">.</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token class-name">Outer</span><span class="token punctuation">.</span><span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">"外部类(修改)"</span><span class="token punctuation">;</span>
+                <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"修改后外部类-->name: "</span><span class="token operator">+</span><span class="token class-name">Outer</span><span class="token punctuation">.</span><span class="token keyword">this</span><span class="token punctuation">.</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token function">out_mem_fuc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">new</span> <span class="token class-name">LocalInner</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">local_fuc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">new</span> <span class="token class-name">Outer</span><span class="token punctuation">(</span><span class="token string">"外部类"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">out_local_fuc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-txt" data-language="txt"><code class="language-txt">this: com.qibria.inner.Outer$1LocalInner@5e2de80c
+修改前的外部类-->name: 外部类
+修改后外部类-->name: 外部类(修改)
+外部类成员方法<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
 
 
+<h2 id="匿名内部类"><a href="#匿名内部类" class="headerlink" title="匿名内部类"></a>匿名内部类</h2><p>Java 中可以实现一个类中包含另外一个类，且不需要提供任何的类名直接实例化。主要是用于在我们需要的时候创建一个对象来执行特定的任务，可以使代码更加简洁。匿名类是不能有名字的类，它们不能被引用，只能在创建时用 <strong>new</strong> 语句来声明它们。</p>
+<p>匿名内部类也是不能有访问修饰符和 static 修饰符的。</p>
+<p>匿名内部类是唯一一种没有构造器的类。正因为其没有构造器，所以匿名内部类的使用范围非常有限，大部分匿名内部类用于接口回调。</p>
+<p>匿名内部类在编译的时候由系统自动起名为 Outer$1.class。</p>
+<p>匿名内部类主要用于继承其他类或是实现接口，并不需要增加额外的方法，只是对继承方法的实现或是重写。</p>
+<p>匿名内部类使用一次，就不再使用。</p>
+<p>内部类可以直接访问外部属性，但是不要进行修改，如果真的需要修改请用final 数组，通过修改数组内部属性达到修改目的</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span>  num <span class="token operator">=</span> <span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token keyword">new</span> <span class="token class-name">Consumer</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token annotation punctuation">@Override</span>
+        <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">accept</span><span class="token punctuation">(</span><span class="token class-name">Integer</span> o<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"this: "</span> <span class="token operator">+</span> <span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"修改前-->num: "</span><span class="token operator">+</span>num<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment">//num = 456; // 报错--> java: 从内部类引用的本地变量必须是最终变量或实际上的最终变量</span>
+            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"修改后-->num: "</span> <span class="token operator">+</span> num<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">.</span><span class="token function">accept</span><span class="token punctuation">(</span>num<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-txt" data-language="txt"><code class="language-txt">this: com.qibria.inner.Outer$1@1d44bcfa
+修改前-->num: 123
+修改后-->num: 123<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+
+
+
+
+<h2 id="静态内部类"><a href="#静态内部类" class="headerlink" title="静态内部类"></a>静态内部类</h2><p>静态内部类也是定义在另一个类里面的类，只不过在类的前面多了一个关键字static。静态内部类是不需要依赖于外部类的，这点和类的静态成员属性有点类似，并且它不能使用外部类的非static成员变量或者方法，这点很好理解，因为在没有外部类的对象的情况下，可以创建静态内部类的对象，如果允许访问外部类的非static成员就会产生矛盾，因为外部类的非static成员必须依附于具体的对象。可以添加任意的访问修饰符public、protected、private 以及默认，因为它就是类的成员。作用域和其他类成员一样，为整个类体。</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Outer</span> <span class="token punctuation">&#123;</span><span class="token comment">//外部类</span>
+    <span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">Inner</span> <span class="token punctuation">&#123;</span><span class="token comment">//内部类</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">package</span> <span class="token namespace">com<span class="token punctuation">.</span>qibria<span class="token punctuation">.</span>reflect<span class="token punctuation">.</span>demo_01</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>function<span class="token punctuation">.</span></span><span class="token class-name">Consumer</span></span><span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Outer</span> <span class="token punctuation">&#123;</span>
+
+    <span class="token keyword">private</span> <span class="token class-name">String</span> name<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token class-name">Outer</span><span class="token punctuation">(</span><span class="token class-name">String</span> name<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">out_mem_fuc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"外部类成员方法"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">out_static_fuc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"外部类静态方法"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    
+    <span class="token comment">// 成员内部类 成员</span>
+    <span class="token keyword">static</span> <span class="token keyword">int</span> static_num  <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">StaticInner</span><span class="token punctuation">&#123;</span>
+        <span class="token keyword">void</span> <span class="token function">static_fuc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"this: "</span><span class="token operator">+</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">getClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"修改前-->num: "</span><span class="token operator">+</span>static_num<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            static_num <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"修改后-->num: "</span><span class="token operator">+</span>static_num<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token function">out_static_fuc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">new</span> <span class="token class-name">StaticInner</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">static_fuc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-txt" data-language="txt"><code class="language-txt">this: class com.qibria.inner.Outer$StaticInner
+修改前-->num: 1
+修改后-->num: 2
+外部类静态方法<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
 ]]></content>
       <categories>
-        <category>mysql</category>
+        <category>java</category>
       </categories>
       <tags>
-        <tag>mysql</tag>
-        <tag>mysql5.7</tag>
+        <tag>java</tag>
+        <tag>内部类</tag>
       </tags>
   </entry>
   <entry>
@@ -1044,6 +1192,215 @@ default-time_zone<span class="token operator">=</span><span class="token string"
 
 
 <h2 id="基于Spring-FactoryBean的动态代理框架封装"><a href="#基于Spring-FactoryBean的动态代理框架封装" class="headerlink" title="基于Spring FactoryBean的动态代理框架封装"></a>基于<code>Spring FactoryBean</code>的动态代理框架封装</h2>]]></content>
+      <categories>
+        <category>java</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+        <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>java反射</title>
+    <url>/2022/11/24/java%E5%8F%8D%E5%B0%84/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Reflection(反射)是Java被视为动态语言的关键，反射机制允许程序在执行期间借助于Reflection API取得任何类的内部信息，并能直接操作任意对象的内部属性及方法</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">Class</span> c <span class="token operator">=</span> <span class="token class-name">Class</span><span class="token punctuation">.</span><span class="token function">forName</span><span class="token punctuation">(</span><span class="token string">"java.lang.String"</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>加载完类之后，在堆内存的方法区中就产生了一个Class类型的对象(一个类中只有一个Class对象), 这个对象就包含了完整的类的结构信息。 我们可以以通过这个对象看到类的内部结构这就称为反射</p>
+<h2 id="反射相关的主要API"><a href="#反射相关的主要API" class="headerlink" title="反射相关的主要API"></a>反射相关的主要API</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span></span>Class</span><span class="token operator">:</span> 代表一个类
+
+<span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span>reflect<span class="token punctuation">.</span></span>Method</span><span class="token operator">:</span> 代表类的方法
+
+<span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span>relfect<span class="token punctuation">.</span></span>Field</span><span class="token operator">:</span> 代表类的成员变量
+
+<span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span>relfect<span class="token punctuation">.</span></span>Contructor</span><span class="token operator">:</span> 代表类的构造器<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+
+
+<p>在Object类中定义了一下的方法，此方法将被所有的子类继承</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token class-name">Class</span> <span class="token function">getClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<p>此方法返回值的类型是一个Class类，此类是Java反射的源头，实际上所谓的反射从程序的运行结果来看也很好理解，即：通过对象反射求出类的名称。</p>
+<p>对象通过反射后可以得到的信息：某个类的属性、方法和构造器、某个类到底实现了那些接口。对于每个类而言，JRE都为其保留一个不变的Class类型的对象。一个Class对象包含了特定的某个结构<code>(class/interface/enum/annotation/primitive type/void[])</code>的有关信息。</p>
+<ul>
+<li>Class 本身也是一个类</li>
+<li>Class 对象只能由系统建立对象</li>
+<li>一个加载的类在JVM中只有一个Class的实例</li>
+<li>一个Class对象对应的是一个加载到JVM中的.class文件</li>
+<li>每个类的实例都会记得自己是由哪个Class实例产生的</li>
+<li>通过Class可以完整地得到一个类中地所有被加载的结构</li>
+<li>Class类是Reflection的根源，针对任何你想动态加载、运行的类，唯有想获得相应的Class对象</li>
+</ul>
+<p>Class类中的常用方法</p>
+<table>
+<thead>
+<tr>
+<th align="left">方法名</th>
+<th>功能说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>Class.forName()</code></td>
+<td>动态加载类</td>
+</tr>
+<tr>
+<td align="left"><code>newInstance()</code></td>
+<td>根据对象的class新建一个对象</td>
+</tr>
+<tr>
+<td align="left"><code>getSuperclass()</code></td>
+<td>获取继承的父类</td>
+</tr>
+<tr>
+<td align="left"><code>getInterfaces()</code></td>
+<td>获取继承的接口</td>
+</tr>
+<tr>
+<td align="left"><code>getDeclaredFields()</code></td>
+<td>获取字段名字</td>
+</tr>
+<tr>
+<td align="left"><code>getDeclaredMethods()</code></td>
+<td>获取当前类的所有方法</td>
+</tr>
+<tr>
+<td align="left"><code>getConstructors()</code></td>
+<td>获得所有的构造函数</td>
+</tr>
+<tr>
+<td align="left"><code>getModifiers()</code></td>
+<td>反射中获得修饰符</td>
+</tr>
+<tr>
+<td align="left"><code>getPackage()</code></td>
+<td>反射中获得package</td>
+</tr>
+<tr>
+<td align="left"><code>getField(String name）</code></td>
+<td>反射中获得域成员</td>
+</tr>
+<tr>
+<td align="left"><code>getFields()</code></td>
+<td>获得域数组成员</td>
+</tr>
+<tr>
+<td align="left"><code>isAnnotation()</code></td>
+<td>判断是否为注解类型</td>
+</tr>
+<tr>
+<td align="left"><code>isPrimitive()</code></td>
+<td>判断是否为基本类型</td>
+</tr>
+<tr>
+<td align="left"><code>isArray()</code></td>
+<td>判断是否为数组类型</td>
+</tr>
+<tr>
+<td align="left"><code>isEnum()</code></td>
+<td>判断是否为枚举类型</td>
+</tr>
+<tr>
+<td align="left"><code>getClassLoader()</code></td>
+<td>获得类的类加载器</td>
+</tr>
+<tr>
+<td align="left"><code>getMethods()</code></td>
+<td>获得公共的方法</td>
+</tr>
+</tbody></table>
+<h2 id="获取Class类的实例的三种方法"><a href="#获取Class类的实例的三种方法" class="headerlink" title="获取Class类的实例的三种方法"></a>获取Class类的实例的三种方法</h2><p>若已知具体的类，通过类的class属性获取，该方法最为可靠，程序性能最高</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">Class</span> clazz <span class="token operator">=</span> <span class="token class-name">Person</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<p>已知某个类的实例，调用该实例的<code>getClass()</code>方法获取Class对象</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">Person</span> person <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Person</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">Class</span> clazz <span class="token operator">=</span> person<span class="token punctuation">.</span><span class="token function">getClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+
+
+<p>已知一个类的全类名，且该类在类路径下，可通过<code>Class</code>类的静态方法<code>forName()</code>获取</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">Class</span> clazz <span class="token operator">=</span> <span class="token class-name">Class</span><span class="token punctuation">.</span><span class="token function">forName</span><span class="token punctuation">(</span><span class="token string">"com.qibria.Person"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<br/>
+
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">class</span><span class="token operator">:</span> 外部类，成员<span class="token punctuation">(</span>成员内部类，静态内部类<span class="token punctuation">)</span>，局部内部类，匿名内部类
+<span class="token keyword">interface</span><span class="token operator">:</span> 接口
+<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">:</span> 数组
+<span class="token keyword">enum</span><span class="token operator">:</span> 枚举
+annotation<span class="token operator">:</span> 注解<span class="token annotation punctuation">@interface</span>
+primitive type<span class="token operator">:</span> 基本数据类型
+<span class="token keyword">void</span> 空类型<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>java</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+        <tag>反射</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>java方法引用</title>
+    <url>/2022/11/24/java%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>mysql5.7配置文件</title>
+    <url>/2022/11/13/mysql5-7%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/</url>
+    <content><![CDATA[<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p><code>debian bullseye (GNU/Linux)</code></p>
+<p><code>mysql5.7</code></p>
+<p><code>mysql</code>配置文件路径 <code>/etc/mysql/conf.d</code></p>
+<h3 id="新建配置文件-my-cnf"><a href="#新建配置文件-my-cnf" class="headerlink" title="新建配置文件 my.cnf"></a>新建配置文件 <code>my.cnf</code></h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">touch</span> /etc/mysql/conf.d/my.cnf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h2 id="添加内容"><a href="#添加内容" class="headerlink" title="添加内容"></a>添加内容</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">nano</span> /etc/mysql/conf.d/my.cnf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>内容如下:</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>client<span class="token punctuation">]</span>
+<span class="token assign-left variable">default_character_set</span><span class="token operator">=</span>utf8mb4
+
+<span class="token punctuation">[</span>mysql<span class="token punctuation">]</span>
+default-character-set<span class="token operator">=</span>utf8mb4
+
+<span class="token punctuation">[</span>mysqld<span class="token punctuation">]</span>
+<span class="token assign-left variable">collation_server</span><span class="token operator">=</span>utf8mb4_unicode_ci
+<span class="token assign-left variable">character_set_server</span><span class="token operator">=</span>utf8mb4 
+character-set-client-handshake <span class="token operator">=</span> <span class="token boolean">false</span> <span class="token comment">#设置为 False, 在客户端字符集和服务端字符集不同的时候将拒绝连接到服务端执行任何操作</span>
+init_connect <span class="token operator">=</span> <span class="token string">'SET NAMES utf8mb4'</span>
+bind-address<span class="token operator">=</span><span class="token number">0.0</span>.0.0
+default-time_zone<span class="token operator">=</span><span class="token string">'+8:00'</span> <span class="token comment">#设置时区</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>mysql</category>
+      </categories>
+      <tags>
+        <tag>mysql</tag>
+        <tag>mysql5.7</tag>
+      </tags>
   </entry>
   <entry>
     <title>npm、yarn、pnpm镜像</title>
@@ -1093,6 +1450,11 @@ default-time_zone<span class="token operator">=</span><span class="token string"
         <tag>包管理</tag>
         <tag>镜像源</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>java注解</title>
+    <url>/2022/11/24/java%E6%B3%A8%E8%A7%A3/</url>
+    <content><![CDATA[]]></content>
   </entry>
   <entry>
     <title>npm镜像源</title>

@@ -85,7 +85,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">17</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">11</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">16</span></a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">21</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">12</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">21</span></a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -156,18 +156,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-count">21</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -207,6 +207,1054 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://blog.qibria.xyz/2022/11/13/docker-compose%E5%91%BD%E4%BB%A4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="qibria">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ⅶ布利亚">
+      <meta itemprop="description" content="这里是奇布里亚大草原">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Ⅶ布利亚">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/11/13/docker-compose%E5%91%BD%E4%BB%A4/" class="post-title-link" itemprop="url">docker-compose命令</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-11-13 22:37:53 / 修改时间：22:53:59" itemprop="dateCreated datePublished" datetime="2022-11-13T22:37:53+08:00">2022-11-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/docker/" itemprop="url" rel="index"><span itemprop="name">docker</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>241</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h2><p>查看版本号</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> compose version<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+<p>查看帮助</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> compose <span class="token parameter variable">-h</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+<p>启动所有docker-compose服务</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> compose up<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+<p>启动所有docker-compose服务并后台运行</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> compose up <span class="token parameter variable">-d</span>  <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+<p>停止并删除容器、网络、卷、镜像。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> compose down   <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+<p>进入容器实例内部 <code>docker-compose exec docker-compose.yml 文件中写的服务id /bin/bash</code></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> compose <span class="token builtin class-name">exec</span>  yml里面的服务id <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+<p>展示当前docker-compose编排过的运行的所有容器</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> compose <span class="token function">ps</span> <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+<p>展示当前docker-compose编排过的容器进程</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> compose <span class="token function">top</span>   <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+<p>查看容器输出日志</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> compose logs  yml里面的服务id<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+<p>检查配置</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">dokcer compose config<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+<p>检查配置，有问题才有输出</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">dokcer compose config <span class="token parameter variable">-q</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+<p>重启服务</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> compose restart<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+<p>启动服务</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> compose start<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+<p>停止服务</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> compose stop<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#启动 </span>
+<span class="token function">docker</span> compose <span class="token parameter variable">-f</span> standalone-derby.yaml up
+<span class="token comment">#关闭</span>
+<span class="token function">docker</span> compose <span class="token parameter variable">-f</span> standalone-derby.yaml stop
+<span class="token comment">#移除</span>
+<span class="token function">docker</span> compose <span class="token parameter variable">-f</span> standalone-derby.yaml <span class="token function">rm</span>
+<span class="token comment">#关闭并移除</span>
+<span class="token function">docker</span> compose <span class="token parameter variable">-f</span> standalone-derby.yaml down<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://blog.qibria.xyz/2022/11/13/Dockerfile%E6%8C%87%E4%BB%A4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="qibria">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ⅶ布利亚">
+      <meta itemprop="description" content="这里是奇布里亚大草原">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Ⅶ布利亚">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/11/13/Dockerfile%E6%8C%87%E4%BB%A4/" class="post-title-link" itemprop="url">Dockerfile指令</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-11-13 21:40:35" itemprop="dateCreated datePublished" datetime="2022-11-13T21:40:35+08:00">2022-11-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-11-14 11:24:42" itemprop="dateModified" datetime="2022-11-14T11:24:42+08:00">2022-11-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/docker/" itemprop="url" rel="index"><span itemprop="name">docker</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/docker/Dockerfile/" itemprop="url" rel="index"><span itemprop="name">Dockerfile</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="如何使用Dockerfile构建镜像"><a href="#如何使用Dockerfile构建镜像" class="headerlink" title="如何使用Dockerfile构建镜像"></a>如何使用<code>Dockerfile</code>构建镜像</h2><h3 id="新建一个文件夹my-app"><a href="#新建一个文件夹my-app" class="headerlink" title="新建一个文件夹my-app"></a>新建一个文件夹<code>my-app</code></h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">mkdir</span> my-app<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">cd</span> my-app<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="创建Dockerfile文件"><a href="#创建Dockerfile文件" class="headerlink" title="创建Dockerfile文件"></a>创建<code>Dockerfile</code>文件</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">touch</span> Dockerfile<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+
+<h3 id="构建镜像"><a href="#构建镜像" class="headerlink" title="构建镜像"></a>构建镜像</h3><p>在<code>Dokerfile</code>文件准备好后执行命令构建镜像</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> build <span class="token parameter variable">-t</span> my-app:latest <span class="token builtin class-name">.</span> <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h2 id="Dockerfile指令"><a href="#Dockerfile指令" class="headerlink" title="Dockerfile指令"></a><code>Dockerfile</code>指令</h2><h3 id="FROM"><a href="#FROM" class="headerlink" title="FROM"></a>FROM</h3><p><code>FROM</code> 就是指定 <strong>基础镜像</strong>，因此一个 <code>Dockerfile</code> 中 <code>FROM</code> 是必备的指令，并且必须是第一条指令。</p>
+<h3 id="MAINTAINER"><a href="#MAINTAINER" class="headerlink" title="MAINTAINER"></a>MAINTAINER</h3><p>作者(已弃用)</p>
+<h3 id="VOLUME"><a href="#VOLUME" class="headerlink" title="VOLUME"></a>VOLUME</h3><p><code>VOLUME</code> 指定临时文件目录为<code>/tmp</code>，在主机<code>/var/lib/docke</code>r目录下创建了一个临时文件并链接到容器的<code>/tmp</code></p>
+<h3 id="COPY"><a href="#COPY" class="headerlink" title="COPY"></a>COPY</h3><p>格式</p>
+<pre class="line-numbers language-docker" data-language="docker"><code class="language-docker"><span class="token instruction"><span class="token keyword">COPY</span> [--chown=&lt;user>:&lt;group>] &lt;源路径>... &lt;目标路径></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-docker" data-language="docker"><code class="language-docker"><span class="token instruction"><span class="token keyword">COPY</span> [--chown=&lt;user>:&lt;group>] [<span class="token string">"&lt;源路径1>"</span>,... <span class="token string">"&lt;目标路径>"</span>]</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>和 <code>RUN</code> 指令一样，也有两种格式，一种类似于命令行，一种类似于函数调用。</p>
+<p><code>COPY</code> 指令将从构建上下文目录中 <code>&lt;源路径&gt;</code> 的文件&#x2F;目录复制到新的一层的镜像内的 <code>&lt;目标路径&gt;</code> 位置。比如：</p>
+<pre class="line-numbers language-docker" data-language="docker"><code class="language-docker"><span class="token instruction"><span class="token keyword">COPY</span> package.json /usr/src/app/</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>在使用该指令的时候还可以加上 <code>--chown=&lt;user&gt;:&lt;group&gt;</code> 选项来改变文件的所属用户及所属组。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">COPY <span class="token parameter variable">--chown</span><span class="token operator">=</span><span class="token number">55</span>:mygroup files* /mydir/
+
+COPY <span class="token parameter variable">--chown</span><span class="token operator">=</span>bin files* /mydir/
+
+COPY <span class="token parameter variable">--chown</span><span class="token operator">=</span><span class="token number">1</span> files* /mydir/
+
+COPY <span class="token parameter variable">--chown</span><span class="token operator">=</span><span class="token number">10</span>:11 files* /mydir/<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="ADD"><a href="#ADD" class="headerlink" title="ADD"></a>ADD</h3><p>如果 <code>&lt;源路径&gt;</code> 为一个 <code>tar</code> 压缩文件的话，压缩格式为 <code>gzip</code>, <code>bzip2</code> 以及 <code>xz</code> 的情况下，<code>ADD</code> 指令将会自动解压缩这个压缩文件到 <code>&lt;目标路径&gt;</code> 去。</p>
+<pre class="line-numbers language-docker" data-language="docker"><code class="language-docker"><span class="token instruction"><span class="token keyword">ADD</span> ubuntu-xenial-core-cloudimg-amd64-root.tar.gz /</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-docker" data-language="docker"><code class="language-docker">在使用该指令的时候还可以加上 --chown=&lt;user>:&lt;group> 选项来改变文件的所属用户及所属组。
+<span class="token instruction"><span class="token keyword">ADD</span> <span class="token options"><span class="token property">--chown</span><span class="token punctuation">=</span><span class="token string">55:mygroup</span></span> files* /mydir/</span>
+<span class="token instruction"><span class="token keyword">ADD</span> <span class="token options"><span class="token property">--chown</span><span class="token punctuation">=</span><span class="token string">bin</span></span> files* /mydir/</span>
+<span class="token instruction"><span class="token keyword">ADD</span> <span class="token options"><span class="token property">--chown</span><span class="token punctuation">=</span><span class="token string">1</span></span> files* /mydir/</span>
+<span class="token instruction"><span class="token keyword">ADD</span> <span class="token options"><span class="token property">--chown</span><span class="token punctuation">=</span><span class="token string">10:11</span></span> files* /mydir/</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="RUN"><a href="#RUN" class="headerlink" title="RUN"></a>RUN</h3><ul>
+<li><p><em>shell</em> 格式：<code>RUN &lt;命令&gt;</code>，就像直接在命令行中输入的命令一样。刚才写的 <code>Dockerfile</code> 中的 <code>RUN</code> 指令就是这种格式。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">RUN <span class="token builtin class-name">echo</span> <span class="token string">'&lt;h1>Hello, Docker!&lt;/h1>'</span> <span class="token operator">></span> /usr/share/nginx/html/index.html<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p><em>exec</em> 格式：<code>RUN [&quot;可执行文件&quot;, &quot;参数1&quot;, &quot;参数2&quot;]</code>，这更像是函数调用中的格式。</p>
+</li>
+</ul>
+<p>既然 <code>RUN</code> 就像 Shell 脚本一样可以执行命令，那么我们是否就可以像 Shell 脚本一样把每个命令对应一个 RUN 呢？比如这样：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">FROM debian:stretch
+
+RUN <span class="token function">apt-get</span> update
+RUN <span class="token function">apt-get</span> <span class="token function">install</span> <span class="token parameter variable">-y</span> gcc libc6-dev <span class="token function">make</span> <span class="token function">wget</span>
+RUN <span class="token function">wget</span> <span class="token parameter variable">-O</span> redis.tar.gz <span class="token string">"http://download.redis.io/releases/redis-5.0.3.tar.gz"</span>
+RUN <span class="token function">mkdir</span> <span class="token parameter variable">-p</span> /usr/src/redis
+RUN <span class="token function">tar</span> <span class="token parameter variable">-xzf</span> redis.tar.gz <span class="token parameter variable">-C</span> /usr/src/redis --strip-components<span class="token operator">=</span><span class="token number">1</span>
+RUN <span class="token function">make</span> <span class="token parameter variable">-C</span> /usr/src/redis
+RUN <span class="token function">make</span> <span class="token parameter variable">-C</span> /usr/src/redis <span class="token function">install</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><code>Dockerfile</code> 中每一个指令都会建立一层，<code>RUN</code> 也不例外。每一个 <code>RUN</code> 的行为，就和刚才我们手工建立镜像的过程一样：新建立一层，在其上执行这些命令，执行结束后，<code>commit</code> 这一层的修改，构成新的镜像。</p>
+<p>而上面的这种写法，创建了 7 层镜像。这是完全没有意义的，而且很多运行时不需要的东西，都被装进了镜像里，比如编译环境、更新的软件包等等。结果就是产生非常臃肿、非常多层的镜像，不仅仅增加了构建部署的时间，也很容易出错。 这是很多初学 Docker 的人常犯的一个错误。</p>
+<p>Union FS 是有最大层数限制的，比如 AUFS，曾经是最大不得超过 42 层，现在是不得超过 127 层。</p>
+<p>上面的 <code>Dockerfile</code> 正确的写法应该是这样：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">FROM debian:stretch
+
+RUN <span class="token builtin class-name">set</span> -x<span class="token punctuation">;</span> <span class="token assign-left variable">buildDeps</span><span class="token operator">=</span><span class="token string">'gcc libc6-dev make wget'</span> <span class="token punctuation">\</span>
+    <span class="token operator">&amp;&amp;</span> <span class="token function">apt-get</span> update <span class="token punctuation">\</span>
+    <span class="token operator">&amp;&amp;</span> <span class="token function">apt-get</span> <span class="token function">install</span> <span class="token parameter variable">-y</span> <span class="token variable">$buildDeps</span> <span class="token punctuation">\</span>
+    <span class="token operator">&amp;&amp;</span> <span class="token function">wget</span> <span class="token parameter variable">-O</span> redis.tar.gz <span class="token string">"http://download.redis.io/releases/redis-5.0.3.tar.gz"</span> <span class="token punctuation">\</span>
+    <span class="token operator">&amp;&amp;</span> <span class="token function">mkdir</span> <span class="token parameter variable">-p</span> /usr/src/redis <span class="token punctuation">\</span>
+    <span class="token operator">&amp;&amp;</span> <span class="token function">tar</span> <span class="token parameter variable">-xzf</span> redis.tar.gz <span class="token parameter variable">-C</span> /usr/src/redis --strip-components<span class="token operator">=</span><span class="token number">1</span> <span class="token punctuation">\</span>
+    <span class="token operator">&amp;&amp;</span> <span class="token function">make</span> <span class="token parameter variable">-C</span> /usr/src/redis <span class="token punctuation">\</span>
+    <span class="token operator">&amp;&amp;</span> <span class="token function">make</span> <span class="token parameter variable">-C</span> /usr/src/redis <span class="token function">install</span> <span class="token punctuation">\</span>
+    <span class="token operator">&amp;&amp;</span> <span class="token function">rm</span> <span class="token parameter variable">-rf</span> /var/lib/apt/lists/* <span class="token punctuation">\</span>
+    <span class="token operator">&amp;&amp;</span> <span class="token function">rm</span> redis.tar.gz <span class="token punctuation">\</span>
+    <span class="token operator">&amp;&amp;</span> <span class="token function">rm</span> <span class="token parameter variable">-r</span> /usr/src/redis <span class="token punctuation">\</span>
+    <span class="token operator">&amp;&amp;</span> <span class="token function">apt-get</span> purge <span class="token parameter variable">-y</span> --auto-remove <span class="token variable">$buildDeps</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="CMD"><a href="#CMD" class="headerlink" title="CMD"></a>CMD</h3><p>shell格式：</p>
+<pre class="line-numbers language-docker" data-language="docker"><code class="language-docker"><span class="token instruction"><span class="token keyword">CMD</span> &lt;命令></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>exec格式：</p>
+<pre class="line-numbers language-docker" data-language="docker"><code class="language-docker"><span class="token instruction"><span class="token keyword">CMD</span> [<span class="token string">"可执行文件"</span>, <span class="token string">"参数1"</span>, <span class="token string">"参数2"</span>...]</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>参数列表格式：<code>CMD [&quot;参数1&quot;, &quot;参数2&quot;...]</code>。在指定了 <code>ENTRYPOINT</code> 指令后，用 <code>CMD</code> 指定具体的参数。</p>
+<pre class="line-numbers language-docker" data-language="docker"><code class="language-docker"><span class="token instruction"><span class="token keyword">CMD</span> echo <span class="token variable">$HOME</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>等同于</p>
+<pre class="line-numbers language-docker" data-language="docker"><code class="language-docker"><span class="token instruction"><span class="token keyword">CMD</span> [ <span class="token string">"sh"</span>, <span class="token string">"-c"</span>, <span class="token string">"echo $HOME"</span> ]</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h3 id="ENTRYPOINT"><a href="#ENTRYPOINT" class="headerlink" title="ENTRYPOINT"></a>ENTRYPOINT</h3><p><code>ENTRYPOINT</code> 的格式和 <code>RUN</code> 指令格式一样，分为 <code>exec</code> 格式和 <code>shell</code> 格式。</p>
+<p><code>ENTRYPOINT</code> 的目的和 <code>CMD</code> 一样，都是在指定容器启动程序及参数。<code>ENTRYPOINT</code> 在运行时也可以替代，不过比 <code>CMD</code> 要略显繁琐，需要通过 <code>docker run</code> 的参数 <code>--entrypoint</code> 来指定。</p>
+<p>当指定了 <code>ENTRYPOINT</code> 后，<code>CMD</code> 的含义就发生了改变，不再是直接的运行其命令，而是将 <code>CMD</code> 的内容作为参数传给 <code>ENTRYPOINT</code> 指令，换句话说实际执行时，将变为：</p>
+<pre class="line-numbers language-docker" data-language="docker"><code class="language-docker">&lt;ENTRYPOINT> "&lt;CMD>"<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h3 id="EXPOSE"><a href="#EXPOSE" class="headerlink" title="EXPOSE"></a>EXPOSE</h3><p>暴露端口</p>
+<pre class="line-numbers language-docker" data-language="docker"><code class="language-docker"><span class="token instruction"><span class="token keyword">EXPOSE</span> 6001</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+
+
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">mkdir</span> my-app<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">cd</span> my-app<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">touch</span> Dockerfile<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>准备一个web服务在my-app路劲下</p>
+<p><code>Dockerfile</code></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 基础镜像使用java</span>
+FROM openjdk:8u332-jdk
+
+<span class="token comment"># 作者</span>
+MAINTAINER qibria
+
+<span class="token comment"># VOLUME 指定临时文件目录为/tmp，在主机/var/lib/docker目录下创建了一个临时文件并链接到容器的/tmp</span>
+<span class="token comment"># VOLUME /tmp</span>
+
+<span class="token comment"># 将jar包添加到容器中并更名为zzyy_docker.jar</span>
+<span class="token comment"># ADD docker_boot-0.0.1-SNAPSHOT.jar zzyy_docker.jar</span>
+
+COPY docker_helloworld-1.0-SNAPSHOT.jar usr/src/app/helloapp/hello.jar
+
+WORKDIR /usr/src/app/helloapp
+
+<span class="token comment"># 运行jar包</span>
+<span class="token comment"># RUN bash -c 'touch /zzyy_docker.jar'</span>
+
+ENTRYPOINT <span class="token punctuation">[</span><span class="token string">"java"</span>,<span class="token string">"-jar"</span>,<span class="token string">"hello.jar"</span><span class="token punctuation">]</span>
+
+<span class="token comment">#暴露6001端口作为微服务</span>
+
+EXPOSE <span class="token number">6001</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<p>执行打包</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> build <span class="token parameter variable">-t</span> my-app:latest <span class="token builtin class-name">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://blog.qibria.xyz/2022/11/13/mysql5-7%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="qibria">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ⅶ布利亚">
+      <meta itemprop="description" content="这里是奇布里亚大草原">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Ⅶ布利亚">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/11/13/mysql5-7%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/" class="post-title-link" itemprop="url">mysql5.7配置文件</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-11-13 21:22:03 / 修改时间：21:46:41" itemprop="dateCreated datePublished" datetime="2022-11-13T21:22:03+08:00">2022-11-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/mysql/" itemprop="url" rel="index"><span itemprop="name">mysql</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>118</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p><code>debian bullseye (GNU/Linux)</code></p>
+<p><code>mysql5.7</code></p>
+<p><code>mysql</code>配置文件路径 <code>/etc/mysql/conf.d</code></p>
+<h3 id="新建配置文件-my-cnf"><a href="#新建配置文件-my-cnf" class="headerlink" title="新建配置文件 my.cnf"></a>新建配置文件 <code>my.cnf</code></h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">touch</span> /etc/mysql/conf.d/my.cnf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h2 id="添加内容"><a href="#添加内容" class="headerlink" title="添加内容"></a>添加内容</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">nano</span> /etc/mysql/conf.d/my.cnf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>内容如下:</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>client<span class="token punctuation">]</span>
+<span class="token assign-left variable">default_character_set</span><span class="token operator">=</span>utf8mb4
+
+<span class="token punctuation">[</span>mysql<span class="token punctuation">]</span>
+default-character-set<span class="token operator">=</span>utf8mb4
+
+<span class="token punctuation">[</span>mysqld<span class="token punctuation">]</span>
+<span class="token assign-left variable">collation_server</span><span class="token operator">=</span>utf8mb4_unicode_ci
+<span class="token assign-left variable">character_set_server</span><span class="token operator">=</span>utf8mb4 
+character-set-client-handshake <span class="token operator">=</span> <span class="token boolean">false</span> <span class="token comment">#设置为 False, 在客户端字符集和服务端字符集不同的时候将拒绝连接到服务端执行任何操作</span>
+init_connect <span class="token operator">=</span> <span class="token string">'SET NAMES utf8mb4'</span>
+bind-address<span class="token operator">=</span><span class="token number">0.0</span>.0.0
+default-time_zone<span class="token operator">=</span><span class="token string">'+8:00'</span> <span class="token comment">#设置时区</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+
+
+
+
+
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://blog.qibria.xyz/2022/11/13/docker%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="qibria">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ⅶ布利亚">
+      <meta itemprop="description" content="这里是奇布里亚大草原">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Ⅶ布利亚">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/11/13/docker%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4/" class="post-title-link" itemprop="url">docker操作命令</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-11-13 11:39:47 / 修改时间：21:50:49" itemprop="dateCreated datePublished" datetime="2022-11-13T11:39:47+08:00">2022-11-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/docker/" itemprop="url" rel="index"><span itemprop="name">docker</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="镜像命令"><a href="#镜像命令" class="headerlink" title="镜像命令"></a>镜像命令</h2><h3 id="查找网络镜像-search"><a href="#查找网络镜像-search" class="headerlink" title="查找网络镜像(search)"></a>查找网络镜像(search)</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> search <span class="token operator">&lt;</span>image-name<span class="token operator">></span>:<span class="token operator">&lt;</span>tag<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><code>-a</code> 选项显示本地镜像<br><code>-q</code> 仅显示镜像ID</p>
+<p>分页查找</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> search <span class="token operator">&lt;</span>image<span class="token operator">></span>:<span class="token operator">&lt;</span>tag<span class="token operator">></span> <span class="token parameter variable">--limit</span> <span class="token number">5</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h3 id="拉取镜像-pull"><a href="#拉取镜像-pull" class="headerlink" title="拉取镜像(pull)"></a>拉取镜像(pull)</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> pull <span class="token operator">&lt;</span>image<span class="token operator">></span>:<span class="token operator">&lt;</span>tag<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h3 id="推送镜像"><a href="#推送镜像" class="headerlink" title="推送镜像"></a>推送镜像</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> push <span class="token operator">&lt;</span>username<span class="token operator">></span>/<span class="token operator">&lt;</span>image<span class="token operator">></span>:<span class="token operator">&lt;</span>tag<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h3 id="列出镜像-image"><a href="#列出镜像-image" class="headerlink" title="列出镜像(image)"></a>列出镜像(image)</h3><p>查看本地所有镜像</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> images<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> image <span class="token function">ls</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h3 id="删除镜像-rmi"><a href="#删除镜像-rmi" class="headerlink" title="删除镜像(rmi)"></a>删除镜像(rmi)</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> rmi <span class="token operator">&lt;</span>image<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<p>强制删除</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> rmi <span class="token operator">&lt;</span>image<span class="token operator">></span> <span class="token parameter variable">-f</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<p>删除全部</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> rmi <span class="token parameter variable">-f</span> <span class="token variable">$&#123;docker images -qa&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h3 id="虚浮镜像"><a href="#虚浮镜像" class="headerlink" title="虚浮镜像"></a>虚浮镜像</h3><p>虚浮镜像指的是只有镜像ID，没有镜像名的镜像</p>
+<p>删除虚浮镜像</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> image prune<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+
+
+<h3 id="标记镜像"><a href="#标记镜像" class="headerlink" title="标记镜像"></a>标记镜像</h3><p>可以将一个镜像标记成一个新的镜像，新的镜像和原来的镜像是同一个镜像ID</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> tag <span class="token operator">&lt;</span>image<span class="token operator">></span>:tag <span class="token operator">&lt;</span>new-image<span class="token operator">></span>:tag<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h2 id="容器命令"><a href="#容器命令" class="headerlink" title="容器命令"></a>容器命令</h2><h3 id="运行容器-run"><a href="#运行容器-run" class="headerlink" title="运行容器(run)"></a>运行容器(run)</h3><p>以守护进程形式启动</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> run <span class="token parameter variable">-d</span> <span class="token operator">&lt;</span>image<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token parameter variable">--name</span><span class="token operator">=</span><span class="token string">"容器名"</span> <span class="token comment"># 系统默认随机</span>
+<span class="token parameter variable">--restart</span><span class="token operator">=</span>always <span class="token comment"># 自启动</span>
+<span class="token parameter variable">-d</span>  <span class="token comment">#以守护进程形式运行，返回容器id</span>
+<span class="token parameter variable">-i</span>  <span class="token comment">#交互式运行，通常与-t同时使用</span>
+<span class="token parameter variable">-t</span>  <span class="token comment">#为容器重新分配一个伪输入终端，通常与-i同时使用</span>
+<span class="token parameter variable">-P</span> <span class="token comment"># 随机端口映射 -p 6379:6379 宿主机port:容器port</span>
+<span class="token parameter variable">-p</span> <span class="token comment"># 指定端口映射 </span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<p>以交互式形式启动</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> run <span class="token parameter variable">-it</span> <span class="token operator">&lt;</span>image<span class="token operator">></span> /bin/bash<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h3 id="停止容器-stop"><a href="#停止容器-stop" class="headerlink" title="停止容器(stop)"></a>停止容器(stop)</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> stop <span class="token operator">&lt;</span>container<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>强制停止</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> <span class="token function">kill</span> <span class="token operator">&lt;</span>container<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h3 id="启动停止容器-start"><a href="#启动停止容器-start" class="headerlink" title="启动停止容器(start)"></a>启动停止容器(start)</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> start <span class="token operator">&lt;</span>container<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h3 id="重启容器-restart"><a href="#重启容器-restart" class="headerlink" title="重启容器(restart)"></a>重启容器(restart)</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> restart <span class="token operator">&lt;</span>container<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h3 id="查看容器-ps"><a href="#查看容器-ps" class="headerlink" title="查看容器(ps)"></a>查看容器(ps)</h3><p>查看正在运行的容器</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> <span class="token function">ps</span> <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<p>查看所有容器</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> <span class="token function">ps</span> <span class="token parameter variable">-a</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>options<span class="token punctuation">]</span>
+<span class="token parameter variable">-a</span> <span class="token comment"># 列出所有运行过的容器 正在运行 + 历史记录</span>
+<span class="token parameter variable">-l</span> <span class="token comment"># 列出最近创建的容器</span>
+<span class="token parameter variable">-n</span> <span class="token comment"># 显示最近n个创建的容器</span>
+<span class="token parameter variable">-q</span> <span class="token comment"># 静默模式，只显示容器编号</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="移除容器-rm"><a href="#移除容器-rm" class="headerlink" title="移除容器(rm)"></a>移除容器(rm)</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> <span class="token function">rm</span> <span class="token operator">&lt;</span>container<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>强制移除</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> <span class="token function">rm</span> <span class="token parameter variable">-f</span> <span class="token operator">&lt;</span>container<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>移除所有</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> <span class="token function">rm</span> <span class="token parameter variable">-f</span> <span class="token variable">$&#123;docker ps -a -q&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> <span class="token function">ps</span> <span class="token parameter variable">-a</span> <span class="token parameter variable">-q</span> <span class="token operator">|</span> <span class="token function">xargs</span> <span class="token function">docker</span> <span class="token function">rm</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h3 id="容器日志-logs"><a href="#容器日志-logs" class="headerlink" title="容器日志(logs)"></a>容器日志(logs)</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> logs  <span class="token operator">&lt;</span>container<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h3 id="容器进程-top"><a href="#容器进程-top" class="headerlink" title="容器进程(top)"></a>容器进程(top)</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> <span class="token function">top</span> <span class="token operator">&lt;</span>id<span class="token operator">></span> or <span class="token operator">&lt;</span>name<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h3 id="容器详情-inspect"><a href="#容器详情-inspect" class="headerlink" title="容器详情(inspect)"></a>容器详情(inspect)</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> inspect <span class="token operator">&lt;</span>id<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h3 id="容器交互-exec"><a href="#容器交互-exec" class="headerlink" title="容器交互(exec)"></a>容器交互(exec)</h3><p><code>exec</code>命令</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> <span class="token builtin class-name">exec</span> <span class="token parameter variable">-it</span> debian11 /bin/bash<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><code>attach</code>命令</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> attach <span class="token parameter variable">-it</span> debian11 /bin/bash<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>区别: </p>
+<p>attach直接进入容器启动命令的终端，不会启功新的进程，使用exit退出 会导致容器停止</p>
+<p>exec 是在容器中打开行的终端，并且可以启动新的进程，使用exit退出不会导致容器停止</p>
+<h3 id="容器文件复制-cp"><a href="#容器文件复制-cp" class="headerlink" title="容器文件复制(cp)"></a>容器文件复制(cp)</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> <span class="token function">cp</span> debian11-1:/tmp/test.txt /tmp/test.txt<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h3 id="导出容器实例-export"><a href="#导出容器实例-export" class="headerlink" title="导出容器实例(export)"></a>导出容器实例(export)</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> <span class="token builtin class-name">export</span> <span class="token operator">&lt;</span>id<span class="token operator">></span> <span class="token operator">></span> filename.tar<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h3 id="导入容器实例-import"><a href="#导入容器实例-import" class="headerlink" title="导入容器实例(import)"></a>导入容器实例(import)</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">car abcd.tar <span class="token operator">|</span> <span class="token function">docker</span> <span class="token function">import</span> - qibria/ubuntu:3:7<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h3 id="提交容器实例生成镜像文件-commit"><a href="#提交容器实例生成镜像文件-commit" class="headerlink" title="提交容器实例生成镜像文件(commit)"></a>提交容器实例生成镜像文件(commit)</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> commit <span class="token parameter variable">-m</span><span class="token operator">=</span><span class="token string">"描述信息"</span> <span class="token parameter variable">-a</span><span class="token operator">=</span><span class="token string">"作者"</span> <span class="token operator">&lt;</span>container-id<span class="token operator">></span> <span class="token operator">&lt;</span>image-name<span class="token operator">></span>:<span class="token operator">&lt;</span>tag<span class="token operator">></span> <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h3 id="容器自启动"><a href="#容器自启动" class="headerlink" title="容器自启动"></a>容器自启动</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> run <span class="token parameter variable">-d</span> <span class="token parameter variable">--restart</span><span class="token operator">=</span>always <span class="token parameter variable">--name</span> <span class="token operator">&lt;</span>name<span class="token operator">></span> <span class="token operator">&lt;</span>image<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> update <span class="token parameter variable">--restart</span><span class="token operator">=</span>always <span class="token operator">&lt;</span>container<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h2 id="容器数据卷"><a href="#容器数据卷" class="headerlink" title="容器数据卷"></a>容器数据卷</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> volume<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<p>容器卷在宿主机上的路径</p>
+<pre class="line-numbers language-apl" data-language="apl"><code class="language-apl"><span class="token monadic-operator operator">/</span>var<span class="token monadic-operator operator">/</span>lib<span class="token monadic-operator operator">/</span>docker<span class="token monadic-operator operator">/</span>volumes<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h3 id="创建数据卷"><a href="#创建数据卷" class="headerlink" title="创建数据卷"></a>创建数据卷</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> volume create <span class="token operator">&lt;</span>name<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> volume create my-vol<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h3 id="查看数据卷"><a href="#查看数据卷" class="headerlink" title="查看数据卷"></a>查看数据卷</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> volume <span class="token function">ls</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<p>查看指定 <code>数据卷</code> 的信息</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> volume inspect my-vol<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h3 id="删除数据卷"><a href="#删除数据卷" class="headerlink" title="删除数据卷"></a>删除数据卷</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> volume <span class="token function">rm</span> my-vol<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h3 id="移除空闲卷"><a href="#移除空闲卷" class="headerlink" title="移除空闲卷"></a>移除空闲卷</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> volume prune<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h3 id="启动时挂载卷"><a href="#启动时挂载卷" class="headerlink" title="启动时挂载卷"></a>启动时挂载卷</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> run <span class="token parameter variable">-d</span> <span class="token parameter variable">-P</span> <span class="token punctuation">\</span>
+    <span class="token parameter variable">--name</span> web <span class="token punctuation">\</span>
+    <span class="token comment"># -v my-vol:/usr/share/nginx/html \</span>
+    <span class="token parameter variable">--mount</span> <span class="token assign-left variable">source</span><span class="token operator">=</span>my-vol,target<span class="token operator">=</span>/usr/share/nginx/html <span class="token punctuation">\</span>
+    nginx:alpine<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<p>也可以直接挂载的宿主机上面</p>
+<p>要使用绝对路径</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> run <span class="token parameter variable">-d</span> <span class="token parameter variable">-P</span> <span class="token punctuation">\</span>
+    <span class="token parameter variable">--name</span> web <span class="token punctuation">\</span>
+    <span class="token comment"># -v my-vol:/usr/share/nginx/html \</span>
+    <span class="token parameter variable">--mount</span> <span class="token assign-left variable">source</span><span class="token operator">=</span>/tmp/my-vol,target<span class="token operator">=</span>/usr/share/nginx/html <span class="token punctuation">\</span>
+    nginx:alpine<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+
+
+<h3 id="数据卷权限"><a href="#数据卷权限" class="headerlink" title="数据卷权限"></a>数据卷权限</h3><p>默认权限<code>(rw)</code></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> run <span class="token parameter variable">-it</span> <span class="token parameter variable">--privileged</span><span class="token operator">=</span>true <span class="token parameter variable">-v</span> <span class="token operator">&lt;</span>source<span class="token operator">></span>:<span class="token operator">&lt;</span>target<span class="token operator">></span> <span class="token operator">&lt;</span>image<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>显式指定</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> run <span class="token parameter variable">-it</span> <span class="token parameter variable">--privileged</span><span class="token operator">=</span>true <span class="token parameter variable">-v</span> <span class="token operator">&lt;</span>source<span class="token operator">></span>:<span class="token operator">&lt;</span>target<span class="token operator">></span>:rw <span class="token operator">&lt;</span>image<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<blockquote>
+<p><code>rw</code> 可读可写</p>
+<p><code>r</code> 只读</p>
+</blockquote>
+<h2 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h2><p>网络模式</p>
+<ul>
+<li><p><code>bridge</code>：使用<code>--network bridge</code>指定，默认使用<code>docker0</code></p>
+</li>
+<li><p><code>host</code>：使用<code>--network host</code>指定</p>
+</li>
+<li><p><code>none</code>：使用<code>--network none</code>指定</p>
+</li>
+<li><p><code>container</code>：使用<code>--network container</code>：NAME或者容器ID指定</p>
+</li>
+</ul>
+<h3 id="查看网络"><a href="#查看网络" class="headerlink" title="查看网络"></a>查看网络</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> network <span class="token function">ls</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<p>详情</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">dokcer network inspect <span class="token operator">&lt;</span>network-name<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h3 id="新建网络"><a href="#新建网络" class="headerlink" title="新建网络"></a>新建网络</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> network create aa_network<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h3 id="删除网络"><a href="#删除网络" class="headerlink" title="删除网络"></a>删除网络</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> network <span class="token function">rm</span> <span class="token operator">&lt;</span>network-name<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h3 id="容器网络"><a href="#容器网络" class="headerlink" title="容器网络"></a>容器网络</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> run <span class="token parameter variable">-d</span> <span class="token parameter variable">-p</span> <span class="token number">8081</span>:8080 <span class="token parameter variable">--network</span> my_network <span class="token parameter variable">--name</span> tomcat81 <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>tips: 使用同一个自定义网络的容器可以通过容器名直接调用，可以<code>ping &lt;name&gt;</code> 连通</p>
+<h2 id="docker-hub"><a href="#docker-hub" class="headerlink" title="docker hub"></a>docker hub</h2><h3 id="登录"><a href="#登录" class="headerlink" title="登录"></a>登录</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> login<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<p>推送镜像至<code>docker hub</code></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> push <span class="token operator">&lt;</span>username<span class="token operator">></span>/<span class="token operator">&lt;</span>image<span class="token operator">></span>:<span class="token operator">&lt;</span>tag<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://blog.qibria.xyz/2022/11/11/vscode%E9%85%8D%E7%BD%AEgitbash(win10)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="qibria">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ⅶ布利亚">
+      <meta itemprop="description" content="这里是奇布里亚大草原">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Ⅶ布利亚">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/11/11/vscode%E9%85%8D%E7%BD%AEgitbash(win10)/" class="post-title-link" itemprop="url">windows 10 在 vscode 中配置 git bash 终端</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-11-11 14:10:42 / 修改时间：21:12:39" itemprop="dateCreated datePublished" datetime="2022-11-11T14:10:42+08:00">2022-11-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/vscode/" itemprop="url" rel="index"><span itemprop="name">vscode</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/vscode/git/" itemprop="url" rel="index"><span itemprop="name">git</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>144</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>打开设置搜索<code>Terminal Integrated window</code></p>
+<p>找到<code>settings.json</code>文件打开</p>
+<p><img src="/images/vscode%E9%85%8D%E7%BD%AEgitbash(win10)/image-20221111143208620.png" alt="image-20221111143208620"></p>
+<p>找到<code>terminal.integrated.profiles.windows</code></p>
+<p><img src="/images/vscode%E9%85%8D%E7%BD%AEgitbash(win10)/image-20221111143208620.png" alt="image-20221111143208620"></p>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token property">"terminal.integrated.profiles.windows"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token property">"PowerShell"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+        <span class="token property">"source"</span><span class="token operator">:</span> <span class="token string">"PowerShell"</span><span class="token punctuation">,</span>
+        <span class="token property">"icon"</span><span class="token operator">:</span> <span class="token string">"terminal-powershell"</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token property">"Command Prompt"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+        <span class="token property">"path"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+            <span class="token string">"$&#123;env:windir&#125;\\Sysnative\\cmd.exe"</span><span class="token punctuation">,</span>
+            <span class="token string">"$&#123;env:windir&#125;\\System32\\cmd.exe"</span>
+        <span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token property">"args"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token property">"icon"</span><span class="token operator">:</span> <span class="token string">"terminal-cmd"</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token property">"GitBash"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">//"source": "Git Bash",</span>
+        <span class="token property">"path"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"D:\\Program Files\\Git\\bin\\bash.exe"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token property">"icon"</span><span class="token operator">:</span> <span class="token string">"terminal-bash"</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+<span class="token property">"terminal.integrated.defaultProfile.windows"</span><span class="token operator">:</span> <span class="token string">"GitBash"</span><span class="token punctuation">,</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>添加Git Bash配置</p>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token property">"GitBash"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+   <span class="token comment">//"source": "Git Bash",</span>
+   <span class="token property">"path"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"D:\\Program Files\\Git\\bin\\bash.exe"</span><span class="token punctuation">]</span><span class="token punctuation">,</span> 
+   <span class="token property">"icon"</span><span class="token operator">:</span> <span class="token string">"terminal-bash"</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><code>path</code> 的参数是git的安装路径下的<code>/bin/bash.exe</code></p>
+<p>注意<code>GitBash</code>可以是<code>Git-Bash</code>但不可以是<code>Git Bash</code> 配置文件中避免出现空格</p>
+<p>这段配置将<code>Git Bash</code>设置为默认终端</p>
+<p><code>&quot;terminal.integrated.defaultProfile.windows&quot;: &quot;GitBash&quot;,</code> </p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -269,7 +1317,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1.1k</span>
+      <span>159</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -399,7 +1447,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>55</span>
+      <span>27</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -507,7 +1555,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>309</span>
+      <span>70</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -625,7 +1673,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>318</span>
+      <span>72</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -743,7 +1791,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>294</span>
+      <span>73</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -800,111 +1848,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://blog.qibria.xyz/2022/11/10/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="qibria">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ⅶ布利亚">
-      <meta itemprop="description" content="这里是奇布里亚大草原">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Ⅶ布利亚">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/11/10/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-11-10 16:46:48" itemprop="dateCreated datePublished" datetime="2022-11-10T16:46:48+08:00">2022-11-10</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-09 23:54:35" itemprop="dateModified" datetime="2022-11-09T23:54:35+08:00">2022-11-09</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>353</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo server<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo generate<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo deploy<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/home/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/home/">1</a><span class="page-number current">2</span>
+    <a class="extend prev" rel="prev" href="/home/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/home/">1</a><span class="page-number current">2</span><a class="page-number" href="/home/page/3/">3</a><a class="extend next" rel="next" href="/home/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 </div>
@@ -928,14 +1873,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">28k</span>
+    <span title="站点总字数">9k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">26 分钟</span>
+    <span title="站点阅读时长">34 分钟</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
