@@ -3,7 +3,10 @@ title: java动态代理
 typora-root-url: ../
 date: 2022-11-23 13:50:00
 tags:
+ - java
+ - 设计模式
 categories:
+ - java
 ---
 
 
