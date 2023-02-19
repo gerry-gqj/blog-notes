@@ -183,6 +183,73 @@ EXPOSE <span class="token number">6001</span><span aria-hidden="true" class="lin
       </tags>
   </entry>
   <entry>
+    <title>debian设置静态ip</title>
+    <url>/2022/11/15/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/</url>
+    <content><![CDATA[<p>在 DHCP 网络上，您的 Linux 系统通常会自动从 DHCP 服务器接收 IP 地址，在大多数情况下，它是路由器。 IP 配置通常包括 IPv4 地址、网络掩码、网关和 DNS 设置。 这对于只需要访问 Internet 或网络资源的桌面或客户端 PC 来说通常很方便。</p>
+<p>但是，当您要设置服务器时，情况就不同了。 在这种情况下，您需要配置静态 IP 以使服务器始终通过相同的 IP 地址可用。 使用 DHCP，一旦租用时间结束，IP 地址必然会更改，从而导致服务器不可用。</p>
+<p>在本指南中，我们将带您逐步了解怎样在 Debian 11 上设置静态 IP。我们将演示怎样在桌面 GUI 和服务器实例上配置静态 IP。</p>
+<h2 id="方式一-桌面环境UI"><a href="#方式一-桌面环境UI" class="headerlink" title="方式一(桌面环境UI)"></a>方式一(桌面环境UI)</h2><p>如果您运行的是 Debian 11 桌面实例，请使用您的用户名和密码登录。 在我们配置静态 IP 之前，首先确认分配给您系统的 IP 地址。 在我们的例子中，我们在 DHCP 网络中有一台 IP 地址为 192.168.2.104 的 Debian PC。</p>
+<p>您可以使用显示的命令验证这一点。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">ip</span> addr show<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>在我们的系统中， <strong>enp0s3</strong> interface 是分配了 IP 地址的活动链路。 在您的情况下，这可能是另一回事。</p>
+<p>要开始设置静态 IP，请单击 <strong>‘活动</strong>‘在左边的远角。 搜索并单击“<strong>设置</strong>‘ 图标。</p>
+<p>在“设置”页面上，选择“<strong>网络</strong>‘ 标签。 接下来，转到“有线”部分，然后单击所示的小齿轮。</p>
+<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646185.png" alt="怎样在 Debian 11 上设置静态 IP 1"></p>
+<p>这将显示当前的 IP 地址配置，如图所示。 正如我们之前所确认的，我们当前的 IP 地址是 192.168.2.104。 这已使用 DHCP 服务动态分配给活动接口。</p>
+<p>我们将覆盖 DHCP 设置并手动设置一个静态 IP，该 IP 将在重新启动后持续存在。</p>
+<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646192.png" alt="怎样在 Debian 11 上设置静态 IP 2"></p>
+<p>点击 <strong>IPv4</strong> 标签。 切换自 <strong>自动的</strong> 到 <strong>手动的</strong> 在里面 <strong>IPv4方式</strong> 部分。 此后，指定所需的 IP 地址、网络掩码和默认网关。 请务必同时提供首选 DNS 设置。</p>
+<p>要应用所做的更改，请单击<strong>申请</strong> 按钮。</p>
+<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646209.png" alt="怎样在 Debian 11 上设置静态 IP 3"></p>
+<p>您需要重新启动 Debian 系统的网络守护进程或服务以实现新的静态 IP 设置。 因此，关闭切换按钮，然后再打开。</p>
+<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646215.png" alt="怎样在 Debian 11 上设置静态 IP 4"></p>
+<p>再次单击齿轮图标以验证是否已应用静态 IP 设置。</p>
+<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646221.png" alt="怎样在 Debian 11 上设置静态 IP 5"></p>
+<p>在终端上，验证网络接口是否已获取新配置的 IP 地址：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">ip</span> addr show<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><strong><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646228.png" alt="怎样在 Debian 11 上设置静态 IP 6"></strong></p>
+<p>输出确认系统已使用静态 IP 成功配置。 现在让我们换档并探索在命令行上设置静态 IP。</p>
+<h2 id="方式二-服务器环境"><a href="#方式二-服务器环境" class="headerlink" title="方式二(服务器环境)"></a>方式二(服务器环境)</h2><p>如果您正在运行无外设服务器，或者通过 SSH 连接到远程服务器，则唯一可用的选项是在命令行上配置静态 IP。</p>
+<p>网络配置设置存储在 <strong>&#x2F;etc&#x2F;网络&#x2F;接口</strong> 文件。 看一下文件如下。 如果您没有安装 vim，请随意使用 Nano 编辑器。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">vim</span> /etc/network/interfaces<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>默认情况下，仅指定环回设置。</p>
+<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646232.png" alt="怎样在 Debian 11 上设置静态 IP 7"></p>
+<p>我们将为我们的活动网络接口指定 IP 设置。 但在进行任何更改之前，请备份配置文件。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">cp</span> /etc/network/interfaces /etc/network/interface.bak<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646236.png" alt="怎样在 Debian 11 上设置静态 IP 8"></p>
+<p>按照提供的方式指定 IP 设置。 确保根据您的网络子网进行设置。</p>
+<pre class="line-numbers language-conf" data-language="conf"><code class="language-conf">auto enp0s3
+
+iface enp0s3 inet static
+
+ address 192.168.2.150
+
+ netmask 255.255.255.0
+
+ gateway 192.168.2.1
+
+ dns-nameservers 8.8.8.8 192.168.2.1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646239.png" alt="怎样在 Debian 11 上设置静态 IP 9"></p>
+<p>要应用更改，请重新启动网络服务。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> systemctl restart networking<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>如果您通过 SSH 连接，这将断开您与服务器的连接。 使用新设置的静态 IP 地址重新连接。</p>
+<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646243.png" alt="怎样在 Debian 11 上设置静态 IP 10"></p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a><strong>结论</strong></h2><p>我们概述了两种在 Debian 11 PC 上分配静态 IP 的方法——使用 GUI 和终端。 前者在 Debian 桌面上工作时更容易选择，后者在通过 SSH 客户端配置远程服务器时派上用场。</p>
+]]></content>
+      <categories>
+        <category>debian</category>
+      </categories>
+      <tags>
+        <tag>debian</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>docker-compose命令</title>
     <url>/2022/11/13/docker-compose%E5%91%BD%E4%BB%A4/</url>
     <content><![CDATA[<h2 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h2><p>查看版本号</p>
@@ -259,73 +326,6 @@ EXPOSE <span class="token number">6001</span><span aria-hidden="true" class="lin
       <tags>
         <tag>docker</tag>
         <tag>docker compose</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>debian设置静态ip</title>
-    <url>/2022/11/15/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/</url>
-    <content><![CDATA[<p>在 DHCP 网络上，您的 Linux 系统通常会自动从 DHCP 服务器接收 IP 地址，在大多数情况下，它是路由器。 IP 配置通常包括 IPv4 地址、网络掩码、网关和 DNS 设置。 这对于只需要访问 Internet 或网络资源的桌面或客户端 PC 来说通常很方便。</p>
-<p>但是，当您要设置服务器时，情况就不同了。 在这种情况下，您需要配置静态 IP 以使服务器始终通过相同的 IP 地址可用。 使用 DHCP，一旦租用时间结束，IP 地址必然会更改，从而导致服务器不可用。</p>
-<p>在本指南中，我们将带您逐步了解怎样在 Debian 11 上设置静态 IP。我们将演示怎样在桌面 GUI 和服务器实例上配置静态 IP。</p>
-<h2 id="方式一-桌面环境UI"><a href="#方式一-桌面环境UI" class="headerlink" title="方式一(桌面环境UI)"></a>方式一(桌面环境UI)</h2><p>如果您运行的是 Debian 11 桌面实例，请使用您的用户名和密码登录。 在我们配置静态 IP 之前，首先确认分配给您系统的 IP 地址。 在我们的例子中，我们在 DHCP 网络中有一台 IP 地址为 192.168.2.104 的 Debian PC。</p>
-<p>您可以使用显示的命令验证这一点。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">ip</span> addr show<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>在我们的系统中， <strong>enp0s3</strong> interface 是分配了 IP 地址的活动链路。 在您的情况下，这可能是另一回事。</p>
-<p>要开始设置静态 IP，请单击 <strong>‘活动</strong>‘在左边的远角。 搜索并单击“<strong>设置</strong>‘ 图标。</p>
-<p>在“设置”页面上，选择“<strong>网络</strong>‘ 标签。 接下来，转到“有线”部分，然后单击所示的小齿轮。</p>
-<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646185.png" alt="怎样在 Debian 11 上设置静态 IP 1"></p>
-<p>这将显示当前的 IP 地址配置，如图所示。 正如我们之前所确认的，我们当前的 IP 地址是 192.168.2.104。 这已使用 DHCP 服务动态分配给活动接口。</p>
-<p>我们将覆盖 DHCP 设置并手动设置一个静态 IP，该 IP 将在重新启动后持续存在。</p>
-<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646192.png" alt="怎样在 Debian 11 上设置静态 IP 2"></p>
-<p>点击 <strong>IPv4</strong> 标签。 切换自 <strong>自动的</strong> 到 <strong>手动的</strong> 在里面 <strong>IPv4方式</strong> 部分。 此后，指定所需的 IP 地址、网络掩码和默认网关。 请务必同时提供首选 DNS 设置。</p>
-<p>要应用所做的更改，请单击<strong>申请</strong> 按钮。</p>
-<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646209.png" alt="怎样在 Debian 11 上设置静态 IP 3"></p>
-<p>您需要重新启动 Debian 系统的网络守护进程或服务以实现新的静态 IP 设置。 因此，关闭切换按钮，然后再打开。</p>
-<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646215.png" alt="怎样在 Debian 11 上设置静态 IP 4"></p>
-<p>再次单击齿轮图标以验证是否已应用静态 IP 设置。</p>
-<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646221.png" alt="怎样在 Debian 11 上设置静态 IP 5"></p>
-<p>在终端上，验证网络接口是否已获取新配置的 IP 地址：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">ip</span> addr show<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p><strong><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646228.png" alt="怎样在 Debian 11 上设置静态 IP 6"></strong></p>
-<p>输出确认系统已使用静态 IP 成功配置。 现在让我们换档并探索在命令行上设置静态 IP。</p>
-<h2 id="方式二-服务器环境"><a href="#方式二-服务器环境" class="headerlink" title="方式二(服务器环境)"></a>方式二(服务器环境)</h2><p>如果您正在运行无外设服务器，或者通过 SSH 连接到远程服务器，则唯一可用的选项是在命令行上配置静态 IP。</p>
-<p>网络配置设置存储在 <strong>&#x2F;etc&#x2F;网络&#x2F;接口</strong> 文件。 看一下文件如下。 如果您没有安装 vim，请随意使用 Nano 编辑器。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">vim</span> /etc/network/interfaces<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>默认情况下，仅指定环回设置。</p>
-<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646232.png" alt="怎样在 Debian 11 上设置静态 IP 7"></p>
-<p>我们将为我们的活动网络接口指定 IP 设置。 但在进行任何更改之前，请备份配置文件。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">cp</span> /etc/network/interfaces /etc/network/interface.bak<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646236.png" alt="怎样在 Debian 11 上设置静态 IP 8"></p>
-<p>按照提供的方式指定 IP 设置。 确保根据您的网络子网进行设置。</p>
-<pre class="line-numbers language-conf" data-language="conf"><code class="language-conf">auto enp0s3
-
-iface enp0s3 inet static
-
- address 192.168.2.150
-
- netmask 255.255.255.0
-
- gateway 192.168.2.1
-
- dns-nameservers 8.8.8.8 192.168.2.1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646239.png" alt="怎样在 Debian 11 上设置静态 IP 9"></p>
-<p>要应用更改，请重新启动网络服务。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> systemctl restart networking<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>如果您通过 SSH 连接，这将断开您与服务器的连接。 使用新设置的静态 IP 地址重新连接。</p>
-<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646243.png" alt="怎样在 Debian 11 上设置静态 IP 10"></p>
-<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a><strong>结论</strong></h2><p>我们概述了两种在 Debian 11 PC 上分配静态 IP 的方法——使用 GUI 和终端。 前者在 Debian 桌面上工作时更容易选择，后者在通过 SSH 客户端配置远程服务器时派上用场。</p>
-]]></content>
-      <categories>
-        <category>debian</category>
-      </categories>
-      <tags>
-        <tag>debian</tag>
       </tags>
   </entry>
   <entry>
@@ -420,6 +420,70 @@ iface enp0s3 inet static
       <tags>
         <tag>docker</tag>
         <tag>docker compose</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>UG常用快捷键</title>
+    <url>/2023/02/19/UG%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE/</url>
+    <content><![CDATA[<p>开始学UG了，一直都没想到头来转到搞摸具，人生无常，UG居然也是西门子旗下的，其实想想也对，这个时代但凡和理工科相关的软件不是美国的就是欧洲的，中国，呵呵除了搞电商还是电商，要不就是手机组装长，人都麻了，算了，不唠叨了，学了一个星期，写点笔记记录一下UG的常用快捷键</p>
+<p>开始先看看UG长什么鬼样子</p>
+<img src="/images/UG常用快捷键/image-20230219192141365.png" alt="image-20230219192141365" style="zoom: 33%;" />
+
+
+
+<p>电脑只安装了12和8版本的UG，其实10版本之后的长的差不多，8的页面嘛，但凡看过XP系统的都能想象出是什么鬼样子了，我就不想辣眼睛</p>
+<p>嗯…然后就是快捷键</p>
+<p>快捷键嘛就是在键盘上巴拉巴拉，比用鼠标点点点舒服一点，效率嘛，个人没感觉，其实就是键盘敲起来比较有感觉</p>
+<p>说正事时间</p>
+<pre class="line-numbers language-txt" data-language="txt"><code class="language-txt">C - J 对象类型，对象是什么，我只认识java的对象，别的我不知道<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-txt" data-language="txt"><code class="language-txt">C - L 图层设置，其实这个快捷键个人做的并不好，很多实用的点都没用上<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-txt" data-language="txt"><code class="language-txt">C - B 这个就是隐藏啦，当你点不到想点的线的时候就可以无脑隐藏掉碍事的鬼东西<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-txt" data-language="txt"><code class="language-txt">C - S - B 这个就是反显，懂得都懂<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-txt" data-language="txt"><code class="language-txt">C - S - U 全显<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-txt" data-language="txt"><code class="language-txt">C - H 刨析图，就是把体解开，康康里面是什么鬼样子，超好用<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<p>C是什么，当然是CTRL键咯，谁没事会打全称，S不认识就可以拉出去埋了，至于ALT…</p>
+<p>没了，基本和制图有关的快捷键就这几个，剩下的嘛嘿嘿 </p>
+<p>嘻个屁，画一个小图，调半天视角，呕</p>
+<p><img src="/images/UG%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE/image-20230219194511677.png" alt="image-20230219194511677"></p>
+<p>搞一下几个视角的快捷键</p>
+<pre class="line-numbers language-txt" data-language="txt"><code class="language-txt">C - A - T
+C - A - R
+C - A - L
+C - A - F<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>四个方向的快捷键，上右左下</p>
+<p>算了，今天就记录这个 ————-</p>
+<p>草图，一种很草的图，用来画平面图的，这东西用起来就是fiang~~~</p>
+<p>搞一下快捷键先</p>
+<pre class="line-numbers language-txt" data-language="txt"><code class="language-txt">C 这个是约束，万恶之源
+T 这个是修剪，神奇药水，就是用起来有点那个
+E 这个是，嗯...想起来的，是延申，应该没错
+O 这个就是画圆，嗯...看样子就知道
+R 这个应该是画矩形，大概，下次看到不对再改，懒得翻书<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>还一些快捷键都忘完了，欸，记性又差了，呕，看电脑久了，关机睡觉</p>
+<p>还用一个很重要的东西没纪律</p>
+<p>用习惯了10版本的工具条，用12要费点功夫才能搞回到10的工具条</p>
+<p>首先，设置环境变量</p>
+<pre class="line-numbers language-txt" data-language="txt"><code class="language-txt">环境名: UGII_DISPLAY_DEBUG
+值: 1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>然后重启重启，傻逼才不重启等软件</p>
+<p>重启之后，菜单-首选项-用户界面-布局-经典布局</p>
+]]></content>
+      <categories>
+        <category>UG</category>
+      </categories>
+      <tags>
+        <tag>UG</tag>
       </tags>
   </entry>
   <entry>
@@ -768,11 +832,6 @@ iface enp0s3 inet static
 ]]></content>
   </entry>
   <entry>
-    <title>java Lambda表达式</title>
-    <url>/2022/11/24/java-Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
     <title>java内部类</title>
     <url>/2022/11/24/java%E5%86%85%E9%83%A8%E7%B1%BB/</url>
     <content><![CDATA[<h2 id="成员内部类"><a href="#成员内部类" class="headerlink" title="成员内部类"></a>成员内部类</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Outer</span> <span class="token punctuation">&#123;</span><span class="token comment">//外部类</span>
@@ -958,6 +1017,11 @@ name:外部类(修改后)
         <tag>java</tag>
         <tag>内部类</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>java Lambda表达式</title>
+    <url>/2022/11/24/java-Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/</url>
+    <content><![CDATA[]]></content>
   </entry>
   <entry>
     <title>java动态代理</title>
@@ -1750,41 +1814,6 @@ default-time_zone<span class="token operator">=</span><span class="token string"
       </tags>
   </entry>
   <entry>
-    <title>npm镜像源</title>
-    <url>/2022/11/11/npm%E9%95%9C%E5%83%8F%E6%BA%90/</url>
-    <content><![CDATA[<h2 id="查看"><a href="#查看" class="headerlink" title="查看"></a>查看</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> config get registry <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
-<h2 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h2><p>临时更改( –registry 参数)</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> <span class="token function">install</span> any-touch@latest <span class="token parameter variable">--registry</span> <span class="token operator">&lt;</span>源地址<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>持久化更改</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> config <span class="token builtin class-name">set</span> registry <span class="token operator">&lt;</span>源地址<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
-<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p>原始源</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> config <span class="token builtin class-name">set</span> registry https://registry.npmjs.org/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>淘宝源</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> config <span class="token builtin class-name">set</span> registry https://registry.npm.taobao.org <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>华为源</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> config <span class="token builtin class-name">set</span> registry https://mirrors.huaweicloud.com/repository/npm/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-]]></content>
-      <categories>
-        <category>web前端</category>
-        <category>包管理</category>
-      </categories>
-      <tags>
-        <tag>npm</tag>
-        <tag>包管理</tag>
-        <tag>镜像源</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>npm、yarn、pnpm镜像</title>
     <url>/2022/11/11/npm%E3%80%81yarn%E3%80%81pnpm%E9%95%9C%E5%83%8F/</url>
     <content><![CDATA[<h2 id="npm"><a href="#npm" class="headerlink" title="npm"></a>npm</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 华为镜像</span>
@@ -1827,10 +1856,45 @@ default-time_zone<span class="token operator">=</span><span class="token string"
       </categories>
       <tags>
         <tag>npm</tag>
-        <tag>包管理</tag>
-        <tag>镜像源</tag>
         <tag>yarn</tag>
         <tag>pnpm</tag>
+        <tag>包管理</tag>
+        <tag>镜像源</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>npm镜像源</title>
+    <url>/2022/11/11/npm%E9%95%9C%E5%83%8F%E6%BA%90/</url>
+    <content><![CDATA[<h2 id="查看"><a href="#查看" class="headerlink" title="查看"></a>查看</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> config get registry <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h2 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h2><p>临时更改( –registry 参数)</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> <span class="token function">install</span> any-touch@latest <span class="token parameter variable">--registry</span> <span class="token operator">&lt;</span>源地址<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>持久化更改</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> config <span class="token builtin class-name">set</span> registry <span class="token operator">&lt;</span>源地址<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p>原始源</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> config <span class="token builtin class-name">set</span> registry https://registry.npmjs.org/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>淘宝源</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> config <span class="token builtin class-name">set</span> registry https://registry.npm.taobao.org <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>华为源</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> config <span class="token builtin class-name">set</span> registry https://mirrors.huaweicloud.com/repository/npm/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+]]></content>
+      <categories>
+        <category>web前端</category>
+        <category>包管理</category>
+      </categories>
+      <tags>
+        <tag>npm</tag>
+        <tag>包管理</tag>
+        <tag>镜像源</tag>
       </tags>
   </entry>
   <entry>
@@ -1887,9 +1951,9 @@ default-time_zone<span class="token operator">=</span><span class="token string"
         <category>包管理</category>
       </categories>
       <tags>
+        <tag>pnpm</tag>
         <tag>包管理</tag>
         <tag>镜像源</tag>
-        <tag>pnpm</tag>
       </tags>
   </entry>
   <entry>
@@ -2272,9 +2336,9 @@ default-time_zone<span class="token operator">=</span><span class="token string"
         <category>包管理</category>
       </categories>
       <tags>
+        <tag>yarn</tag>
         <tag>包管理</tag>
         <tag>镜像源</tag>
-        <tag>yarn</tag>
       </tags>
   </entry>
 </search>
