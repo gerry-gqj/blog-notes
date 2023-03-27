@@ -85,7 +85,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">28</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">14</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">28</span></a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">29</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">14</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">35</span></a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -156,7 +156,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-count">35</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -167,7 +167,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-count">29</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -207,6 +207,1402 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://blog.qibria.xyz/2022/11/15/sentinel%E6%8C%81%E4%B9%85%E5%8C%96%E6%94%B9%E9%80%A0%E8%AE%B0%E5%BD%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="qibria">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ⅶ布利亚">
+      <meta itemprop="description" content="这里是奇布里亚大草原">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Ⅶ布利亚">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/11/15/sentinel%E6%8C%81%E4%B9%85%E5%8C%96%E6%94%B9%E9%80%A0%E8%AE%B0%E5%BD%95/" class="post-title-link" itemprop="url">sentinel持久化改造记录</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-11-15 15:24:50 / 修改时间：15:45:06" itemprop="dateCreated datePublished" datetime="2022-11-15T15:24:50+08:00">2022-11-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/sentinel/" itemprop="url" rel="index"><span itemprop="name">sentinel</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id=""><a href="#" class="headerlink" title=""></a></h2><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Sentinel Dashboard管理界面配置的规则默认存储在内存，Sentinel Dashboard一旦重启，配置规则就会消失，不适用于生成环境。</p>
+<p>以下对<code>Sentinel Dashboard</code>的源码进行进行修改，实现规则持久化至<code>nacos</code>中，基于<code>sentinel 1.8</code>版本的master分支修改</p>
+<p>github仓库地址:<code>https://github.com/alibaba/Sentinel.git</code></p>
+<h2 id="改造Sentinel-Dashboard"><a href="#改造Sentinel-Dashboard" class="headerlink" title="改造Sentinel-Dashboard"></a>改造Sentinel-Dashboard</h2><h3 id="修改依赖"><a href="#修改依赖" class="headerlink" title="修改依赖"></a>修改依赖</h3><p>修改sentinel-dashboard模块的pom.xml，将依赖<code>sentinel-datasource-nacos</code>的test注释掉</p>
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token comment">&lt;!-- for Nacos rule publisher sample --></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>com.alibaba.csp<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>sentinel-datasource-nacos<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+    <span class="token comment">&lt;!--&lt;scope>test&lt;/scope>--></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="修改nacos相关java代码"><a href="#修改nacos相关java代码" class="headerlink" title="修改nacos相关java代码"></a>修改nacos相关java代码</h3><p>找到如下目录</p>
+<pre class="line-numbers language-apl" data-language="apl"><code class="language-apl">sentinel<span class="token function">-</span>dashboard<span class="token monadic-operator operator">/</span>src<span class="token monadic-operator operator">/</span>test<span class="token monadic-operator operator">/</span>java<span class="token monadic-operator operator">/</span>com<span class="token monadic-operator operator">/</span>alibaba<span class="token monadic-operator operator">/</span>csp<span class="token monadic-operator operator">/</span>sentinel<span class="token monadic-operator operator">/</span>dashboard<span class="token monadic-operator operator">/</span>rule<span class="token monadic-operator operator">/</span>nacos<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>将整个目录拷贝到</p>
+<pre class="line-numbers language-apl" data-language="apl"><code class="language-apl">sentinel<span class="token function">-</span>dashboard<span class="token monadic-operator operator">/</span>src<span class="token monadic-operator operator">/</span>main<span class="token monadic-operator operator">/</span>java<span class="token monadic-operator operator">/</span>com<span class="token monadic-operator operator">/</span>alibaba<span class="token monadic-operator operator">/</span>csp<span class="token monadic-operator operator">/</span>sentinel<span class="token monadic-operator operator">/</span>dashboard<span class="token monadic-operator operator">/</span>rule<span class="token monadic-operator operator">/</span>nacos<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<p>改造NacosConfig类</p>
+<ol>
+<li>添加各规则转换器</li>
+<li>ConfigService bean修改添加nacos相关连接配置,以便启动时可以通过JVM参数指定对应的配置项</li>
+</ol>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Configuration</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">NacosConfig</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// 指定bean name</span>
+    <span class="token annotation punctuation">@Bean</span><span class="token punctuation">(</span><span class="token string">"flowRuleEntityEncoder"</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> <span class="token class-name">Converter</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">List</span><span class="token punctuation">&lt;</span><span class="token class-name">FlowRuleEntity</span><span class="token punctuation">></span><span class="token punctuation">,</span> <span class="token class-name">String</span><span class="token punctuation">></span></span> <span class="token function">flowRuleEntityEncoder</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> <span class="token constant">JSON</span><span class="token operator">::</span><span class="token function">toJSONString</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token comment">// 指定bean name</span>
+    <span class="token annotation punctuation">@Bean</span><span class="token punctuation">(</span><span class="token string">"flowRuleEntityDecoder"</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> <span class="token class-name">Converter</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">List</span><span class="token punctuation">&lt;</span><span class="token class-name">FlowRuleEntity</span><span class="token punctuation">></span><span class="token punctuation">></span></span> <span class="token function">flowRuleEntityDecoder</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> s <span class="token operator">-></span> <span class="token constant">JSON</span><span class="token punctuation">.</span><span class="token function">parseArray</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> <span class="token class-name">FlowRuleEntity</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token comment">// </span>
+    <span class="token comment">// 其它的EntityEncoder，EntityDecoder....省略</span>
+    <span class="token comment">// 如：degrade,param-flow,system,authority,gw-flow,gw-api-group</span>
+    <span class="token comment">// </span>
+
+    <span class="token comment">// 添加nacos连接配置</span>
+    <span class="token annotation punctuation">@Bean</span>
+    <span class="token annotation punctuation">@ConfigurationProperties</span><span class="token punctuation">(</span><span class="token string">"spring.cloud.nacos.config"</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> <span class="token class-name">NacosConfigProperties</span> <span class="token function">nacosConfigProperties</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">NacosConfigProperties</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token annotation punctuation">@Bean</span>
+    <span class="token keyword">public</span> <span class="token class-name">ConfigService</span> <span class="token function">nacosConfigService</span><span class="token punctuation">(</span><span class="token class-name">NacosConfigProperties</span> configProperties<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Exception</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">Properties</span> properties <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Properties</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        properties<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token class-name">PropertyKeyConst</span><span class="token punctuation">.</span><span class="token constant">SERVER_ADDR</span><span class="token punctuation">,</span> configProperties<span class="token punctuation">.</span><span class="token function">getServerAddr</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        properties<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token class-name">PropertyKeyConst</span><span class="token punctuation">.</span><span class="token constant">NAMESPACE</span><span class="token punctuation">,</span> configProperties<span class="token punctuation">.</span><span class="token function">getNamespace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token class-name">ConfigFactory</span><span class="token punctuation">.</span><span class="token function">createConfigService</span><span class="token punctuation">(</span>properties<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">NacosConfigProperties</span><span class="token punctuation">&#123;</span>
+        <span class="token keyword">private</span> <span class="token class-name">String</span> serverAddr<span class="token punctuation">;</span>
+        <span class="token keyword">private</span> <span class="token class-name">String</span> namespace<span class="token punctuation">;</span>
+
+        <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">getServerAddr</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">return</span> serverAddr<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+
+        <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setServerAddr</span><span class="token punctuation">(</span><span class="token class-name">String</span> serverAddr<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">this</span><span class="token punctuation">.</span>serverAddr <span class="token operator">=</span> serverAddr<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+
+        <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">getNamespace</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">return</span> namespace<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+
+        <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setNamespace</span><span class="token punctuation">(</span><span class="token class-name">String</span> namespace<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">this</span><span class="token punctuation">.</span>namespace <span class="token operator">=</span> namespace<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<p>改造<code>NacosConfigUtil</code>,添加各种规则在Nacos存储的Data Id后缀</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"> <span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">class</span> <span class="token class-name">NacosConfigUtil</span> <span class="token punctuation">&#123;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> <span class="token constant">GROUP_ID</span> <span class="token operator">=</span> <span class="token string">"SENTINEL_GROUP"</span><span class="token punctuation">;</span>
+    
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> <span class="token constant">AUTHORITY_DATA_ID_POSTFIX</span> <span class="token operator">=</span> <span class="token string">"-authority-rules"</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> <span class="token constant">DEGRADE_DATA_ID_POSTFIX</span> <span class="token operator">=</span> <span class="token string">"-degrade-rules"</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> <span class="token constant">FLOW_DATA_ID_POSTFIX</span> <span class="token operator">=</span> <span class="token string">"-flow-rules"</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> <span class="token constant">GW_API_DATA_ID_POSTFIX</span> <span class="token operator">=</span> <span class="token string">"-gw-api-rules"</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> <span class="token constant">GW_FLOW_DATA_ID_POSTFIX</span> <span class="token operator">=</span> <span class="token string">"-gw-flow-rules"</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> <span class="token constant">PARAM_FLOW_DATA_ID_POSTFIX</span> <span class="token operator">=</span> <span class="token string">"-param-flow-rules"</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> <span class="token constant">SYSTEM_DATA_ID_POSTFIX</span> <span class="token operator">=</span> <span class="token string">"-system-rules"</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="增加NacosProvider和NacosPublisher"><a href="#增加NacosProvider和NacosPublisher" class="headerlink" title="增加NacosProvider和NacosPublisher"></a>增加NacosProvider和NacosPublisher</h3><p>参考从test目录拷贝过来<code>FlowRuleNacosProvider</code>添加其它类型的<code>NacosProvider</code>,如下的<code>DegradeRuleNacosProvider</code>，其它<code>param-flow</code>,<code>system</code>,<code>authority</code>,<code>gw-flow</code>,<code>gw-api-group</code>此处省略</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Component</span><span class="token punctuation">(</span><span class="token string">"degradeRuleNacosProvider"</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DegradeRuleNacosProvider</span> <span class="token keyword">implements</span> <span class="token class-name">DynamicRuleProvider</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">List</span><span class="token punctuation">&lt;</span><span class="token class-name">DegradeRuleEntity</span><span class="token punctuation">></span><span class="token punctuation">></span></span> <span class="token punctuation">&#123;</span>
+
+    <span class="token annotation punctuation">@Autowired</span>
+    <span class="token keyword">private</span> <span class="token class-name">ConfigService</span> configService<span class="token punctuation">;</span>
+    <span class="token annotation punctuation">@Autowired</span>
+    <span class="token keyword">private</span> <span class="token class-name">Converter</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">List</span><span class="token punctuation">&lt;</span><span class="token class-name">DegradeRuleEntity</span><span class="token punctuation">></span><span class="token punctuation">></span></span> converter<span class="token punctuation">;</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">DegradeRuleEntity</span><span class="token punctuation">></span></span> <span class="token function">getRules</span><span class="token punctuation">(</span><span class="token class-name">String</span> appName<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Exception</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">String</span> rules <span class="token operator">=</span> configService<span class="token punctuation">.</span><span class="token function">getConfig</span><span class="token punctuation">(</span>appName <span class="token operator">+</span> <span class="token class-name">NacosConfigUtil</span><span class="token punctuation">.</span><span class="token constant">DEGRADE_DATA_ID_POSTFIX</span><span class="token punctuation">,</span> <span class="token class-name">NacosConfigUtil</span><span class="token punctuation">.</span><span class="token constant">GROUP_ID</span><span class="token punctuation">,</span> <span class="token number">3000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token class-name">StringUtil</span><span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span>rules<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">return</span> converter<span class="token punctuation">.</span><span class="token function">convert</span><span class="token punctuation">(</span>rules<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>参考从test目录拷贝过来<code>FlowRuleNacosPublisher</code>添加其它类型的<code>NacosPublisher</code>,如下的<code>DegradeRuleNacosPublisher</code>，其它<code>param-flow</code>,<code>system</code>,<code>authority</code>,<code>gw-flow</code>,<code>gw-api-group</code>此处省略</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Component</span><span class="token punctuation">(</span><span class="token string">"degradeRuleNacosPublisher"</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DegradeRuleNacosPublisher</span> <span class="token keyword">implements</span> <span class="token class-name">DynamicRulePublisher</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">List</span><span class="token punctuation">&lt;</span><span class="token class-name">DegradeRuleEntity</span><span class="token punctuation">></span><span class="token punctuation">></span></span> <span class="token punctuation">&#123;</span>
+
+    <span class="token annotation punctuation">@Autowired</span>
+    <span class="token keyword">private</span> <span class="token class-name">ConfigService</span> configService<span class="token punctuation">;</span>
+    <span class="token annotation punctuation">@Autowired</span>
+    <span class="token keyword">private</span> <span class="token class-name">Converter</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">List</span><span class="token punctuation">&lt;</span><span class="token class-name">DegradeRuleEntity</span><span class="token punctuation">></span><span class="token punctuation">,</span> <span class="token class-name">String</span><span class="token punctuation">></span></span> converter<span class="token punctuation">;</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">publish</span><span class="token punctuation">(</span><span class="token class-name">String</span> app<span class="token punctuation">,</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">DegradeRuleEntity</span><span class="token punctuation">></span></span> rules<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Exception</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">AssertUtil</span><span class="token punctuation">.</span><span class="token function">notEmpty</span><span class="token punctuation">(</span>app<span class="token punctuation">,</span> <span class="token string">"app name cannot be empty"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>rules <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        configService<span class="token punctuation">.</span><span class="token function">publishConfig</span><span class="token punctuation">(</span>app <span class="token operator">+</span> <span class="token class-name">NacosConfigUtil</span><span class="token punctuation">.</span><span class="token constant">DEGRADE_DATA_ID_POSTFIX</span><span class="token punctuation">,</span> <span class="token class-name">NacosConfigUtil</span><span class="token punctuation">.</span><span class="token constant">GROUP_ID</span><span class="token punctuation">,</span> converter<span class="token punctuation">.</span><span class="token function">convert</span><span class="token punctuation">(</span>rules<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="改造Controller类"><a href="#改造Controller类" class="headerlink" title="改造Controller类"></a>改造Controller类</h3><p>修改流控规则<code>FlowControllerV1</code>,添加<code>flow</code>的<code>NacosPublisher</code>和<code>NacosProvider</code>，处理增删查改4个接口</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@RestController</span>
+<span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span>value <span class="token operator">=</span> <span class="token string">"/v1/flow"</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">FlowControllerV1</span> <span class="token punctuation">&#123;</span>
+    
+    <span class="token comment">// 这里只给出变动或新增的代码，其它原本的代码省略...</span>
+    
+    <span class="token comment">// 注入FlowRuleNacosProvider</span>
+    <span class="token annotation punctuation">@Autowired</span>
+    <span class="token keyword">private</span> <span class="token class-name">FlowRuleNacosProvider</span> flowRuleNacosProvider<span class="token punctuation">;</span>
+    <span class="token comment">// 注入FlowRuleNacosPublisher</span>
+    <span class="token annotation punctuation">@Autowired</span>
+    <span class="token keyword">private</span> <span class="token class-name">FlowRuleNacosPublisher</span> flowRuleNacosPublisher<span class="token punctuation">;</span>
+
+    <span class="token comment">// 推送规则到nacos</span>
+    <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">publishRules</span><span class="token punctuation">(</span><span class="token class-name">String</span> app<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Exception</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">FlowRuleEntity</span><span class="token punctuation">></span></span> rules <span class="token operator">=</span> repository<span class="token punctuation">.</span><span class="token function">findAllByApp</span><span class="token punctuation">(</span>app<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>flowRuleNacosPublisher<span class="token punctuation">.</span><span class="token function">publish</span><span class="token punctuation">(</span>app<span class="token punctuation">,</span> rules<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    
+    <span class="token annotation punctuation">@GetMapping</span><span class="token punctuation">(</span><span class="token string">"/rules"</span><span class="token punctuation">)</span>
+    <span class="token annotation punctuation">@AuthAction</span><span class="token punctuation">(</span><span class="token class-name">PrivilegeType</span><span class="token punctuation">.</span><span class="token constant">READ_RULE</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> <span class="token class-name">Result</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">List</span><span class="token punctuation">&lt;</span><span class="token class-name">FlowRuleEntity</span><span class="token punctuation">></span><span class="token punctuation">></span></span> <span class="token function">apiQueryMachineRules</span><span class="token punctuation">(</span><span class="token annotation punctuation">@RequestParam</span> <span class="token class-name">String</span> app<span class="token punctuation">,</span>
+                                                             <span class="token annotation punctuation">@RequestParam</span> <span class="token class-name">String</span> ip<span class="token punctuation">,</span>
+                                                             <span class="token annotation punctuation">@RequestParam</span> <span class="token class-name">Integer</span> port<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// 省略....</span>
+        <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
+            <span class="token comment">// 注解掉这行</span>
+            <span class="token comment">//List&lt;FlowRuleEntity> rules = sentinelApiClient.fetchFlowRuleOfMachine(app, ip, port);</span>
+            <span class="token comment">// 通过NacosProvider从nacos获取规则</span>
+            <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">FlowRuleEntity</span><span class="token punctuation">></span></span> rules <span class="token operator">=</span> flowRuleNacosProvider<span class="token punctuation">.</span><span class="token function">getRules</span><span class="token punctuation">(</span>app<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            rules <span class="token operator">=</span> repository<span class="token punctuation">.</span><span class="token function">saveAll</span><span class="token punctuation">(</span>rules<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span> <span class="token class-name">Result</span><span class="token punctuation">.</span><span class="token function">ofSuccess</span><span class="token punctuation">(</span>rules<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Throwable</span> throwable<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token comment">// 省略....</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    
+    <span class="token annotation punctuation">@PostMapping</span><span class="token punctuation">(</span><span class="token string">"/rule"</span><span class="token punctuation">)</span>
+    <span class="token annotation punctuation">@AuthAction</span><span class="token punctuation">(</span><span class="token class-name">PrivilegeType</span><span class="token punctuation">.</span><span class="token constant">WRITE_RULE</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> <span class="token class-name">Result</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">FlowRuleEntity</span><span class="token punctuation">></span></span> <span class="token function">apiAddFlowRule</span><span class="token punctuation">(</span><span class="token annotation punctuation">@RequestBody</span> <span class="token class-name">FlowRuleEntity</span> entity<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// 省略....</span>
+        <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
+            <span class="token comment">// 注解掉这行</span>
+            <span class="token comment">//publishRules(entity.getApp(), entity.getIp(), entity.getPort()).get(5000, TimeUnit.MILLISECONDS);</span>
+            <span class="token comment">// 新增时重新同步至nacos</span>
+            <span class="token function">publishRules</span><span class="token punctuation">(</span>entity<span class="token punctuation">.</span><span class="token function">getApp</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span> <span class="token class-name">Result</span><span class="token punctuation">.</span><span class="token function">ofSuccess</span><span class="token punctuation">(</span>entity<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Throwable</span> t<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token comment">// 省略....</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    
+    <span class="token annotation punctuation">@PutMapping</span><span class="token punctuation">(</span><span class="token string">"/save.json"</span><span class="token punctuation">)</span>
+    <span class="token annotation punctuation">@AuthAction</span><span class="token punctuation">(</span><span class="token class-name">PrivilegeType</span><span class="token punctuation">.</span><span class="token constant">WRITE_RULE</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> <span class="token class-name">Result</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">FlowRuleEntity</span><span class="token punctuation">></span></span> <span class="token function">apiUpdateFlowRule</span><span class="token punctuation">(</span><span class="token class-name">Long</span> id<span class="token punctuation">,</span> <span class="token class-name">String</span> app<span class="token punctuation">,</span>
+                                                  <span class="token class-name">String</span> limitApp<span class="token punctuation">,</span> <span class="token class-name">String</span> resource<span class="token punctuation">,</span> <span class="token class-name">Integer</span> grade<span class="token punctuation">,</span>
+                                                  <span class="token class-name">Double</span> count<span class="token punctuation">,</span> <span class="token class-name">Integer</span> strategy<span class="token punctuation">,</span> <span class="token class-name">String</span> refResource<span class="token punctuation">,</span>
+                                                  <span class="token class-name">Integer</span> controlBehavior<span class="token punctuation">,</span> <span class="token class-name">Integer</span> warmUpPeriodSec<span class="token punctuation">,</span>
+                                                  <span class="token class-name">Integer</span> maxQueueingTimeMs<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// 省略....</span>
+        <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
+            <span class="token comment">// 注解这行</span>
+            <span class="token comment">//publishRules(entity.getApp(), entity.getIp(), entity.getPort()).get(5000, TimeUnit.MILLISECONDS);</span>
+            <span class="token comment">// 更新时重新同步至nacos</span>
+            <span class="token function">publishRules</span><span class="token punctuation">(</span>entity<span class="token punctuation">.</span><span class="token function">getApp</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span> <span class="token class-name">Result</span><span class="token punctuation">.</span><span class="token function">ofSuccess</span><span class="token punctuation">(</span>entity<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Throwable</span> t<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token comment">// 省略....</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    
+    <span class="token annotation punctuation">@DeleteMapping</span><span class="token punctuation">(</span><span class="token string">"/delete.json"</span><span class="token punctuation">)</span>
+    <span class="token annotation punctuation">@AuthAction</span><span class="token punctuation">(</span><span class="token class-name">PrivilegeType</span><span class="token punctuation">.</span><span class="token constant">WRITE_RULE</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> <span class="token class-name">Result</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Long</span><span class="token punctuation">></span></span> <span class="token function">apiDeleteFlowRule</span><span class="token punctuation">(</span><span class="token class-name">Long</span> id<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// 省略....</span>
+        <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
+            <span class="token comment">// 注解这行</span>
+            <span class="token comment">//publishRules(oldEntity.getApp(), oldEntity.getIp(), oldEntity.getPort()).get(5000, TimeUnit.MILLISECONDS);</span>
+            <span class="token comment">// 删除时重新同步至nacos</span>
+            <span class="token function">publishRules</span><span class="token punctuation">(</span>oldEntity<span class="token punctuation">.</span><span class="token function">getApp</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span> <span class="token class-name">Result</span><span class="token punctuation">.</span><span class="token function">ofSuccess</span><span class="token punctuation">(</span>id<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Throwable</span> t<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token comment">// 省略....</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>其它<code>Controller</code>，如：<code>degrade</code>,<code>param-flow</code>,<code>system</code>,<code>authority</code>,<code>gw-flow</code>,<code>gw-api-group</code>也是一样的改造逻辑，此处省略…</p>
+<h2 id="业务微服务项目"><a href="#业务微服务项目" class="headerlink" title="业务微服务项目"></a>业务微服务项目</h2><p>添加POM依赖</p>
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>com.alibaba.csp<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>sentinel-datasource-nacos<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>添加项目配置</p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">spring</span><span class="token punctuation">:</span>
+  <span class="token key atrule">cloud</span><span class="token punctuation">:</span>
+    <span class="token key atrule">sentinel</span><span class="token punctuation">:</span>
+      <span class="token key atrule">transport</span><span class="token punctuation">:</span>
+        <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token string">"20051"</span>
+        <span class="token key atrule">dashboard</span><span class="token punctuation">:</span> 192.168.2.x<span class="token punctuation">:</span><span class="token number">8080</span>   <span class="token comment"># 配置Sentinel dashborad 控制台地址</span>
+      <span class="token key atrule">datasource</span><span class="token punctuation">:</span>                   <span class="token comment">#添加Nacos数据源配置</span>
+        <span class="token key atrule">flow</span><span class="token punctuation">:</span>
+          <span class="token key atrule">nacos</span><span class="token punctuation">:</span>                          <span class="token comment">#数据源为NACOS中</span>
+            <span class="token key atrule">server-addr</span><span class="token punctuation">:</span> $<span class="token punctuation">&#123;</span>spring.cloud.nacos.config.server<span class="token punctuation">-</span>addr<span class="token punctuation">&#125;</span>   <span class="token comment">#NACOS SERVER URL</span>
+            <span class="token key atrule">dataId</span><span class="token punctuation">:</span> $<span class="token punctuation">&#123;</span>spring.application.name<span class="token punctuation">&#125;</span><span class="token punctuation">-</span>flow<span class="token punctuation">-</span>rules           
+            <span class="token key atrule">groupId</span><span class="token punctuation">:</span> SENTINEL_GROUP
+            <span class="token key atrule">namespace</span><span class="token punctuation">:</span> c8247bcf<span class="token punctuation">-</span>16a1<span class="token punctuation">-</span>42da<span class="token punctuation">-</span>bc98<span class="token punctuation">-</span>0f6f4c7b5ecc          
+            <span class="token key atrule">data-type</span><span class="token punctuation">:</span> json
+            <span class="token key atrule">rule-type</span><span class="token punctuation">:</span> flow
+        <span class="token key atrule">authority</span><span class="token punctuation">:</span>
+          <span class="token key atrule">nacos</span><span class="token punctuation">:</span>                          <span class="token comment">#数据源为NACOS中</span>
+            <span class="token key atrule">server-addr</span><span class="token punctuation">:</span> $<span class="token punctuation">&#123;</span>spring.cloud.nacos.config.server<span class="token punctuation">-</span>addr<span class="token punctuation">&#125;</span>   <span class="token comment">#NACOS SERVER URL</span>
+            <span class="token key atrule">dataId</span><span class="token punctuation">:</span> $<span class="token punctuation">&#123;</span>spring.application.name<span class="token punctuation">&#125;</span><span class="token punctuation">-</span>authority<span class="token punctuation">-</span>rules
+            <span class="token key atrule">groupId</span><span class="token punctuation">:</span> DEFAULT_GROUP
+            <span class="token key atrule">namespace</span><span class="token punctuation">:</span> c8247bcf<span class="token punctuation">-</span>16a1<span class="token punctuation">-</span>42da<span class="token punctuation">-</span>bc98<span class="token punctuation">-</span>0f6f4c7b5ecc
+            <span class="token key atrule">data-type</span><span class="token punctuation">:</span> json
+            <span class="token key atrule">rule-type</span><span class="token punctuation">:</span> authority
+        <span class="token key atrule">degrade</span><span class="token punctuation">:</span>
+          <span class="token key atrule">nacos</span><span class="token punctuation">:</span>                          <span class="token comment">#数据源为NACOS中</span>
+            <span class="token key atrule">server-addr</span><span class="token punctuation">:</span> $<span class="token punctuation">&#123;</span>spring.cloud.nacos.config.server<span class="token punctuation">-</span>addr<span class="token punctuation">&#125;</span>   <span class="token comment">#NACOS SERVER URL</span>
+            <span class="token key atrule">dataId</span><span class="token punctuation">:</span> $<span class="token punctuation">&#123;</span>spring.application.name<span class="token punctuation">&#125;</span><span class="token punctuation">-</span>degrade<span class="token punctuation">-</span>rules
+            <span class="token key atrule">groupId</span><span class="token punctuation">:</span> SENTINEL_GROUP
+            <span class="token key atrule">namespace</span><span class="token punctuation">:</span> 83fe3f08<span class="token punctuation">-</span>a12f<span class="token punctuation">-</span>4887<span class="token punctuation">-</span>9cc9<span class="token punctuation">-</span>6ac73320d658
+            <span class="token key atrule">data-type</span><span class="token punctuation">:</span> json
+            <span class="token key atrule">rule-type</span><span class="token punctuation">:</span> degrade
+        <span class="token key atrule">param-flow</span><span class="token punctuation">:</span>
+          <span class="token key atrule">nacos</span><span class="token punctuation">:</span>                          <span class="token comment">#数据源为NACOS中</span>
+            <span class="token key atrule">server-addr</span><span class="token punctuation">:</span> $<span class="token punctuation">&#123;</span>spring.cloud.nacos.config.server<span class="token punctuation">-</span>addr<span class="token punctuation">&#125;</span>   <span class="token comment">#NACOS SERVER URL</span>
+            <span class="token key atrule">dataId</span><span class="token punctuation">:</span> $<span class="token punctuation">&#123;</span>spring.application.name<span class="token punctuation">&#125;</span><span class="token punctuation">-</span>param<span class="token punctuation">-</span>flow<span class="token punctuation">-</span>rules
+            <span class="token key atrule">groupId</span><span class="token punctuation">:</span> SENTINEL_GROUP
+            <span class="token key atrule">namespace</span><span class="token punctuation">:</span> c8247bcf<span class="token punctuation">-</span>16a1<span class="token punctuation">-</span>42da<span class="token punctuation">-</span>bc98<span class="token punctuation">-</span>0f6f4c7b5ecc
+            <span class="token key atrule">data-type</span><span class="token punctuation">:</span> json
+            <span class="token key atrule">rule-type</span><span class="token punctuation">:</span> param<span class="token punctuation">-</span>flow
+        <span class="token key atrule">system</span><span class="token punctuation">:</span>
+          <span class="token key atrule">nacos</span><span class="token punctuation">:</span>                          <span class="token comment">#数据源为NACOS中</span>
+            <span class="token key atrule">server-addr</span><span class="token punctuation">:</span> $<span class="token punctuation">&#123;</span>spring.cloud.nacos.config.server<span class="token punctuation">-</span>addr<span class="token punctuation">&#125;</span>   <span class="token comment">#NACOS SERVER URL</span>
+            <span class="token key atrule">dataId</span><span class="token punctuation">:</span> $<span class="token punctuation">&#123;</span>spring.application.name<span class="token punctuation">&#125;</span><span class="token punctuation">-</span>system<span class="token punctuation">-</span>rules
+            <span class="token key atrule">groupId</span><span class="token punctuation">:</span> SENTINEL_GROUP
+            <span class="token key atrule">namespace</span><span class="token punctuation">:</span> c8247bcf<span class="token punctuation">-</span>16a1<span class="token punctuation">-</span>42da<span class="token punctuation">-</span>bc98<span class="token punctuation">-</span>0f6f4c7b5ecc
+            <span class="token key atrule">data-type</span><span class="token punctuation">:</span> json
+            <span class="token key atrule">rule-type</span><span class="token punctuation">:</span> system<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://blog.qibria.xyz/2022/11/15/git%E8%AE%BE%E7%BD%AE%E4%BB%A3%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="qibria">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ⅶ布利亚">
+      <meta itemprop="description" content="这里是奇布里亚大草原">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Ⅶ布利亚">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/11/15/git%E8%AE%BE%E7%BD%AE%E4%BB%A3%E7%90%86/" class="post-title-link" itemprop="url">git设置代理</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-11-15 12:05:37 / 修改时间：12:18:33" itemprop="dateCreated datePublished" datetime="2022-11-15T12:05:37+08:00">2022-11-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/git/" itemprop="url" rel="index"><span itemprop="name">git</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>75</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="全局代理"><a href="#全局代理" class="headerlink" title="全局代理"></a>全局代理</h2><p><code>http</code> 代理</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> config <span class="token parameter variable">--global</span> http.proxy http://127.0.0.1:1080<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<p><code>https</code>代理</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> config <span class="token parameter variable">--global</span> https.proxy http://127.0.0.1:1080<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<p><code>socket</code>方式</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> config <span class="token parameter variable">--global</span> http.proxy socks5://127.0.0.1:7890<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> config <span class="token parameter variable">--global</span> https.proxy socks5://127.0.0.1:7890<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+
+
+<h2 id="针对github代理"><a href="#针对github代理" class="headerlink" title="针对github代理"></a>针对<code>github</code>代理</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> config <span class="token parameter variable">--global</span> http.https://github.com.proxy socks5://127.0.0.1:7890<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+
+
+<h2 id="取消代理"><a href="#取消代理" class="headerlink" title="取消代理"></a>取消代理</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> config <span class="token parameter variable">--global</span> <span class="token parameter variable">--unset</span> http.proxy<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> config <span class="token parameter variable">--global</span> <span class="token parameter variable">--unset</span> https.proxy<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://blog.qibria.xyz/2022/11/15/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="qibria">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ⅶ布利亚">
+      <meta itemprop="description" content="这里是奇布里亚大草原">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Ⅶ布利亚">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/11/15/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/" class="post-title-link" itemprop="url">debian设置静态ip</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-11-15 11:50:39 / 修改时间：11:56:14" itemprop="dateCreated datePublished" datetime="2022-11-15T11:50:39+08:00">2022-11-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/debian/" itemprop="url" rel="index"><span itemprop="name">debian</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>在 DHCP 网络上，您的 Linux 系统通常会自动从 DHCP 服务器接收 IP 地址，在大多数情况下，它是路由器。 IP 配置通常包括 IPv4 地址、网络掩码、网关和 DNS 设置。 这对于只需要访问 Internet 或网络资源的桌面或客户端 PC 来说通常很方便。</p>
+<p>但是，当您要设置服务器时，情况就不同了。 在这种情况下，您需要配置静态 IP 以使服务器始终通过相同的 IP 地址可用。 使用 DHCP，一旦租用时间结束，IP 地址必然会更改，从而导致服务器不可用。</p>
+<p>在本指南中，我们将带您逐步了解怎样在 Debian 11 上设置静态 IP。我们将演示怎样在桌面 GUI 和服务器实例上配置静态 IP。</p>
+<h2 id="方式一-桌面环境UI"><a href="#方式一-桌面环境UI" class="headerlink" title="方式一(桌面环境UI)"></a>方式一(桌面环境UI)</h2><p>如果您运行的是 Debian 11 桌面实例，请使用您的用户名和密码登录。 在我们配置静态 IP 之前，首先确认分配给您系统的 IP 地址。 在我们的例子中，我们在 DHCP 网络中有一台 IP 地址为 192.168.2.104 的 Debian PC。</p>
+<p>您可以使用显示的命令验证这一点。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">ip</span> addr show<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>在我们的系统中， <strong>enp0s3</strong> interface 是分配了 IP 地址的活动链路。 在您的情况下，这可能是另一回事。</p>
+<p>要开始设置静态 IP，请单击 <strong>‘活动</strong>‘在左边的远角。 搜索并单击“<strong>设置</strong>‘ 图标。</p>
+<p>在“设置”页面上，选择“<strong>网络</strong>‘ 标签。 接下来，转到“有线”部分，然后单击所示的小齿轮。</p>
+<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646185.png" alt="怎样在 Debian 11 上设置静态 IP 1"></p>
+<p>这将显示当前的 IP 地址配置，如图所示。 正如我们之前所确认的，我们当前的 IP 地址是 192.168.2.104。 这已使用 DHCP 服务动态分配给活动接口。</p>
+<p>我们将覆盖 DHCP 设置并手动设置一个静态 IP，该 IP 将在重新启动后持续存在。</p>
+<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646192.png" alt="怎样在 Debian 11 上设置静态 IP 2"></p>
+<p>点击 <strong>IPv4</strong> 标签。 切换自 <strong>自动的</strong> 到 <strong>手动的</strong> 在里面 <strong>IPv4方式</strong> 部分。 此后，指定所需的 IP 地址、网络掩码和默认网关。 请务必同时提供首选 DNS 设置。</p>
+<p>要应用所做的更改，请单击<strong>申请</strong> 按钮。</p>
+<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646209.png" alt="怎样在 Debian 11 上设置静态 IP 3"></p>
+<p>您需要重新启动 Debian 系统的网络守护进程或服务以实现新的静态 IP 设置。 因此，关闭切换按钮，然后再打开。</p>
+<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646215.png" alt="怎样在 Debian 11 上设置静态 IP 4"></p>
+<p>再次单击齿轮图标以验证是否已应用静态 IP 设置。</p>
+<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646221.png" alt="怎样在 Debian 11 上设置静态 IP 5"></p>
+<p>在终端上，验证网络接口是否已获取新配置的 IP 地址：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">ip</span> addr show<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><strong><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646228.png" alt="怎样在 Debian 11 上设置静态 IP 6"></strong></p>
+<p>输出确认系统已使用静态 IP 成功配置。 现在让我们换档并探索在命令行上设置静态 IP。</p>
+<h2 id="方式二-服务器环境"><a href="#方式二-服务器环境" class="headerlink" title="方式二(服务器环境)"></a>方式二(服务器环境)</h2><p>如果您正在运行无外设服务器，或者通过 SSH 连接到远程服务器，则唯一可用的选项是在命令行上配置静态 IP。</p>
+<p>网络配置设置存储在 <strong>&#x2F;etc&#x2F;网络&#x2F;接口</strong> 文件。 看一下文件如下。 如果您没有安装 vim，请随意使用 Nano 编辑器。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">vim</span> /etc/network/interfaces<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>默认情况下，仅指定环回设置。</p>
+<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646232.png" alt="怎样在 Debian 11 上设置静态 IP 7"></p>
+<p>我们将为我们的活动网络接口指定 IP 设置。 但在进行任何更改之前，请备份配置文件。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">cp</span> /etc/network/interfaces /etc/network/interface.bak<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646236.png" alt="怎样在 Debian 11 上设置静态 IP 8"></p>
+<p>按照提供的方式指定 IP 设置。 确保根据您的网络子网进行设置。</p>
+<pre class="line-numbers language-conf" data-language="conf"><code class="language-conf">auto enp0s3
+
+iface enp0s3 inet static
+
+ address 192.168.2.150
+
+ netmask 255.255.255.0
+
+ gateway 192.168.2.1
+
+ dns-nameservers 8.8.8.8 192.168.2.1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646239.png" alt="怎样在 Debian 11 上设置静态 IP 9"></p>
+<p>要应用更改，请重新启动网络服务。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> systemctl restart networking<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>如果您通过 SSH 连接，这将断开您与服务器的连接。 使用新设置的静态 IP 地址重新连接。</p>
+<p><img src="/images/debian%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip/1636646243.png" alt="怎样在 Debian 11 上设置静态 IP 10"></p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a><strong>结论</strong></h2><p>我们概述了两种在 Debian 11 PC 上分配静态 IP 的方法——使用 GUI 和终端。 前者在 Debian 桌面上工作时更容易选择，后者在通过 SSH 客户端配置远程服务器时派上用场。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://blog.qibria.xyz/2022/11/13/docker-compose%E5%B8%B8%E7%94%A8%E6%A8%A1%E6%9D%BF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="qibria">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ⅶ布利亚">
+      <meta itemprop="description" content="这里是奇布里亚大草原">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Ⅶ布利亚">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/11/13/docker-compose%E5%B8%B8%E7%94%A8%E6%A8%A1%E6%9D%BF/" class="post-title-link" itemprop="url">docker-compose常用模板</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-11-13 22:38:04 / 修改时间：22:47:26" itemprop="dateCreated datePublished" datetime="2022-11-13T22:38:04+08:00">2022-11-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/docker/" itemprop="url" rel="index"><span itemprop="name">docker</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>452</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="网络服务"><a href="#网络服务" class="headerlink" title="网络服务"></a>网络服务</h2><pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">version</span><span class="token punctuation">:</span> <span class="token string">'3'</span>
+<span class="token key atrule">services</span><span class="token punctuation">:</span>
+  <span class="token key atrule">hello_web</span><span class="token punctuation">:</span>
+    <span class="token key atrule">image</span><span class="token punctuation">:</span> my<span class="token punctuation">-</span>app<span class="token punctuation">:</span>latest
+    <span class="token key atrule">container_name</span><span class="token punctuation">:</span> my<span class="token punctuation">-</span>app_6001
+    <span class="token key atrule">privileged</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>  <span class="token comment"># 提供权限</span>
+    <span class="token key atrule">network_mode</span><span class="token punctuation">:</span> bridge
+    <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> 6001<span class="token punctuation">:</span><span class="token number">6001</span> <span class="token comment"># 启动时暴露端口 内部端口3306 宿主机端口3300</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h2 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h2><pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">version</span><span class="token punctuation">:</span> <span class="token string">'3'</span>
+<span class="token key atrule">services</span><span class="token punctuation">:</span>
+  <span class="token key atrule">mysql</span><span class="token punctuation">:</span>
+    <span class="token key atrule">image</span><span class="token punctuation">:</span> qibria/mysql<span class="token punctuation">:</span><span class="token number">5.7</span>
+    <span class="token key atrule">container_name</span><span class="token punctuation">:</span> mysql<span class="token punctuation">-</span>5.7<span class="token punctuation">-</span><span class="token number">3300</span>
+    <span class="token key atrule">restart</span><span class="token punctuation">:</span> always <span class="token comment"># 总是开机启动</span>
+    <span class="token key atrule">network_mode</span><span class="token punctuation">:</span> bridge
+      <span class="token comment">#no不自动重启容器. (默认value)</span>
+      <span class="token comment">#on-failure 容器发生error而退出(容器退出状态不为0)重启容器</span>
+      <span class="token comment">#unless-stopped 在容器已经stop掉或Docker stoped/restarted的时候才重启容器</span>
+      <span class="token comment">#always 在容器已经stop掉或Docker stoped/restarted的时候才重启容器</span>
+    <span class="token key atrule">privileged</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>  <span class="token comment"># 提供权限</span>
+    <span class="token key atrule">volumes</span><span class="token punctuation">:</span> <span class="token comment"># 容器数据卷挂载</span>
+      <span class="token punctuation">-</span> v5.7_3300_data<span class="token punctuation">:</span>/var/lib/mysql<span class="token punctuation">:</span>rw <span class="token comment"># 数据文件</span>
+      <span class="token punctuation">-</span> v5.7_3300<span class="token punctuation">-</span>log<span class="token punctuation">:</span>/var/log/mysql<span class="token punctuation">:</span>rw <span class="token comment"># 日志文件</span>
+      <span class="token punctuation">-</span> v5.7_3300_config<span class="token punctuation">:</span>/etc/mysql/conf.d<span class="token punctuation">:</span>rw <span class="token comment"># 配置文件</span>
+    <span class="token key atrule">environment</span><span class="token punctuation">:</span>
+      <span class="token key atrule">MYSQL_ROOT_PASSWORD</span><span class="token punctuation">:</span> root <span class="token comment"># root 用户密码</span>
+      <span class="token key atrule">MYSQL_ALLOW_EMPTY_PASSWORD</span><span class="token punctuation">:</span> no <span class="token comment"># 不允许空密码登录</span>
+      <span class="token comment">#MYSQL_DATABASE: db2021 # 创建容器时创建数据库</span>
+      <span class="token key atrule">MYSQL_USER</span><span class="token punctuation">:</span> mysqldboy <span class="token comment"># 创建用户 具备admin权限 用户名</span>
+      <span class="token key atrule">MYSQL_PASSWORD</span><span class="token punctuation">:</span> mysqldboy <span class="token comment"># 密码</span>
+    <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> 3300<span class="token punctuation">:</span><span class="token number">3306</span> <span class="token comment"># 启动时暴露端口 内部端口3306 宿主机端口3300</span>
+    <span class="token key atrule">mem_limit</span><span class="token punctuation">:</span> 1g <span class="token comment"># 最大内存空间占用 1g</span>
+<span class="token key atrule">volumes</span><span class="token punctuation">:</span> <span class="token comment"># 容器数据卷</span>
+  <span class="token key atrule">v5.7_3300_data</span><span class="token punctuation">:</span>
+  <span class="token key atrule">v5.7_3300-log</span><span class="token punctuation">:</span>
+  v5.7_3300_config<span class="token punctuation">:</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h2 id="nacos"><a href="#nacos" class="headerlink" title="nacos"></a>nacos</h2><pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">version</span><span class="token punctuation">:</span> <span class="token string">'3'</span>
+<span class="token key atrule">services</span><span class="token punctuation">:</span>
+  <span class="token key atrule">nacos</span><span class="token punctuation">:</span>
+    <span class="token key atrule">image</span><span class="token punctuation">:</span> qibria/nacos<span class="token punctuation">-</span>server<span class="token punctuation">:</span>v2.1.0
+    <span class="token key atrule">container_name</span><span class="token punctuation">:</span> nacos<span class="token punctuation">-</span>server<span class="token punctuation">-</span>v2.1.0<span class="token punctuation">-</span><span class="token number">8840</span>
+    <span class="token key atrule">restart</span><span class="token punctuation">:</span> always <span class="token comment"># 总是开机启动</span>
+    <span class="token key atrule">privileged</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>  <span class="token comment"># 提供权限</span>
+    <span class="token key atrule">network_mode</span><span class="token punctuation">:</span> bridge
+    <span class="token key atrule">environment</span><span class="token punctuation">:</span>
+      <span class="token key atrule">PREFER_HOST_MODE</span><span class="token punctuation">:</span> hostname       <span class="token comment"># 是否支持hostname</span>
+      <span class="token key atrule">MODE</span><span class="token punctuation">:</span> standalone                           <span class="token comment"># 单机模式启动</span>
+      <span class="token key atrule">SPRING_DATASOURCE_PLATFORM</span><span class="token punctuation">:</span> mysql
+      <span class="token key atrule">MYSQL_SERVICE_HOST</span><span class="token punctuation">:</span> dboy    <span class="token comment"># 注：这里不能为`127.0.0.1`或`localhost`方式！！！</span>
+      <span class="token key atrule">MYSQL_SERVICE_DB_NAME</span><span class="token punctuation">:</span> nacos_config        <span class="token comment"># 所需sql脚本位于 `nacos-mysql/nacos-mysql.sql`</span>
+      <span class="token key atrule">MYSQL_SERVICE_PORT</span><span class="token punctuation">:</span> <span class="token number">3300</span>
+      <span class="token key atrule">MYSQL_SERVICE_USER</span><span class="token punctuation">:</span> root
+      <span class="token key atrule">MYSQL_SERVICE_PASSWORD</span><span class="token punctuation">:</span> root
+       <span class="token comment"># JVM调优参数</span>
+      <span class="token key atrule">JVM_XMS</span><span class="token punctuation">:</span> 512m   <span class="token comment">#-Xms default :2g</span>
+      <span class="token key atrule">JVM_XMX</span><span class="token punctuation">:</span> 512m   <span class="token comment">#-Xmx default :2g</span>
+      <span class="token key atrule">JVM_XMN</span><span class="token punctuation">:</span> 256m   <span class="token comment">#-Xmn default :1g</span>
+      <span class="token key atrule">JVM_MS</span><span class="token punctuation">:</span> 128m     <span class="token comment">#-XX:MetaspaceSize default :128m</span>
+      <span class="token key atrule">JVM_MMS</span><span class="token punctuation">:</span> 320m    <span class="token comment">#-XX:MaxMetaspaceSize default :320m</span>
+      <span class="token key atrule">NACOS_DEBUG</span><span class="token punctuation">:</span> n <span class="token comment">#是否开启远程debug，y/n，默认n</span>
+      <span class="token key atrule">TOMCAT_ACCESSLOG_ENABLED</span><span class="token punctuation">:</span> <span class="token boolean important">false</span> <span class="token comment">#是否开始tomcat访问日志的记录，默认false</span>
+    <span class="token key atrule">volumes</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> logs<span class="token punctuation">:</span>/home/nacos/logs<span class="token punctuation">:</span>rw
+      <span class="token punctuation">-</span> init.d<span class="token punctuation">:</span>/home/nacos/init.d<span class="token punctuation">:</span>rw
+    <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> 8840<span class="token punctuation">:</span><span class="token number">8848</span> <span class="token comment"># 启动时暴露端口 内部端口3306 宿主机端口3300</span>
+<span class="token key atrule">volumes</span><span class="token punctuation">:</span> <span class="token comment"># 容器数据卷</span>
+  <span class="token key atrule">logs</span><span class="token punctuation">:</span>
+  init.d<span class="token punctuation">:</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://blog.qibria.xyz/2022/11/13/docker-compose%E5%91%BD%E4%BB%A4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="qibria">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ⅶ布利亚">
+      <meta itemprop="description" content="这里是奇布里亚大草原">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Ⅶ布利亚">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/11/13/docker-compose%E5%91%BD%E4%BB%A4/" class="post-title-link" itemprop="url">docker-compose命令</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-11-13 22:37:53 / 修改时间：22:53:59" itemprop="dateCreated datePublished" datetime="2022-11-13T22:37:53+08:00">2022-11-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/docker/" itemprop="url" rel="index"><span itemprop="name">docker</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>241</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h2><p>查看版本号</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> compose version<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+<p>查看帮助</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> compose <span class="token parameter variable">-h</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+<p>启动所有docker-compose服务</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> compose up<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+<p>启动所有docker-compose服务并后台运行</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> compose up <span class="token parameter variable">-d</span>  <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+<p>停止并删除容器、网络、卷、镜像。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> compose down   <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+<p>进入容器实例内部 <code>docker-compose exec docker-compose.yml 文件中写的服务id /bin/bash</code></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> compose <span class="token builtin class-name">exec</span>  yml里面的服务id <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+<p>展示当前docker-compose编排过的运行的所有容器</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> compose <span class="token function">ps</span> <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+<p>展示当前docker-compose编排过的容器进程</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> compose <span class="token function">top</span>   <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+<p>查看容器输出日志</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> compose logs  yml里面的服务id<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+<p>检查配置</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">dokcer compose config<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+<p>检查配置，有问题才有输出</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">dokcer compose config <span class="token parameter variable">-q</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+<p>重启服务</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> compose restart<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+<p>启动服务</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> compose start<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+<p>停止服务</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> compose stop<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#启动 </span>
+<span class="token function">docker</span> compose <span class="token parameter variable">-f</span> standalone-derby.yaml up
+<span class="token comment">#关闭</span>
+<span class="token function">docker</span> compose <span class="token parameter variable">-f</span> standalone-derby.yaml stop
+<span class="token comment">#移除</span>
+<span class="token function">docker</span> compose <span class="token parameter variable">-f</span> standalone-derby.yaml <span class="token function">rm</span>
+<span class="token comment">#关闭并移除</span>
+<span class="token function">docker</span> compose <span class="token parameter variable">-f</span> standalone-derby.yaml down<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://blog.qibria.xyz/2022/11/13/Dockerfile%E6%8C%87%E4%BB%A4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="qibria">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ⅶ布利亚">
+      <meta itemprop="description" content="这里是奇布里亚大草原">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Ⅶ布利亚">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/11/13/Dockerfile%E6%8C%87%E4%BB%A4/" class="post-title-link" itemprop="url">Dockerfile指令</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-11-13 21:40:35" itemprop="dateCreated datePublished" datetime="2022-11-13T21:40:35+08:00">2022-11-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-11-14 11:24:42" itemprop="dateModified" datetime="2022-11-14T11:24:42+08:00">2022-11-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/docker/" itemprop="url" rel="index"><span itemprop="name">docker</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/docker/Dockerfile/" itemprop="url" rel="index"><span itemprop="name">Dockerfile</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="如何使用Dockerfile构建镜像"><a href="#如何使用Dockerfile构建镜像" class="headerlink" title="如何使用Dockerfile构建镜像"></a>如何使用<code>Dockerfile</code>构建镜像</h2><h3 id="新建一个文件夹my-app"><a href="#新建一个文件夹my-app" class="headerlink" title="新建一个文件夹my-app"></a>新建一个文件夹<code>my-app</code></h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">mkdir</span> my-app<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">cd</span> my-app<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="创建Dockerfile文件"><a href="#创建Dockerfile文件" class="headerlink" title="创建Dockerfile文件"></a>创建<code>Dockerfile</code>文件</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">touch</span> Dockerfile<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+
+<h3 id="构建镜像"><a href="#构建镜像" class="headerlink" title="构建镜像"></a>构建镜像</h3><p>在<code>Dokerfile</code>文件准备好后执行命令构建镜像</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> build <span class="token parameter variable">-t</span> my-app:latest <span class="token builtin class-name">.</span> <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h2 id="Dockerfile指令"><a href="#Dockerfile指令" class="headerlink" title="Dockerfile指令"></a><code>Dockerfile</code>指令</h2><h3 id="FROM"><a href="#FROM" class="headerlink" title="FROM"></a>FROM</h3><p><code>FROM</code> 就是指定 <strong>基础镜像</strong>，因此一个 <code>Dockerfile</code> 中 <code>FROM</code> 是必备的指令，并且必须是第一条指令。</p>
+<h3 id="MAINTAINER"><a href="#MAINTAINER" class="headerlink" title="MAINTAINER"></a>MAINTAINER</h3><p>作者(已弃用)</p>
+<h3 id="VOLUME"><a href="#VOLUME" class="headerlink" title="VOLUME"></a>VOLUME</h3><p><code>VOLUME</code> 指定临时文件目录为<code>/tmp</code>，在主机<code>/var/lib/docke</code>r目录下创建了一个临时文件并链接到容器的<code>/tmp</code></p>
+<h3 id="COPY"><a href="#COPY" class="headerlink" title="COPY"></a>COPY</h3><p>格式</p>
+<pre class="line-numbers language-docker" data-language="docker"><code class="language-docker"><span class="token instruction"><span class="token keyword">COPY</span> [--chown=&lt;user>:&lt;group>] &lt;源路径>... &lt;目标路径></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-docker" data-language="docker"><code class="language-docker"><span class="token instruction"><span class="token keyword">COPY</span> [--chown=&lt;user>:&lt;group>] [<span class="token string">"&lt;源路径1>"</span>,... <span class="token string">"&lt;目标路径>"</span>]</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>和 <code>RUN</code> 指令一样，也有两种格式，一种类似于命令行，一种类似于函数调用。</p>
+<p><code>COPY</code> 指令将从构建上下文目录中 <code>&lt;源路径&gt;</code> 的文件&#x2F;目录复制到新的一层的镜像内的 <code>&lt;目标路径&gt;</code> 位置。比如：</p>
+<pre class="line-numbers language-docker" data-language="docker"><code class="language-docker"><span class="token instruction"><span class="token keyword">COPY</span> package.json /usr/src/app/</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>在使用该指令的时候还可以加上 <code>--chown=&lt;user&gt;:&lt;group&gt;</code> 选项来改变文件的所属用户及所属组。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">COPY <span class="token parameter variable">--chown</span><span class="token operator">=</span><span class="token number">55</span>:mygroup files* /mydir/
+
+COPY <span class="token parameter variable">--chown</span><span class="token operator">=</span>bin files* /mydir/
+
+COPY <span class="token parameter variable">--chown</span><span class="token operator">=</span><span class="token number">1</span> files* /mydir/
+
+COPY <span class="token parameter variable">--chown</span><span class="token operator">=</span><span class="token number">10</span>:11 files* /mydir/<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="ADD"><a href="#ADD" class="headerlink" title="ADD"></a>ADD</h3><p>如果 <code>&lt;源路径&gt;</code> 为一个 <code>tar</code> 压缩文件的话，压缩格式为 <code>gzip</code>, <code>bzip2</code> 以及 <code>xz</code> 的情况下，<code>ADD</code> 指令将会自动解压缩这个压缩文件到 <code>&lt;目标路径&gt;</code> 去。</p>
+<pre class="line-numbers language-docker" data-language="docker"><code class="language-docker"><span class="token instruction"><span class="token keyword">ADD</span> ubuntu-xenial-core-cloudimg-amd64-root.tar.gz /</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-docker" data-language="docker"><code class="language-docker">在使用该指令的时候还可以加上 --chown=&lt;user>:&lt;group> 选项来改变文件的所属用户及所属组。
+<span class="token instruction"><span class="token keyword">ADD</span> <span class="token options"><span class="token property">--chown</span><span class="token punctuation">=</span><span class="token string">55:mygroup</span></span> files* /mydir/</span>
+<span class="token instruction"><span class="token keyword">ADD</span> <span class="token options"><span class="token property">--chown</span><span class="token punctuation">=</span><span class="token string">bin</span></span> files* /mydir/</span>
+<span class="token instruction"><span class="token keyword">ADD</span> <span class="token options"><span class="token property">--chown</span><span class="token punctuation">=</span><span class="token string">1</span></span> files* /mydir/</span>
+<span class="token instruction"><span class="token keyword">ADD</span> <span class="token options"><span class="token property">--chown</span><span class="token punctuation">=</span><span class="token string">10:11</span></span> files* /mydir/</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="RUN"><a href="#RUN" class="headerlink" title="RUN"></a>RUN</h3><ul>
+<li><p><em>shell</em> 格式：<code>RUN &lt;命令&gt;</code>，就像直接在命令行中输入的命令一样。刚才写的 <code>Dockerfile</code> 中的 <code>RUN</code> 指令就是这种格式。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">RUN <span class="token builtin class-name">echo</span> <span class="token string">'&lt;h1>Hello, Docker!&lt;/h1>'</span> <span class="token operator">></span> /usr/share/nginx/html/index.html<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p><em>exec</em> 格式：<code>RUN [&quot;可执行文件&quot;, &quot;参数1&quot;, &quot;参数2&quot;]</code>，这更像是函数调用中的格式。</p>
+</li>
+</ul>
+<p>既然 <code>RUN</code> 就像 Shell 脚本一样可以执行命令，那么我们是否就可以像 Shell 脚本一样把每个命令对应一个 RUN 呢？比如这样：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">FROM debian:stretch
+
+RUN <span class="token function">apt-get</span> update
+RUN <span class="token function">apt-get</span> <span class="token function">install</span> <span class="token parameter variable">-y</span> gcc libc6-dev <span class="token function">make</span> <span class="token function">wget</span>
+RUN <span class="token function">wget</span> <span class="token parameter variable">-O</span> redis.tar.gz <span class="token string">"http://download.redis.io/releases/redis-5.0.3.tar.gz"</span>
+RUN <span class="token function">mkdir</span> <span class="token parameter variable">-p</span> /usr/src/redis
+RUN <span class="token function">tar</span> <span class="token parameter variable">-xzf</span> redis.tar.gz <span class="token parameter variable">-C</span> /usr/src/redis --strip-components<span class="token operator">=</span><span class="token number">1</span>
+RUN <span class="token function">make</span> <span class="token parameter variable">-C</span> /usr/src/redis
+RUN <span class="token function">make</span> <span class="token parameter variable">-C</span> /usr/src/redis <span class="token function">install</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><code>Dockerfile</code> 中每一个指令都会建立一层，<code>RUN</code> 也不例外。每一个 <code>RUN</code> 的行为，就和刚才我们手工建立镜像的过程一样：新建立一层，在其上执行这些命令，执行结束后，<code>commit</code> 这一层的修改，构成新的镜像。</p>
+<p>而上面的这种写法，创建了 7 层镜像。这是完全没有意义的，而且很多运行时不需要的东西，都被装进了镜像里，比如编译环境、更新的软件包等等。结果就是产生非常臃肿、非常多层的镜像，不仅仅增加了构建部署的时间，也很容易出错。 这是很多初学 Docker 的人常犯的一个错误。</p>
+<p>Union FS 是有最大层数限制的，比如 AUFS，曾经是最大不得超过 42 层，现在是不得超过 127 层。</p>
+<p>上面的 <code>Dockerfile</code> 正确的写法应该是这样：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">FROM debian:stretch
+
+RUN <span class="token builtin class-name">set</span> -x<span class="token punctuation">;</span> <span class="token assign-left variable">buildDeps</span><span class="token operator">=</span><span class="token string">'gcc libc6-dev make wget'</span> <span class="token punctuation">\</span>
+    <span class="token operator">&amp;&amp;</span> <span class="token function">apt-get</span> update <span class="token punctuation">\</span>
+    <span class="token operator">&amp;&amp;</span> <span class="token function">apt-get</span> <span class="token function">install</span> <span class="token parameter variable">-y</span> <span class="token variable">$buildDeps</span> <span class="token punctuation">\</span>
+    <span class="token operator">&amp;&amp;</span> <span class="token function">wget</span> <span class="token parameter variable">-O</span> redis.tar.gz <span class="token string">"http://download.redis.io/releases/redis-5.0.3.tar.gz"</span> <span class="token punctuation">\</span>
+    <span class="token operator">&amp;&amp;</span> <span class="token function">mkdir</span> <span class="token parameter variable">-p</span> /usr/src/redis <span class="token punctuation">\</span>
+    <span class="token operator">&amp;&amp;</span> <span class="token function">tar</span> <span class="token parameter variable">-xzf</span> redis.tar.gz <span class="token parameter variable">-C</span> /usr/src/redis --strip-components<span class="token operator">=</span><span class="token number">1</span> <span class="token punctuation">\</span>
+    <span class="token operator">&amp;&amp;</span> <span class="token function">make</span> <span class="token parameter variable">-C</span> /usr/src/redis <span class="token punctuation">\</span>
+    <span class="token operator">&amp;&amp;</span> <span class="token function">make</span> <span class="token parameter variable">-C</span> /usr/src/redis <span class="token function">install</span> <span class="token punctuation">\</span>
+    <span class="token operator">&amp;&amp;</span> <span class="token function">rm</span> <span class="token parameter variable">-rf</span> /var/lib/apt/lists/* <span class="token punctuation">\</span>
+    <span class="token operator">&amp;&amp;</span> <span class="token function">rm</span> redis.tar.gz <span class="token punctuation">\</span>
+    <span class="token operator">&amp;&amp;</span> <span class="token function">rm</span> <span class="token parameter variable">-r</span> /usr/src/redis <span class="token punctuation">\</span>
+    <span class="token operator">&amp;&amp;</span> <span class="token function">apt-get</span> purge <span class="token parameter variable">-y</span> --auto-remove <span class="token variable">$buildDeps</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="CMD"><a href="#CMD" class="headerlink" title="CMD"></a>CMD</h3><p>shell格式：</p>
+<pre class="line-numbers language-docker" data-language="docker"><code class="language-docker"><span class="token instruction"><span class="token keyword">CMD</span> &lt;命令></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>exec格式：</p>
+<pre class="line-numbers language-docker" data-language="docker"><code class="language-docker"><span class="token instruction"><span class="token keyword">CMD</span> [<span class="token string">"可执行文件"</span>, <span class="token string">"参数1"</span>, <span class="token string">"参数2"</span>...]</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>参数列表格式：<code>CMD [&quot;参数1&quot;, &quot;参数2&quot;...]</code>。在指定了 <code>ENTRYPOINT</code> 指令后，用 <code>CMD</code> 指定具体的参数。</p>
+<pre class="line-numbers language-docker" data-language="docker"><code class="language-docker"><span class="token instruction"><span class="token keyword">CMD</span> echo <span class="token variable">$HOME</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>等同于</p>
+<pre class="line-numbers language-docker" data-language="docker"><code class="language-docker"><span class="token instruction"><span class="token keyword">CMD</span> [ <span class="token string">"sh"</span>, <span class="token string">"-c"</span>, <span class="token string">"echo $HOME"</span> ]</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h3 id="ENTRYPOINT"><a href="#ENTRYPOINT" class="headerlink" title="ENTRYPOINT"></a>ENTRYPOINT</h3><p><code>ENTRYPOINT</code> 的格式和 <code>RUN</code> 指令格式一样，分为 <code>exec</code> 格式和 <code>shell</code> 格式。</p>
+<p><code>ENTRYPOINT</code> 的目的和 <code>CMD</code> 一样，都是在指定容器启动程序及参数。<code>ENTRYPOINT</code> 在运行时也可以替代，不过比 <code>CMD</code> 要略显繁琐，需要通过 <code>docker run</code> 的参数 <code>--entrypoint</code> 来指定。</p>
+<p>当指定了 <code>ENTRYPOINT</code> 后，<code>CMD</code> 的含义就发生了改变，不再是直接的运行其命令，而是将 <code>CMD</code> 的内容作为参数传给 <code>ENTRYPOINT</code> 指令，换句话说实际执行时，将变为：</p>
+<pre class="line-numbers language-docker" data-language="docker"><code class="language-docker">&lt;ENTRYPOINT> "&lt;CMD>"<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h3 id="EXPOSE"><a href="#EXPOSE" class="headerlink" title="EXPOSE"></a>EXPOSE</h3><p>暴露端口</p>
+<pre class="line-numbers language-docker" data-language="docker"><code class="language-docker"><span class="token instruction"><span class="token keyword">EXPOSE</span> 6001</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+
+
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">mkdir</span> my-app<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">cd</span> my-app<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">touch</span> Dockerfile<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>准备一个web服务在my-app路劲下</p>
+<p><code>Dockerfile</code></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 基础镜像使用java</span>
+FROM openjdk:8u332-jdk
+
+<span class="token comment"># 作者</span>
+MAINTAINER qibria
+
+<span class="token comment"># VOLUME 指定临时文件目录为/tmp，在主机/var/lib/docker目录下创建了一个临时文件并链接到容器的/tmp</span>
+<span class="token comment"># VOLUME /tmp</span>
+
+<span class="token comment"># 将jar包添加到容器中并更名为zzyy_docker.jar</span>
+<span class="token comment"># ADD docker_boot-0.0.1-SNAPSHOT.jar zzyy_docker.jar</span>
+
+COPY docker_helloworld-1.0-SNAPSHOT.jar usr/src/app/helloapp/hello.jar
+
+WORKDIR /usr/src/app/helloapp
+
+<span class="token comment"># 运行jar包</span>
+<span class="token comment"># RUN bash -c 'touch /zzyy_docker.jar'</span>
+
+ENTRYPOINT <span class="token punctuation">[</span><span class="token string">"java"</span>,<span class="token string">"-jar"</span>,<span class="token string">"hello.jar"</span><span class="token punctuation">]</span>
+
+<span class="token comment">#暴露6001端口作为微服务</span>
+
+EXPOSE <span class="token number">6001</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<p>执行打包</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> build <span class="token parameter variable">-t</span> my-app:latest <span class="token builtin class-name">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://blog.qibria.xyz/2022/11/13/mysql5-7%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="qibria">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ⅶ布利亚">
+      <meta itemprop="description" content="这里是奇布里亚大草原">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Ⅶ布利亚">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/11/13/mysql5-7%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/" class="post-title-link" itemprop="url">mysql5.7配置文件</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-11-13 21:22:03 / 修改时间：21:46:41" itemprop="dateCreated datePublished" datetime="2022-11-13T21:22:03+08:00">2022-11-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/mysql/" itemprop="url" rel="index"><span itemprop="name">mysql</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>118</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p><code>debian bullseye (GNU/Linux)</code></p>
+<p><code>mysql5.7</code></p>
+<p><code>mysql</code>配置文件路径 <code>/etc/mysql/conf.d</code></p>
+<h3 id="新建配置文件-my-cnf"><a href="#新建配置文件-my-cnf" class="headerlink" title="新建配置文件 my.cnf"></a>新建配置文件 <code>my.cnf</code></h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">touch</span> /etc/mysql/conf.d/my.cnf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h2 id="添加内容"><a href="#添加内容" class="headerlink" title="添加内容"></a>添加内容</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">nano</span> /etc/mysql/conf.d/my.cnf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>内容如下:</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>client<span class="token punctuation">]</span>
+<span class="token assign-left variable">default_character_set</span><span class="token operator">=</span>utf8mb4
+
+<span class="token punctuation">[</span>mysql<span class="token punctuation">]</span>
+default-character-set<span class="token operator">=</span>utf8mb4
+
+<span class="token punctuation">[</span>mysqld<span class="token punctuation">]</span>
+<span class="token assign-left variable">collation_server</span><span class="token operator">=</span>utf8mb4_unicode_ci
+<span class="token assign-left variable">character_set_server</span><span class="token operator">=</span>utf8mb4 
+character-set-client-handshake <span class="token operator">=</span> <span class="token boolean">false</span> <span class="token comment">#设置为 False, 在客户端字符集和服务端字符集不同的时候将拒绝连接到服务端执行任何操作</span>
+init_connect <span class="token operator">=</span> <span class="token string">'SET NAMES utf8mb4'</span>
+bind-address<span class="token operator">=</span><span class="token number">0.0</span>.0.0
+default-time_zone<span class="token operator">=</span><span class="token string">'+8:00'</span> <span class="token comment">#设置时区</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+
+
+
+
+
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -272,7 +1668,7 @@
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>4 分钟</span>
+      <span>1 分钟</span>
     </span>
 </div>
 
@@ -829,573 +2225,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://blog.qibria.xyz/2022/11/11/nrm%E9%95%9C%E5%83%8F%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="qibria">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ⅶ布利亚">
-      <meta itemprop="description" content="这里是奇布里亚大草原">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Ⅶ布利亚">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/11/11/nrm%E9%95%9C%E5%83%8F%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/" class="post-title-link" itemprop="url">nrm镜像管理工具</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2022-11-11 00:33:31 / 修改时间：21:13:58" itemprop="dateCreated datePublished" datetime="2022-11-11T00:33:31+08:00">2022-11-11</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/web%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">web前端</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/web%E5%89%8D%E7%AB%AF/%E9%95%9C%E5%83%8F%E7%AE%A1%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">镜像管理</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>27</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>管理registry地址</p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> <span class="token function">install</span> <span class="token parameter variable">-g</span> nrm<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
-<h2 id="查看镜像列表"><a href="#查看镜像列表" class="headerlink" title="查看镜像列表"></a>查看镜像列表</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">nrm <span class="token function">ls</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
-<h2 id="切换"><a href="#切换" class="headerlink" title="切换"></a>切换</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">nrm use taobao/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://blog.qibria.xyz/2022/11/11/pnpm%E9%95%9C%E5%83%8F%E6%BA%90/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="qibria">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ⅶ布利亚">
-      <meta itemprop="description" content="这里是奇布里亚大草原">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Ⅶ布利亚">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/11/11/pnpm%E9%95%9C%E5%83%8F%E6%BA%90/" class="post-title-link" itemprop="url">pnpm镜像源</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2022-11-11 00:23:25 / 修改时间：21:13:54" itemprop="dateCreated datePublished" datetime="2022-11-11T00:23:25+08:00">2022-11-11</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/web%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">web前端</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/web%E5%89%8D%E7%AB%AF/%E5%8C%85%E7%AE%A1%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">包管理</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>70</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="查看"><a href="#查看" class="headerlink" title="查看"></a>查看</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">pnpm</span> get registry <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
-<h2 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h2><p>临时更改( –registry 参数)</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">pnpm</span> <span class="token parameter variable">--registry</span> https://registry.npm.taobao.org <span class="token function">install</span> any-touch<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>持久化更改</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">pnpm</span> config <span class="token builtin class-name">set</span> registry <span class="token operator">&lt;</span>源地址<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
-<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p>原始源</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">pnpm</span> config <span class="token builtin class-name">set</span> registry https://registry.npmjs.org<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>淘宝源</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">pnpm</span> config <span class="token builtin class-name">set</span> registry https://registry.npm.taobao.org<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>华为源</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">pnpm</span> config <span class="token builtin class-name">set</span> registry https://mirrors.huaweicloud.com/repository/npm/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://blog.qibria.xyz/2022/11/11/yarn%E9%95%9C%E5%83%8F%E6%BA%90/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="qibria">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ⅶ布利亚">
-      <meta itemprop="description" content="这里是奇布里亚大草原">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Ⅶ布利亚">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/11/11/yarn%E9%95%9C%E5%83%8F%E6%BA%90/" class="post-title-link" itemprop="url">yarn镜像源</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2022-11-11 00:23:11 / 修改时间：21:13:47" itemprop="dateCreated datePublished" datetime="2022-11-11T00:23:11+08:00">2022-11-11</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/web%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">web前端</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/web%E5%89%8D%E7%AB%AF/%E5%8C%85%E7%AE%A1%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">包管理</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>72</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="查看"><a href="#查看" class="headerlink" title="查看"></a>查看</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">yarn</span> config get registry<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
-<h2 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h2><p>临时更改( –registry 参数)</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">yarn</span> <span class="token function">add</span> any-touch@latest <span class="token parameter variable">--registry</span><span class="token operator">=</span>https://registry.npmjs.org/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>持久化更改</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">yarn</span> config <span class="token builtin class-name">set</span> registry <span class="token operator">&lt;</span>源地址<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
-<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p>原始源</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">yarn</span> config <span class="token builtin class-name">set</span> registry https://registry.yarnpkg.com<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>淘宝源</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">yarn</span> config <span class="token builtin class-name">set</span> registry https://registry.npm.taobao.org/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>华为源</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">yarn</span> config <span class="token builtin class-name">set</span> registry https://mirrors.huaweicloud.com/repository/npm/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://blog.qibria.xyz/2022/11/11/npm%E9%95%9C%E5%83%8F%E6%BA%90/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="qibria">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ⅶ布利亚">
-      <meta itemprop="description" content="这里是奇布里亚大草原">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Ⅶ布利亚">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/11/11/npm%E9%95%9C%E5%83%8F%E6%BA%90/" class="post-title-link" itemprop="url">npm镜像源</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2022-11-11 00:23:02 / 修改时间：21:14:00" itemprop="dateCreated datePublished" datetime="2022-11-11T00:23:02+08:00">2022-11-11</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/web%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">web前端</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/web%E5%89%8D%E7%AB%AF/%E5%8C%85%E7%AE%A1%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">包管理</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>73</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="查看"><a href="#查看" class="headerlink" title="查看"></a>查看</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> config get registry <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
-<h2 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h2><p>临时更改( –registry 参数)</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> <span class="token function">install</span> any-touch@latest <span class="token parameter variable">--registry</span> <span class="token operator">&lt;</span>源地址<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>持久化更改</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> config <span class="token builtin class-name">set</span> registry <span class="token operator">&lt;</span>源地址<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
-<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p>原始源</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> config <span class="token builtin class-name">set</span> registry https://registry.npmjs.org/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>淘宝源</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> config <span class="token builtin class-name">set</span> registry https://registry.npm.taobao.org <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>华为源</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> config <span class="token builtin class-name">set</span> registry https://mirrors.huaweicloud.com/repository/npm/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://blog.qibria.xyz/2022/11/10/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="qibria">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ⅶ布利亚">
-      <meta itemprop="description" content="这里是奇布里亚大草原">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Ⅶ布利亚">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/11/10/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-11-10 16:46:48" itemprop="dateCreated datePublished" datetime="2022-11-10T16:46:48+08:00">2022-11-10</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-09 23:54:35" itemprop="dateModified" datetime="2022-11-09T23:54:35+08:00">2022-11-09</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>78</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo server<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo generate<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo deploy<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/home/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/home/">1</a><a class="page-number" href="/home/page/2/">2</a><span class="page-number current">3</span>
+    <a class="extend prev" rel="prev" href="/home/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/home/">1</a><a class="page-number" href="/home/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/home/page/4/">4</a><a class="extend next" rel="next" href="/home/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 </div>
@@ -1419,14 +2250,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">21k</span>
+    <span title="站点总字数">22k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">1:16</span>
+    <span title="站点阅读时长">20 分钟</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
